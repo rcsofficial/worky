@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "54750728890",
+    "firebase_url": "https://workyapp199.firebaseio.com",
+    "project_id": "workyapp199",
+    "storage_bucket": "workyapp199.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:54750728890:android:0c858f8f551cf67a",
+        "android_client_info": {
+          "package_name": "edu.ateneo.cie199.worky"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "54750728890-qfdqf6v17n7eogsnaicc1lsjps1bp0ma.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.ateneo.cie199.worky",
+            "certificate_hash": "db44fe8cc8fe253f35c9a260ac3a6b6615460387"
+          }
+        },
+        {
+          "client_id": "54750728890-hv8tmp98rrf6i4rr85ec1jutgep5lhqm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqW3aBran3YbOWtJ3kZUdbbUv4wym94dc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "54750728890-hv8tmp98rrf6i4rr85ec1jutgep5lhqm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

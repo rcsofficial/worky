@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.ateneo.cie199.worky.FreelanceSignupActivity">
+
+    <TextView
+        android:id="@+id/lbl_f_dashboardpage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:paddingLeft="5dp"
+        android:paddingTop="10dp"
+        android:text="Freelancer Dashboard Page"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lbl_f_dashboardpage"
+        android:orientation="horizontal"
+        android:paddingTop="10dp">
+
+        <ImageView
+            android:id="@+id/imv_f_profpic"
+            android:layout_width="121dp"
+            android:layout_height="107dp"
+            app:srcCompat="@drawable/freelanceprofile" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txv_f_firstname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Insert First Name"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txv_f_education"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Insert Education" />
+
+            <TextView
+                android:id="@+id/txv_f_expertise"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Insert Expertise" />
+
+            <Button
+                android:id="@+id/btn_f_viewprofile"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:text="View Profile as Client" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/lbl_f_selections"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_marginTop="15dp"
+        android:paddingLeft="5dp"
+        android:text="What do you want to do?"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/lbl_f_selinstructions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Swipe to see more >>"
+        android:textSize="10sp"
+        android:textStyle="italic"
+        android:layout_above="@+id/horizontalScrollView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="17dp" />
+
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/horizontalScrollView"
+        android:layout_below="@+id/lbl_f_selections"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/lbl_f_selections"
+            android:orientation="horizontal"
+            android:paddingTop="10dp">
+
+            <ImageView
+                android:id="@+id/imvbtn_f_find"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.37"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                app:srcCompat="@drawable/freelancefind" />
+
+            <ImageView
+                android:id="@+id/imvbtn_f_post"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                app:srcCompat="@drawable/freelancepost" />
+
+            <ImageView
+                android:id="@+id/imvbtn_f_editpost"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.37"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                app:srcCompat="@drawable/freelanceeditpost" />
+
+            <ImageView
+                android:id="@+id/imvbtn_f_logout"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                app:srcCompat="@drawable/logout" />
+
+            <ImageView
+                android:id="@+id/imvbtn_f_editprofile"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.37"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                app:srcCompat="@drawable/freelanceeditprofile" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/lbl_f_joborders"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/horizontalScrollView"
+        android:paddingTop="10dp"
+        android:text="Previous Transactions:"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <ListView
+        android:id="@+id/lsv_f_joborders"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/lbl_f_joborders" />
+</RelativeLayout>

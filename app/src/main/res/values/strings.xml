@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">Worky</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <string-array name="usertype_array">
+        <item>Freelancer</item>
+        <item>Client</item>
+        <item>Admin</item>
+    </string-array>
+
+    <string-array name="gender_array">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Lesbian</item>
+        <item>Gay</item>
+        <item>Bisexual</item>
+        <item>Transsexual</item>
+        <item>Queer</item>
+        <item>Intersex</item>
+        <item>Asexual</item>
+    </string-array>
+
+    <string-array name="jobcategory_array">
+        <item>Agriculture</item>
+        <item>Arts</item>
+        <item>Clerical</item>
+        <item>Education</item>
+        <item>Engineering</item>
+        <item>Finance</item>
+        <item>Health</item>
+        <item>Hospitality</item>
+        <item>IT</item>
+        <item>Legal</item>
+        <item>Manufacturing</item>
+        <item>Transport</item>
+        <item>Others</item>
+    </string-array>
+
+    <string-array name="searchfilter_array">
+        <item>Job Title</item>
+        <item>Minimum Salary</item>
+        <item>Maximum Salary</item>
+        <item>Location</item>
+    </string-array>
+</resources>

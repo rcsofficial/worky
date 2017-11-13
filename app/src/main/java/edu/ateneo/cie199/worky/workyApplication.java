@@ -1,9 +1,25 @@
 package edu.ateneo.cie199.worky;
 
 import android.app.Application;
+import android.support.annotation.NonNull;
+import android.util.Log;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import static android.content.ContentValues.TAG;
 
 public class workyApplication extends Application {
     private ArrayList<workyFreelancer> mFreelancer = new ArrayList<>();
@@ -235,9 +251,9 @@ public class workyApplication extends Application {
 
     /* EDIT FREELANCER ENTRIES */
     public  void editFreelancer(String username, String password, String firstName, String middleName,
-                            String lastName, int age, String gender, String email, int mobile,
-                            String profile, String educ, String expertise, String course,
-                            String location) {
+                                String lastName, int age, String gender, String email, int mobile,
+                                String profile, String educ, String expertise, String course,
+                                String location) {
         workyFreelancer toEditFromMain = getFreelancerAcctByUsername(username);
         toEditFromMain.setPassword(password);
         toEditFromMain.setFirstname(firstName);
@@ -253,4 +269,76 @@ public class workyApplication extends Application {
         toEditFromMain.setCourse(course);
         toEditFromMain.setLocation(location);
     }
+
+    // TODO DB TEST FUNCTIONS BEYOND THIS
+    public void testDb() {
+        Log.d("HELLO", "HERE1");
+
+        // Access a Cloud Firestore instance from your Activity
+        FirebaseApp.initializeApp(this);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        Log.d("HELLO", "HERE");
+
+        // Create a new user with a first and last name
+        Map<String, Object> user = new HashMap<>();
+        user.put("first", "Ada");
+        user.put("last", "Lovelace");
+        user.put("born", 1815);
+
+        // Add a new document with a generated ID
+        db.collection("users")
+                .add(user)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d("HELLO", "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("HELLO", "Error adding document", e);
+                    }
+                });
+
+        // Create a new user with a first, middle, and last name
+        Map<String, Object> user1 = new HashMap<>();
+        user1.put("first", "Alan");
+        user1.put("middle", "Mathison");
+        user1.put("last", "Turring");
+        user1.put("born", 1912);
+
+        // Add a new document with a generated ID
+        db.collection("users")
+                .add(user1)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d("HELLO", "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("HELLO", "Error adding document", e);
+                    }
+                });
+
+        db.collection("users")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot document : task.getResult()) {
+                                Log.d("HELLO", document.getId() + " => " + document.getData());
+                            }
+                        } else {
+                            Log.w("HELLO", "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
+    // TODO DELETE UNTIL HERE
 }

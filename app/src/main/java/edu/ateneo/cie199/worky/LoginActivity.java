@@ -3,12 +3,16 @@ package edu.ateneo.cie199.worky;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
     /* LOGIN SESSION MANAGEMENT */
@@ -23,6 +27,13 @@ public class LoginActivity extends AppCompatActivity {
         final workyApplication app = (workyApplication) getApplication();
 
 
+        // TODO DELETE THIS LATER; DATABASE TEST
+        Log.d("HELLO","HI");
+        //FirebaseApp.initializeApp(this);
+        //FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Log.e("HELLO", "HI2");
+        //app.testDb();
+        // TODO DELETE UNTIL HERE
 
 
         // TODO: Remove this part! Only for testing purposes

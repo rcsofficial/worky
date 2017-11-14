@@ -162,13 +162,6 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
-                    /* ERROR TOAST MESSAGE FOR ADMIN SIGNUPS */
-                    else if (usertype == 2) {
-                        Toast.makeText(LoginActivity.this,
-                                "ERROR: You may not signup as an administrator.",
-                                Toast.LENGTH_SHORT).show();
-                        return;
-                    }
                 }
             }
         });

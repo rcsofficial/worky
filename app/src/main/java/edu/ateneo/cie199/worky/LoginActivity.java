@@ -29,16 +29,9 @@ public class LoginActivity extends AppCompatActivity {
         /* APPLICATION OBJECT */
         final workyApplication app = (workyApplication) getApplication();
 
+        /* INITIALIZE APPLICATION DATABASE */
         app.initAll();
 
-        // TODO: Remove this part! Only for testing purposes
-        app.addClientAccount(new workyClient("c1", "c1", "c1name",
-                "c1mid", "c1last", 20, "Male", "c1@w.com", 915, "Hi",
-                "W", "Engineering", "CoE", "MLA", null));
-        app.addFreelancerAccount(new workyFreelancer("f1", "f1", "f1name",
-                "f1mid", "f1last", 20, "Male", "f1@w.com", 915, "Hi",
-                "W", "Engineering", "CoE", "MLA", null));
-        // TODO: Until this part, remove!
 
         // TODO: Maintain Signin after App is Closed
 
@@ -89,7 +82,6 @@ public class LoginActivity extends AppCompatActivity {
                                     "ERROR: Please verify freelancer login credentials.",
                                     Toast.LENGTH_SHORT).show();
                         }
-
                     }
                     /* REDIRECT TO CLIENT DASHBOARD */
                     else if (usertype == 1) {
@@ -111,15 +103,6 @@ public class LoginActivity extends AppCompatActivity {
                                     "ERROR: Please verify client login credentials.",
                                     Toast.LENGTH_SHORT).show();
                         }
-                    }
-                    /* REDIRECT TO ADMIN DASHBOARD */
-                    else if (usertype == 2) {
-                        // TODO: Verify Account
-                        Intent launchAdminDashboardActivity = new Intent(LoginActivity.this,
-                                AdminDashboardActivity.class);
-                        startActivity(launchAdminDashboardActivity);
-                        finish();
-                        return;
                     }
                 }
             }

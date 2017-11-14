@@ -27,7 +27,6 @@
         <activity android:name=".ClientSignupActivity" />
         <activity android:name=".ClientDashboardActivity" />
         <activity android:name=".FreelanceDashboardActivity" />
-        <activity android:name=".AdminDashboardActivity" />
         <activity android:name=".ClientEditProfileActivity" />
         <activity android:name=".FreelanceEditProfileActivity" />
         <activity android:name=".ClientFindActivity" />

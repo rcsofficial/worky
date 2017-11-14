@@ -1,33 +1,18 @@
 package edu.ateneo.cie199.worky;
 
 import android.app.Application;
-import android.os.AsyncTask;
-import android.support.annotation.IntegerRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
-
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
-
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.Semaphore;
+
 
 import static android.content.ContentValues.TAG;
 
@@ -36,7 +21,6 @@ public class workyApplication extends Application{
     private ArrayList<workyClient> mClient = new ArrayList<>();
     private ArrayList<workyJobs> mJobs = new ArrayList<>();
     private Boolean initialized = false;
-    // TODO: Save client / freelancer accounts to server
 
     public void initAll() {
         if (!initialized) {
@@ -47,6 +31,7 @@ public class workyApplication extends Application{
         }
     }
 
+    /* INITIALIZE LISTENER FOR FREELANCER COLLECTION */
     public void initFreelancerAccountSync() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -82,6 +67,7 @@ public class workyApplication extends Application{
                 });
     }
 
+    /* INITIALIZE LISTENER FOR CLIENT COLLECTION */
     public void initClientAccountSync() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -117,6 +103,7 @@ public class workyApplication extends Application{
                 });
     }
 
+    /* INITIALIZE LISTENER FOR JOB COLLECTION */
     public void initJobSync() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -182,7 +169,7 @@ public class workyApplication extends Application{
     }
 
 
-    /* ADD FREELANCER ACCOUNT */ // TODO OK!
+    /* ADD FREELANCER ACCOUNT */
     public void addFreelancerAccount(workyFreelancer fAccount) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("freelancer").document(fAccount.getUsername()).set(fAccount);
@@ -190,7 +177,7 @@ public class workyApplication extends Application{
         return;
     }
 
-    /* ADD CLIENT ACCOUNT */  // TODO OK!
+    /* ADD CLIENT ACCOUNT */
     public void addClientAccount(workyClient cAccount) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("client").document(cAccount.getUsername()).set(cAccount);
@@ -198,7 +185,7 @@ public class workyApplication extends Application{
         return;
     }
 
-    /* ADD JOB */ // TODO OK!
+    /* ADD JOB */
     public void addJob(workyJobs job) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("job").document(job.getUsertype() + job.getUsername() + ": " + job.getJobtitle()).set(job);
@@ -206,7 +193,6 @@ public class workyApplication extends Application{
     }
 
     /* ACCOUNT FREELANCE EXISTENCE VERIFICATION */
-
     public boolean isFreelancerExistent(String username, String password) {
         for (int i=0; i<mFreelancer.size(); i++) {
             if (mFreelancer.get(i).getUsername().equals(username) &&
@@ -250,7 +236,7 @@ public class workyApplication extends Application{
         return mFreelancer;
     }
 
-    /* GET FREELANCE ACCOUNT BY USERNAME */ // TODO NOW!
+    /* GET FREELANCE ACCOUNT BY USERNAME */
     public workyFreelancer getFreelancerAcctByUsername(String username) {
         int index = -1;
         for (int i = 0; i < mFreelancer.size(); i++) {

@@ -28,7 +28,7 @@ public class FreelanceFindActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 /* APPLICATION OBJECT */
-                workyApplication app = (workyApplication) getApplication();
+                final workyApplication app = (workyApplication) getApplication();
 
 
                 /* DECLARATION OF ARRAY TO BE OUTPUTTED */

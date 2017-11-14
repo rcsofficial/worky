@@ -76,16 +76,6 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/txv_c_e_oldjobtitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="140dp"
-            android:paddingTop="10dp"
-            android:text="Old Job Title"
-            android:textAlignment="viewStart"
-            android:textStyle="italic" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -93,22 +83,23 @@
 
             <TextView
                 android:id="@+id/lbl_c_e_jobtitle"
-                android:layout_width="wrap_content"
+                android:layout_width="142dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.90"
                 android:text="Position Title:"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/edt_c_e_jobtitle"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/txv_c_e_oldjobtitle"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.62"
-                android:ems="10"
-                android:hint="Keyword"
-                android:inputType="textPersonName"
-                android:textSize="15sp" />
+                android:layout_weight="0.90"
+                android:paddingLeft="5dp"
+                android:paddingTop="10dp"
+                android:text="Old Job Title"
+                android:textAlignment="viewStart"
+                android:textStyle="italic" />
+
         </LinearLayout>
 
         <TextView

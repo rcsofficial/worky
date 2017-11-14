@@ -41,7 +41,7 @@ public class FreelanceEditProfileActivity extends AppCompatActivity {
                         LoginActivity.class);
 
                 /* APPLICATION OBJECT */
-                workyApplication app = (workyApplication)getApplication();
+                final workyApplication app = (workyApplication) getApplication();
 
 
                 /* GET EDIT TEXT AND SPIN FIELDS CONTENT */
@@ -92,17 +92,20 @@ public class FreelanceEditProfileActivity extends AppCompatActivity {
                         return;
                     }
                     else {
-                        /* EDIT FREELANCER ACCOUNT */
-                        app.editFreelancer(fUsername, fPassword, fFirstname, fMidname, fLastname,
-                                fAge, fGender, fEmail, fMobilenum, fProfile, fEduc,
-                                fExpertise, fCourse, fLocation);
-
 
                         /* LOGOUT SESSION */
                         session.logoutUser();
                         Toast.makeText(FreelanceEditProfileActivity.this,
                                 "SUCCESS. Please log back in to apply changes.",
                                 Toast.LENGTH_SHORT).show();
+
+                        /* EDIT FREELANCER ACCOUNT */
+                        app.editFreelancer(fUsername, fPassword, fFirstname, fMidname, fLastname,
+                                fAge, fGender, fEmail, fMobilenum, fProfile, fEduc,
+                                fExpertise, fCourse, fLocation);
+
+                        startActivity(launchLoginActivity);
+
                     }
                 }
                 /* LAUNCH LOGIN ACTIVITY */

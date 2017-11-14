@@ -39,7 +39,7 @@ public class FreelanceSignupActivity extends AppCompatActivity {
                         FreelanceDashboardActivity.class);
 
                 /* APPLICATION OBJECT */
-                workyApplication app = (workyApplication)getApplication();
+                final workyApplication app = (workyApplication) getApplication();
 
 
                 /* GET EDIT TEXT AND SPIN FIELDS CONTENT */

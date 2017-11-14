@@ -41,7 +41,7 @@ public class ClientSignupActivity extends AppCompatActivity {
                         ClientDashboardActivity.class);
 
                 /* APPLICATION OBJECT */
-                workyApplication app = (workyApplication)getApplication();
+                final workyApplication app = (workyApplication) getApplication();
 
 
                 /* GET EDIT TEXT AND SPIN FIELDS CONTENT */

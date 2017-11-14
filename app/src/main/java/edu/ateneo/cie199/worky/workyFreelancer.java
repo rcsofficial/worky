@@ -21,6 +21,8 @@ public class workyFreelancer {
     private ArrayList<String> mExperiences = new ArrayList<>();
 
     /* CONSTRUCTOR */
+    public workyFreelancer () {}
+
     public workyFreelancer(String mUsername, String mPassword, String mFirstname,
                            String mMiddlename, String mLastname, int mAge, String mGender,
                            String mEmail, int mMobile, String mProfile, String mEducation,

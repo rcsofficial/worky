@@ -13,6 +13,8 @@ public class workyJobs {
     private String mUsername;
     private String mUsertype;
 
+    public workyJobs() {}
+
     public workyJobs(String mJobfield, String mJobtitle, float mSalary, 
                      String mLocation, String mDescription, String mUsername, String mUsertype) {
         this.mJobfield = mJobfield;

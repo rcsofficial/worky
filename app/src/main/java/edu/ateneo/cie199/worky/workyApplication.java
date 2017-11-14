@@ -1,7 +1,10 @@
 package edu.ateneo.cie199.worky;
 
 import android.app.Application;
+import android.os.AsyncTask;
+import android.support.annotation.IntegerRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -9,45 +12,201 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Semaphore;
 
 import static android.content.ContentValues.TAG;
 
-public class workyApplication extends Application {
+public class workyApplication extends Application{
     private ArrayList<workyFreelancer> mFreelancer = new ArrayList<>();
     private ArrayList<workyClient> mClient = new ArrayList<>();
-    private ArrayList<workyAdmin> mAdmin = new ArrayList<>();
     private ArrayList<workyJobs> mJobs = new ArrayList<>();
-
+    private Boolean initialized = false;
     // TODO: Save client / freelancer accounts to server
 
-    /* ADD FREELANCER ACCOUNT */
+    public void initAll() {
+        if (!initialized) {
+            initFreelancerAccountSync();
+            initClientAccountSync();
+            initJobSync();
+            initialized = true;
+        }
+    }
+
+    public void initFreelancerAccountSync() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("freelancer")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot snapshots,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w(TAG, "listen:error", e);
+                            return;
+                        }
+
+                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                            switch (dc.getType()) {
+                                case ADDED:
+                                    mFreelancer.add(dc.getDocument().toObject(workyFreelancer.class));
+                                    Log.d(TAG, "New freelancer: " + dc.getDocument().getData());
+                                    break;
+                                case MODIFIED:
+                                    workyFreelancer freelancer = dc.getDocument().toObject(workyFreelancer.class);
+                                    int i = getFreelancerIndexByUsername(freelancer.getUsername());
+                                    mFreelancer.set(i, freelancer);
+                                    Log.d(TAG, "Modified freelancer: " + dc.getDocument().getData());
+                                    break;
+                                case REMOVED:
+                                    mFreelancer.remove(dc.getDocument().toObject(workyFreelancer.class));
+                                    Log.d(TAG, "Removed freelancer: " + dc.getDocument().getData());
+                                    break;
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void initClientAccountSync() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("client")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot snapshots,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w(TAG, "listen:error", e);
+                            return;
+                        }
+
+                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                            switch (dc.getType()) {
+                                case ADDED:
+                                    mClient.add(dc.getDocument().toObject(workyClient.class));
+                                    Log.d(TAG, "New client: " + dc.getDocument().getData());
+                                    break;
+                                case MODIFIED:
+                                    workyClient client = dc.getDocument().toObject(workyClient.class);
+                                    int i = getClientIndexByUsername(client.getUsername());
+                                    mClient.set(i, client);
+                                    Log.d(TAG, "Modified client: " + dc.getDocument().getData());
+                                    break;
+                                case REMOVED:
+                                    mClient.remove(dc.getDocument().toObject(workyClient.class));
+                                    Log.d(TAG, "Removed client: " + dc.getDocument().getData());
+                                    break;
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void initJobSync() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("job")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot snapshots,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w(TAG, "listen:error", e);
+                            return;
+                        }
+
+                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                            switch (dc.getType()) {
+                                case ADDED:
+                                    mJobs.add(dc.getDocument().toObject(workyJobs.class));
+                                    Log.d(TAG, "New job: " + dc.getDocument().getData());
+                                    break;
+                                case MODIFIED:
+                                    workyJobs job = dc.getDocument().toObject(workyJobs.class);
+                                    int i = getJobIndexByTypeUsernameTitle(job.getUsertype(), job.getUsername(), job.getJobtitle());
+                                    mJobs.set(i, job);
+                                    Log.d(TAG, "Modified job: " + dc.getDocument().getData());
+                                    break;
+                                case REMOVED:
+                                    mJobs.remove(dc.getDocument().toObject(workyJobs.class));
+                                    Log.d(TAG, "Removed job: " + dc.getDocument().getData());
+                                    break;
+                            }
+                        }
+                    }
+                });
+    }
+
+    /* GET CLIENT INDEX BY USERNAME */
+    public int getClientIndexByUsername(String username) {
+        for (int i = 0; i < mClient.size(); i++) {
+            if (mClient.get(i).getUsername().equals(username))
+                return i;
+        }
+        return -1;
+    }
+
+    /* GET FREELANCER INDEX BY USERNAME */
+    public int getJobIndexByTypeUsernameTitle(String type, String username, String title) {
+        for (int i = 0; i < mFreelancer.size(); i++) {
+            if ( mJobs.get(i).getUsertype().equals(type) &&
+                 mJobs.get(i).getUsername().equals(username) &&
+                 mJobs.get(i).getJobtitle().equals(title) )
+                return i;
+        }
+        return -1;
+    }
+
+    /* GET JOB INDEX BY TYPE, USERNAME AND TITLE */
+    public int getFreelancerIndexByUsername(String username) {
+        for (int i = 0; i < mFreelancer.size(); i++) {
+            if (mFreelancer.get(i).getUsername().equals(username))
+                return i;
+        }
+        return -1;
+    }
+
+
+    /* ADD FREELANCER ACCOUNT */ // TODO OK!
     public void addFreelancerAccount(workyFreelancer fAccount) {
-        mFreelancer.add(fAccount);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("freelancer").document(fAccount.getUsername()).set(fAccount);
+        //mFreelancer.add(fAccount);
         return;
     }
 
-    /* ADD CLIENT ACCOUNT */
+    /* ADD CLIENT ACCOUNT */  // TODO OK!
     public void addClientAccount(workyClient cAccount) {
-        mClient.add(cAccount);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("client").document(cAccount.getUsername()).set(cAccount);
+        //mClient.add(cAccount);
         return;
     }
 
-    /* ADD JOB */
+    /* ADD JOB */ // TODO OK!
     public void addJob(workyJobs job) {
-        mJobs.add(job);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("job").document(job.getUsertype() + job.getUsername() + ": " + job.getJobtitle()).set(job);
         return;
     }
 
     /* ACCOUNT FREELANCE EXISTENCE VERIFICATION */
+
     public boolean isFreelancerExistent(String username, String password) {
         for (int i=0; i<mFreelancer.size(); i++) {
             if (mFreelancer.get(i).getUsername().equals(username) &&
@@ -56,6 +215,7 @@ public class workyApplication extends Application {
         }
         return false;
     }
+
 
     /* ACCOUNT CLIENT EXISTENCE VERIFICATION */
     public boolean isClientExistent(String username, String password) {
@@ -90,7 +250,7 @@ public class workyApplication extends Application {
         return mFreelancer;
     }
 
-    /* GET FREELANCE ACCOUNT BY USERNAME */
+    /* GET FREELANCE ACCOUNT BY USERNAME */ // TODO NOW!
     public workyFreelancer getFreelancerAcctByUsername(String username) {
         int index = -1;
         for (int i = 0; i < mFreelancer.size(); i++) {
@@ -113,11 +273,6 @@ public class workyApplication extends Application {
                 index = i;
         }
         return mClient.get(index);
-    }
-
-    /* GET ADMIN ALL ACCOUNTS */
-    public ArrayList<workyAdmin> getAdmin() {
-        return mAdmin;
     }
 
     /* GET JOB ALL ENTRIES */
@@ -198,15 +353,22 @@ public class workyApplication extends Application {
     public void deleteJob(String username, String usertype, int index) {
         workyJobs toDeleteFromMain = getJobsByUsername(username, usertype).get(index);
 
-        for (int i = 0; i<mJobs.size(); i++) {
-            if (mJobs.get(i).getJobfield().equals(toDeleteFromMain.getJobfield()) &&
-                    mJobs.get(i).getJobtitle().equals(toDeleteFromMain.getJobtitle()) &&
-                    mJobs.get(i).getSalary() == toDeleteFromMain.getSalary() &&
-                    mJobs.get(i).getLocation().equals(toDeleteFromMain.getLocation()) &&
-                    mJobs.get(i).getDescription().equals(toDeleteFromMain.getDescription())) {
-                mJobs.remove(i);
-            }
-        }
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("job").document(toDeleteFromMain.getUsertype()+ toDeleteFromMain.getUsername() + ": " + toDeleteFromMain.getJobtitle())
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
+
         return;
     }
 
@@ -215,16 +377,23 @@ public class workyApplication extends Application {
                         String description, String username, String usertype) {
         workyJobs toEditFromMain = getJobsByUsername(username, usertype).get(index);
 
-        for (int i = 0; i<mJobs.size(); i++) {
-            if (mJobs.get(i).getJobfield().equals(toEditFromMain.getJobfield()) &&
-                    mJobs.get(i).getJobtitle().equals(toEditFromMain.getJobtitle()) &&
-                    mJobs.get(i).getSalary() == toEditFromMain.getSalary() &&
-                    mJobs.get(i).getLocation().equals(toEditFromMain.getLocation()) &&
-                    mJobs.get(i).getDescription().equals(toEditFromMain.getDescription())) {
-                mJobs.set(i, new workyJobs(jobField, jobTitle,
-                        salary, location, description, username, usertype));
-            }
-        }
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("job").document(toEditFromMain.getUsertype() + toEditFromMain.getUsername() + ": " + toEditFromMain.getJobtitle())
+                .set(new workyJobs(jobField, jobTitle,
+                        salary, location, description, username, usertype))
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+
         return;
     }
 
@@ -233,20 +402,39 @@ public class workyApplication extends Application {
                             String lastName, int age, String gender, String email, int mobile,
                             String profile, String company, String field, String specialization,
                             String location) {
-        workyClient toEditFromMain = getClientAcctByUsername(username);
-        toEditFromMain.setPassword(password);
-        toEditFromMain.setFirstname(firstName);
-        toEditFromMain.setMiddlename(middleName);
-        toEditFromMain.setLastname(lastName);
-        toEditFromMain.setAge(age);
-        toEditFromMain.setGender(gender);
-        toEditFromMain.setEmail(email);
-        toEditFromMain.setMobile(mobile);
-        toEditFromMain.setProfile(profile);
-        toEditFromMain.setCompany(company);
-        toEditFromMain.setField(field);
-        toEditFromMain.setSpecialization(specialization);
-        toEditFromMain.setLocation(location);
+
+        workyClient client = new workyClient();
+        client.setUsername(username);
+        client.setPassword(password);
+        client.setFirstname(firstName);
+        client.setMiddlename(middleName);
+        client.setLastname(lastName);
+        client.setAge(age);
+        client.setGender(gender);
+        client.setEmail(email);
+        client.setMobile(mobile);
+        client.setProfile(profile);
+        client.setCompany(company);
+        client.setField(field);
+        client.setSpecialization(specialization);
+        client.setLocation(location);
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("client").document(username)
+                .set(client)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
     }
 
     /* EDIT FREELANCER ENTRIES */
@@ -254,91 +442,38 @@ public class workyApplication extends Application {
                                 String lastName, int age, String gender, String email, int mobile,
                                 String profile, String educ, String expertise, String course,
                                 String location) {
-        workyFreelancer toEditFromMain = getFreelancerAcctByUsername(username);
-        toEditFromMain.setPassword(password);
-        toEditFromMain.setFirstname(firstName);
-        toEditFromMain.setMiddlename(middleName);
-        toEditFromMain.setLastname(lastName);
-        toEditFromMain.setAge(age);
-        toEditFromMain.setGender(gender);
-        toEditFromMain.setEmail(email);
-        toEditFromMain.setMobile(mobile);
-        toEditFromMain.setProfile(profile);
-        toEditFromMain.setEducation(educ);
-        toEditFromMain.setExpertise(expertise);
-        toEditFromMain.setCourse(course);
-        toEditFromMain.setLocation(location);
-    }
+        workyFreelancer freelancer = new workyFreelancer();
+        freelancer.setUsername(username);
+        freelancer.setPassword(password);
+        freelancer.setFirstname(firstName);
+        freelancer.setMiddlename(middleName);
+        freelancer.setLastname(lastName);
+        freelancer.setAge(age);
+        freelancer.setGender(gender);
+        freelancer.setEmail(email);
+        freelancer.setMobile(mobile);
+        freelancer.setProfile(profile);
+        freelancer.setEducation(educ);
+        freelancer.setExpertise(expertise);
+        freelancer.setCourse(course);
+        freelancer.setLocation(location);
 
-    // TODO DB TEST FUNCTIONS BEYOND THIS
-    public void testDb() {
-        Log.d("HELLO", "HERE1");
-
-        // Access a Cloud Firestore instance from your Activity
-        FirebaseApp.initializeApp(this);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        Log.d("HELLO", "HERE");
-
-        // Create a new user with a first and last name
-        Map<String, Object> user = new HashMap<>();
-        user.put("first", "Ada");
-        user.put("last", "Lovelace");
-        user.put("born", 1815);
-
-        // Add a new document with a generated ID
-        db.collection("users")
-                .add(user)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        db.collection("freelancer").document(username)
+                .set(freelancer)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d("HELLO", "DocumentSnapshot added with ID: " + documentReference.getId());
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w("HELLO", "Error adding document", e);
-                    }
-                });
-
-        // Create a new user with a first, middle, and last name
-        Map<String, Object> user1 = new HashMap<>();
-        user1.put("first", "Alan");
-        user1.put("middle", "Mathison");
-        user1.put("last", "Turring");
-        user1.put("born", 1912);
-
-        // Add a new document with a generated ID
-        db.collection("users")
-                .add(user1)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d("HELLO", "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("HELLO", "Error adding document", e);
-                    }
-                });
-
-        db.collection("users")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (DocumentSnapshot document : task.getResult()) {
-                                Log.d("HELLO", document.getId() + " => " + document.getData());
-                            }
-                        } else {
-                            Log.w("HELLO", "Error getting documents.", task.getException());
-                        }
+                        Log.w(TAG, "Error writing document", e);
                     }
                 });
     }
-    // TODO DELETE UNTIL HERE
+
 }

@@ -22,7 +22,7 @@ public class ClientDashboardActivity extends AppCompatActivity {
 
 
         /* APPLICATION OBJECT */
-        workyApplication app = (workyApplication)getApplication();
+        final workyApplication app = (workyApplication) getApplication();
 
 
         /* LOGIN SESSION MANAGEMENT INITIALIZATION */

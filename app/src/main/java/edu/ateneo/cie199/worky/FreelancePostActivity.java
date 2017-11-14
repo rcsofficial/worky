@@ -45,7 +45,7 @@ public class FreelancePostActivity extends AppCompatActivity {
 
 
                 /* APPLICATION OBJECT */
-                workyApplication app = (workyApplication) getApplication();
+                final workyApplication app = (workyApplication) getApplication();
 
 
                 /* GET DATA FROM USER FIELDS */

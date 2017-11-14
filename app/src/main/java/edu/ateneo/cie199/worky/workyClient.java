@@ -20,6 +20,8 @@ public class workyClient {
     private ArrayList<String> mJobOrders = new ArrayList<>();
 
     /* CONSTRUCTOR */
+    public workyClient() {}
+
     public workyClient(String mUsername, String mPassword, String mFirstname, String mMiddlename,
                        String mLastname, int mAge, String mGender, String mEmail, int mMobile,
                        String mProfile, String mCompany, String mField, String mSpecialization,

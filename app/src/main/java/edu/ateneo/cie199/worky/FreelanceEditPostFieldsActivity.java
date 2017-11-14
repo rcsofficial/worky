@@ -41,7 +41,7 @@ public class FreelanceEditPostFieldsActivity extends AppCompatActivity {
 
 
         /* SET INITIAL HINT */
-        workyJobs initialData = app.getJobsByUsername(fUsername, "Freelancer").get(position);
+        final workyJobs initialData = app.getJobsByUsername(fUsername, "Freelancer").get(position);
         TextView txvOldCategory = (TextView) findViewById(R.id.txv_f_e_oldcategory);
         TextView txvOldJobtitle = (TextView) findViewById(R.id.txv_f_e_oldjobtitle);
         TextView txvOldMaxpay = (TextView) findViewById(R.id.txv_f_e_oldsalary);
@@ -49,7 +49,7 @@ public class FreelanceEditPostFieldsActivity extends AppCompatActivity {
         TextView txvOldDesc = (TextView) findViewById(R.id.txv_f_e_olddesc);
 
         txvOldCategory.setText("Old Category: " + initialData.getJobfield());
-        txvOldJobtitle.setText("Old Title: " + initialData.getJobtitle());
+        txvOldJobtitle.setText(initialData.getJobtitle());
         txvOldMaxpay.setText("Old Max Pay: " + String.valueOf(initialData.getSalary()));
         txvOldLocation.setText("Old Location: " + initialData.getLocation());
         txvOldDesc.setText("Old Description: " + initialData.getDescription());
@@ -72,7 +72,6 @@ public class FreelanceEditPostFieldsActivity extends AppCompatActivity {
 
                 /* GET DATA FROM USER FIELDS */
                 Spinner spnJobcategory = (Spinner) findViewById(R.id.spn_f_e_jobcategory);
-                EditText edtJobtitle = (EditText) findViewById(R.id.edt_f_e_jobtitle);
                 EditText edtMinpay = (EditText) findViewById(R.id.edt_f_e_minpay);
                 EditText edtJobloc = (EditText) findViewById(R.id.edt_f_e_jobloc);
                 EditText edtJobdesc = (EditText) findViewById(R.id.edt_f_e_jobdesc);
@@ -80,7 +79,7 @@ public class FreelanceEditPostFieldsActivity extends AppCompatActivity {
 
                 /* EXTRACT DATA FROM USER FIELDS */
                 String jobcategory = LOOKUP_JOBCATEGORY[spnJobcategory.getSelectedItemPosition()];
-                String jobtitle = edtJobtitle.getText().toString();
+                String jobtitle = initialData.getJobtitle();
                 float minpay;
                 String jobloc = edtJobloc.getText().toString();
                 String jobdesc = edtJobdesc.getText().toString();

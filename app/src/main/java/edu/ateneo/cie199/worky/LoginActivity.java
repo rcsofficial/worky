@@ -23,18 +23,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // Access a Cloud Firestore instance from your Activity
+        FirebaseApp.initializeApp(this);
+
         /* APPLICATION OBJECT */
         final workyApplication app = (workyApplication) getApplication();
 
-
-        // TODO DELETE THIS LATER; DATABASE TEST
-        Log.d("HELLO","HI");
-        //FirebaseApp.initializeApp(this);
-        //FirebaseFirestore db = FirebaseFirestore.getInstance();
-        Log.e("HELLO", "HI2");
-        //app.testDb();
-        // TODO DELETE UNTIL HERE
-
+        app.initAll();
 
         // TODO: Remove this part! Only for testing purposes
         app.addClientAccount(new workyClient("c1", "c1", "c1name",

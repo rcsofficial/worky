@@ -68,7 +68,7 @@ public class ClientViewAsFreelancerActivity extends AppCompatActivity {
                                     new Intent(ClientViewAsFreelancerActivity.this,
                                             FreelanceDashboardActivity.class);
 
-                            app.linkJob("Client", recvdIntent.getStringExtra("C_USERNAME"),
+                            app.addLinkJob("Client", recvdIntent.getStringExtra("C_USERNAME"),
                                     user.get(workySessionMgt.KEY_USERNAME), job);
 
                             startActivity(launchFreelanceDashboardActivity);
@@ -86,10 +86,10 @@ public class ClientViewAsFreelancerActivity extends AppCompatActivity {
         txvField.setText(app.getClientAcctByUsername(cUsername).getField());
         txvSpecialization.setText(app.getClientAcctByUsername(cUsername).getSpecialization());
         txvProfile.setText(app.getClientAcctByUsername(cUsername).getProfile());
-        txvAge.setText(Integer.toString(app.getClientAcctByUsername(cUsername).getAge()));
+        txvAge.setText(Long.toString(app.getClientAcctByUsername(cUsername).getAge()));
         txvGender.setText(app.getClientAcctByUsername(cUsername).getGender());
         txvLocation.setText(app.getClientAcctByUsername(cUsername).getLocation());
-        txvMobile.setText(Integer.toString(app.getClientAcctByUsername(cUsername).getMobile()));
+        txvMobile.setText(Long.toString(app.getClientAcctByUsername(cUsername).getMobile()));
         txvEmail.setText(app.getClientAcctByUsername(cUsername).getEmail());
 
     }

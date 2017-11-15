@@ -78,7 +78,7 @@ public class ClientSignupActivity extends AppCompatActivity {
                     int cAge = Integer.parseInt(edtCage.getText().toString());
                     String cGender = LOOKUP_GENDER[spnCgender.getSelectedItemPosition()];
                     String cEmail = edtCemail.getText().toString();
-                    int cMobilenum = Integer.parseInt(edtCmobilenum.getText().toString());
+                    long cMobilenum = Long.parseLong(edtCmobilenum.getText().toString());
                     String cProfile = edtCprofile.getText().toString();
                     String cCompany = edtCcompany.getText().toString();
                     String cField = LOOKUP_FIELD[spnCfield.getSelectedItemPosition()];

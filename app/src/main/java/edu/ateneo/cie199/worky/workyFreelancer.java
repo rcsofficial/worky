@@ -12,7 +12,7 @@ public class workyFreelancer {
     private int mAge;
     private String mGender;
     private String mEmail;
-    private int mMobile;
+    private long mMobile;
     private String mProfile;
     private String mEducation;
     private String mExpertise;
@@ -25,7 +25,7 @@ public class workyFreelancer {
 
     public workyFreelancer(String mUsername, String mPassword, String mFirstname,
                            String mMiddlename, String mLastname, int mAge, String mGender,
-                           String mEmail, int mMobile, String mProfile, String mEducation,
+                           String mEmail, long mMobile, String mProfile, String mEducation,
                            String mExpertise, String mCourse, String mLocation,
                            ArrayList<String> mExperiences) {
         this.mUsername = mUsername;
@@ -111,11 +111,11 @@ public class workyFreelancer {
         this.mEmail = mEmail;
     }
 
-    public int getMobile() {
+    public long getMobile() {
         return mMobile;
     }
 
-    public void setMobile(int mMobile) {
+    public void setMobile(long mMobile) {
         this.mMobile = mMobile;
     }
 

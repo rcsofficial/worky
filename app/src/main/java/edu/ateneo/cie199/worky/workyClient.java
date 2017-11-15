@@ -11,7 +11,7 @@ public class workyClient {
     private int mAge;
     private String mGender;
     private String mEmail;
-    private int mMobile;
+    private long mMobile;
     private String mProfile;
     private String mCompany;
     private String mField;
@@ -23,7 +23,7 @@ public class workyClient {
     public workyClient() {}
 
     public workyClient(String mUsername, String mPassword, String mFirstname, String mMiddlename,
-                       String mLastname, int mAge, String mGender, String mEmail, int mMobile,
+                       String mLastname, int mAge, String mGender, String mEmail, long mMobile,
                        String mProfile, String mCompany, String mField, String mSpecialization,
                        String mLocation, ArrayList<String> mJobOrders) {
         this.mUsername = mUsername;
@@ -109,11 +109,11 @@ public class workyClient {
         this.mEmail = mEmail;
     }
 
-    public int getMobile() {
+    public long getMobile() {
         return mMobile;
     }
 
-    public void setMobile(int mMobile) {
+    public void setMobile(long mMobile) {
         this.mMobile = mMobile;
     }
 

@@ -3,12 +3,9 @@ package edu.ateneo.cie199.worky;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.HashMap;
 
@@ -67,7 +64,7 @@ public class FreelanceViewAsClientActivity extends AppCompatActivity {
                                     new Intent(FreelanceViewAsClientActivity.this,
                                             ClientDashboardActivity.class);
 
-                            app.linkJob("Freelancer", user.get(workySessionMgt.KEY_USERNAME),
+                            app.addLinkJob("Freelancer", user.get(workySessionMgt.KEY_USERNAME),
                                     recvdIntent.getStringExtra("F_USERNAME"), job);
 
                             startActivity(launchClientDashboardActivity);
@@ -84,10 +81,10 @@ public class FreelanceViewAsClientActivity extends AppCompatActivity {
         txvExpertise.setText(app.getFreelancerAcctByUsername(cUsername).getExpertise());
         txvCourse.setText(app.getFreelancerAcctByUsername(cUsername).getCourse());
         txvProfile.setText(app.getFreelancerAcctByUsername(cUsername).getProfile());
-        txvAge.setText(Integer.toString(app.getFreelancerAcctByUsername(cUsername).getAge()));
+        txvAge.setText(Long.toString(app.getFreelancerAcctByUsername(cUsername).getAge()));
         txvGender.setText(app.getFreelancerAcctByUsername(cUsername).getGender());
         txvLocation.setText(app.getFreelancerAcctByUsername(cUsername).getLocation());
-        txvMobile.setText(Integer.toString(app.getFreelancerAcctByUsername(cUsername).getMobile()));
+        txvMobile.setText(Long.toString(app.getFreelancerAcctByUsername(cUsername).getMobile()));
         txvEmail.setText(app.getFreelancerAcctByUsername(cUsername).getEmail());
 
     }

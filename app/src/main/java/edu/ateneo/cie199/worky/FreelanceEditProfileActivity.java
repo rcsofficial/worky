@@ -80,7 +80,7 @@ public class FreelanceEditProfileActivity extends AppCompatActivity {
                     int fAge = Integer.parseInt(edtFage.getText().toString());
                     String fGender = LOOKUP_GENDER[spnFgender.getSelectedItemPosition()];
                     String fEmail = edtFemail.getText().toString();
-                    int fMobilenum = Integer.parseInt(edtFmobilenum.getText().toString());
+                    long fMobilenum = Long.parseLong(edtFmobilenum.getText().toString());
                     String fProfile = edtFprofile.getText().toString();
                     String fEduc = edtFeduc.getText().toString();
                     String fExpertise = LOOKUP_FIELD[spnFexpertise.getSelectedItemPosition()];

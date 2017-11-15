@@ -7,11 +7,15 @@ import android.util.Log;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 
 import static android.content.ContentValues.TAG;
@@ -23,136 +27,177 @@ public class workyApplication extends Application{
     private ArrayList<workyLinkJob> mLinkJob = new ArrayList<>();
     private Boolean initialized = false;
 
-    public void initAll() {
+    public void initializeApp() {
         if (!initialized) {
-            initFreelancerAccountSync();
-            initClientAccountSync();
-            initJobSync();
             initialized = true;
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+            /* INITIALIZE LISTENERS FOR FREELANCER COLLECTION */
+            db.collection("freelancer")
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot snapshots,
+                                            @Nullable FirebaseFirestoreException e) {
+                            if (e != null) {
+                                Log.w(TAG, "listen:error", e);
+                                return;
+                            }
+
+                            for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                                switch (dc.getType()) {
+                                    case ADDED:
+                                        mFreelancer.add(dc.getDocument().toObject(workyFreelancer.class));
+                                        Log.d(TAG, "New freelancer: " + dc.getDocument().getData());
+                                        break;
+                                    case MODIFIED:
+                                        workyFreelancer freelancer = dc.getDocument().toObject(workyFreelancer.class);
+                                        int i = getFreelancerIndexByUsername(freelancer.getUsername());
+                                        mFreelancer.set(i, freelancer);
+                                        Log.d(TAG, "Modified freelancer: " + dc.getDocument().getData());
+                                        break;
+                                    case REMOVED:
+                                        mFreelancer.remove(dc.getDocument().toObject(workyFreelancer.class));
+                                        Log.d(TAG, "Removed freelancer: " + dc.getDocument().getData());
+                                        break;
+                                }
+                            }
+                        }
+                    });
+
+            /* INITIALIZE LISTENER FOR CLIENT COLLECTION */
+            db.collection("client")
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot snapshots,
+                                            @Nullable FirebaseFirestoreException e) {
+                            if (e != null) {
+                                Log.w(TAG, "listen:error", e);
+                                return;
+                            }
+
+                            for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                                switch (dc.getType()) {
+                                    case ADDED:
+                                        mClient.add(dc.getDocument().toObject(workyClient.class));
+                                        Log.d(TAG, "New client: " + dc.getDocument().getData());
+                                        break;
+                                    case MODIFIED:
+                                        workyClient client = dc.getDocument().toObject(workyClient.class);
+                                        int i = getClientIndexByUsername(client.getUsername());
+                                        mClient.set(i, client);
+                                        Log.d(TAG, "Modified client: " + dc.getDocument().getData());
+                                        break;
+                                    case REMOVED:
+                                        mClient.remove(dc.getDocument().toObject(workyClient.class));
+                                        Log.d(TAG, "Removed client: " + dc.getDocument().getData());
+                                        break;
+                                }
+                            }
+                        }
+                    });
+
+            /* INITIALIZE LISTENER FOR JOB COLLECTION */
+            db.collection("job")
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot snapshots,
+                                            @Nullable FirebaseFirestoreException e) {
+                            if (e != null) {
+                                Log.w(TAG, "listen:error", e);
+                                return;
+                            }
+
+                            for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                                switch (dc.getType()) {
+                                    case ADDED:
+                                        mJobs.add(dc.getDocument().toObject(workyJobs.class));
+                                        Log.d(TAG, "New job: " + dc.getDocument().getData());
+                                        break;
+                                    case MODIFIED:
+                                        workyJobs job = dc.getDocument().toObject(workyJobs.class);
+                                        int i = getJobIndexByTypeUsernameTitle(job.getUsertype(), job.getUsername(), job.getJobtitle());
+                                        mJobs.set(i, job);
+                                        Log.d(TAG, "Modified job: " + dc.getDocument().getData());
+                                        break;
+                                    case REMOVED:
+                                        mJobs.remove(dc.getDocument().toObject(workyJobs.class));
+                                        Log.d(TAG, "Removed job: " + dc.getDocument().getData());
+                                        break;
+                                }
+                            }
+                        }
+                    });
+
+            /* INITIIALIZE LISTENER FOR JOBLINK COLLECTION */
+            db.collection("joblink")
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot snapshots,
+                                            @Nullable FirebaseFirestoreException e) {
+                            if (e != null) {
+                                Log.w(TAG, "listen:error", e);
+                                return;
+                            }
+
+                            for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                                switch (dc.getType()) {
+                                    case ADDED:
+                                        try {
+                                            String usertype = dc.getDocument().get("usertype").toString();
+                                            String client = dc.getDocument().get("client").toString();
+                                            String freelancer = dc.getDocument().get("freelancer").toString();
+                                            String jobTitle = dc.getDocument().get("job").toString();
+                                            String jobUsername;
+                                            if (usertype.equals("Freelancer"))
+                                                jobUsername = freelancer;
+                                            else
+                                                jobUsername = client;
+                                            workyLinkJob linkJob = new workyLinkJob(usertype,
+                                                    getClientAcctByUsername(client),
+                                                    getFreelancerAcctByUsername(freelancer),
+                                                    getJobByTypeUsernameTitle(usertype, jobUsername, jobTitle));
+
+                                            mLinkJob.add(linkJob);
+                                        }
+                                        catch (NullPointerException err) {
+                                            Log.e(TAG, err.toString());
+                                        }
+                                        Log.d(TAG, "New client: " + dc.getDocument().getData());
+                                        break;
+                                    case MODIFIED:
+                                        Log.d(TAG, "Modified client: " + dc.getDocument().getData());
+                                        break;
+                                    case REMOVED:
+                                        //mLinkJob.remove(dc.getDocument().toObject(workyLinkJob.class));
+                                        Log.d(TAG, "Removed client: " + dc.getDocument().getData());
+                                        break;
+                                }
+                            }
+                        }
+                    });
         }
     }
 
-    /* INITIALIZE LISTENER FOR FREELANCER COLLECTION */
-    public void initFreelancerAccountSync() {
+    /* ADDS A JOB THAT LINKS A CLIENT AND A FREELANCER */
+    public void addLinkJob(String jobUserType, String clientUsername, String freelancerUsername,
+                           workyJobs job) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        db.collection("freelancer")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot snapshots,
-                                        @Nullable FirebaseFirestoreException e) {
-                        if (e != null) {
-                            Log.w(TAG, "listen:error", e);
-                            return;
-                        }
+        Map<String, Object> docData = new HashMap<>();
+        docData.put("usertype", jobUserType);
+        docData.put("client", clientUsername);
+        docData.put("freelancer", freelancerUsername);
+        docData.put("job", job.getJobtitle());
 
-                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
-                            switch (dc.getType()) {
-                                case ADDED:
-                                    mFreelancer.add(dc.getDocument().toObject(workyFreelancer.class));
-                                    Log.d(TAG, "New freelancer: " + dc.getDocument().getData());
-                                    break;
-                                case MODIFIED:
-                                    workyFreelancer freelancer = dc.getDocument().toObject(workyFreelancer.class);
-                                    int i = getFreelancerIndexByUsername(freelancer.getUsername());
-                                    mFreelancer.set(i, freelancer);
-                                    Log.d(TAG, "Modified freelancer: " + dc.getDocument().getData());
-                                    break;
-                                case REMOVED:
-                                    mFreelancer.remove(dc.getDocument().toObject(workyFreelancer.class));
-                                    Log.d(TAG, "Removed freelancer: " + dc.getDocument().getData());
-                                    break;
-                            }
-                        }
-                    }
-                });
-    }
+        db.collection("joblink").add(docData);
 
-    /* INITIALIZE LISTENER FOR CLIENT COLLECTION */
-    public void initClientAccountSync() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection("client")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot snapshots,
-                                        @Nullable FirebaseFirestoreException e) {
-                        if (e != null) {
-                            Log.w(TAG, "listen:error", e);
-                            return;
-                        }
-
-                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
-                            switch (dc.getType()) {
-                                case ADDED:
-                                    mClient.add(dc.getDocument().toObject(workyClient.class));
-                                    Log.d(TAG, "New client: " + dc.getDocument().getData());
-                                    break;
-                                case MODIFIED:
-                                    workyClient client = dc.getDocument().toObject(workyClient.class);
-                                    int i = getClientIndexByUsername(client.getUsername());
-                                    mClient.set(i, client);
-                                    Log.d(TAG, "Modified client: " + dc.getDocument().getData());
-                                    break;
-                                case REMOVED:
-                                    mClient.remove(dc.getDocument().toObject(workyClient.class));
-                                    Log.d(TAG, "Removed client: " + dc.getDocument().getData());
-                                    break;
-                            }
-                        }
-                    }
-                });
-    }
-
-    /* INITIALIZE LISTENER FOR JOB COLLECTION */
-    public void initJobSync() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection("job")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot snapshots,
-                                        @Nullable FirebaseFirestoreException e) {
-                        if (e != null) {
-                            Log.w(TAG, "listen:error", e);
-                            return;
-                        }
-
-                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
-                            switch (dc.getType()) {
-                                case ADDED:
-                                    mJobs.add(dc.getDocument().toObject(workyJobs.class));
-                                    Log.d(TAG, "New job: " + dc.getDocument().getData());
-                                    break;
-                                case MODIFIED:
-                                    workyJobs job = dc.getDocument().toObject(workyJobs.class);
-                                    int i = getJobIndexByTypeUsernameTitle(job.getUsertype(), job.getUsername(), job.getJobtitle());
-                                    mJobs.set(i, job);
-                                    Log.d(TAG, "Modified job: " + dc.getDocument().getData());
-                                    break;
-                                case REMOVED:
-                                    mJobs.remove(dc.getDocument().toObject(workyJobs.class));
-                                    Log.d(TAG, "Removed job: " + dc.getDocument().getData());
-                                    break;
-                            }
-                        }
-                    }
-                });
-    }
-
-    public void linkJob(String jobUserType, String clientUsername, String freelancerUsername,
-                                            workyJobs job) {
-        mLinkJob.add( new workyLinkJob(jobUserType, getClientAcctByUsername(clientUsername),
-                            getFreelancerAcctByUsername(freelancerUsername),
-                            job) );
-        Log.d(TAG, "ADDED LINKED JOB");
-        Log.d(TAG, "Type: " + mLinkJob.get(mLinkJob.size()-1).getJobUsertype());
-        Log.d(TAG, "Client: " + mLinkJob.get(mLinkJob.size()-1).getClient().getUsername());
-        Log.d(TAG, "Freelancer: " + mLinkJob.get(mLinkJob.size()-1).getFreelancer().getUsername());
-        Log.d(TAG, "Job Title: " + mLinkJob.get(mLinkJob.size()-1).getJob().getJobtitle());
+        //mLinkJob.add( new workyLinkJob(jobUserType, getClientAcctByUsername(clientUsername),
+        //                    getFreelancerAcctByUsername(freelancerUsername),
+        //                    job) );
         return;
     }
 
+    /* GET LINKED JOBS FOR A SPECIFIC CLIENT */
     public ArrayList<workyLinkJob> getLinkedJobsByTypeClient(String clientUsername) {
         ArrayList<workyLinkJob> linkJobs = new ArrayList<>();
         for (int i = 0; i < mLinkJob.size(); i++) {
@@ -163,6 +208,7 @@ public class workyApplication extends Application{
         return linkJobs;
     }
 
+    /* GET LINKED JOBS FOR A SPECIFIC FREELANCER */
     public ArrayList<workyLinkJob> getLinkedJobsByTypeFreelancer(String freelancerUsername) {
         ArrayList<workyLinkJob> linkJobs = new ArrayList<>();
         for (int i = 0; i < mLinkJob.size(); i++) {
@@ -173,7 +219,6 @@ public class workyApplication extends Application{
         return linkJobs;
     }
 
-
     /* GET CLIENT INDEX BY USERNAME */
     public int getClientIndexByUsername(String username) {
         for (int i = 0; i < mClient.size(); i++) {
@@ -182,8 +227,8 @@ public class workyApplication extends Application{
         }
         return -1;
     }
-    // TODO
-    /* GET SPECIFIC JOB BY TITLE, USERNAME AND TITLE */
+
+    /* GET SPECIFIC JOB BY TYPE, USERNAME, AND TITLE */
     public workyJobs getJobByTypeUsernameTitle(String type, String username, String title) {
         for (int i = 0; i < mJobs.size(); i++) {
             if ( mJobs.get(i).getUsertype().equals(type) &&
@@ -214,12 +259,10 @@ public class workyApplication extends Application{
         return -1;
     }
 
-
     /* ADD FREELANCER ACCOUNT */
     public void addFreelancerAccount(workyFreelancer fAccount) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("freelancer").document(fAccount.getUsername()).set(fAccount);
-        //mFreelancer.add(fAccount);
         return;
     }
 
@@ -227,7 +270,6 @@ public class workyApplication extends Application{
     public void addClientAccount(workyClient cAccount) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("client").document(cAccount.getUsername()).set(cAccount);
-        //mClient.add(cAccount);
         return;
     }
 
@@ -431,7 +473,7 @@ public class workyApplication extends Application{
 
     /* EDIT CLIENT ENTRIES */
     public  void editClient(String username, String password, String firstName, String middleName,
-                            String lastName, int age, String gender, String email, int mobile,
+                            String lastName, int age, String gender, String email, long mobile,
                             String profile, String company, String field, String specialization,
                             String location) {
 
@@ -471,7 +513,7 @@ public class workyApplication extends Application{
 
     /* EDIT FREELANCER ENTRIES */
     public  void editFreelancer(String username, String password, String firstName, String middleName,
-                                String lastName, int age, String gender, String email, int mobile,
+                                String lastName, int age, String gender, String email, long mobile,
                                 String profile, String educ, String expertise, String course,
                                 String location) {
         workyFreelancer freelancer = new workyFreelancer();

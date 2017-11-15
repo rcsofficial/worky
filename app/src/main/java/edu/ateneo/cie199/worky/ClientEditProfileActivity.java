@@ -85,7 +85,7 @@ public class ClientEditProfileActivity extends AppCompatActivity {
                     int cAge = Integer.parseInt(edtCage.getText().toString());
                     String cGender = LOOKUP_GENDER[spnCgender.getSelectedItemPosition()];
                     String cEmail = edtCemail.getText().toString();
-                    int cMobilenum = Integer.parseInt(edtCmobilenum.getText().toString());
+                    long cMobilenum = Long.parseLong(edtCmobilenum.getText().toString());
                     String cProfile = edtCprofile.getText().toString();
                     String cCompany = edtCcompany.getText().toString();
                     String cField = LOOKUP_FIELD[spnCfield.getSelectedItemPosition()];
@@ -97,17 +97,17 @@ public class ClientEditProfileActivity extends AppCompatActivity {
                         return;
                     }
                     else {
-                        /* EDIT CLIENT ACCOUNT */
-                        app.editClient(cUsername, cPassword, cFirstname, cMidname, cLastname,
-                                cAge, cGender, cEmail, cMobilenum, cProfile, cCompany,
-                                cField, cSpecialization, cLocation);
-
-
                         /* LOGOUT SESSION */
                         session.logoutUser();
                         Toast.makeText(ClientEditProfileActivity.this,
                                 "SUCCESS. Please log back in to apply changes.",
                                 Toast.LENGTH_SHORT).show();
+
+
+                        /* EDIT CLIENT ACCOUNT */
+                        app.editClient(cUsername, cPassword, cFirstname, cMidname, cLastname,
+                                cAge, cGender, cEmail, cMobilenum, cProfile, cCompany,
+                                cField, cSpecialization, cLocation);
                     }
                 }
                 /* LAUNCH LOGIN ACTIVITY */

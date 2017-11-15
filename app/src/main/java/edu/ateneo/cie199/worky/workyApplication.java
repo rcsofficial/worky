@@ -64,6 +64,7 @@ public class workyApplication extends Application{
                         }
                     });
 
+
             /* INITIALIZE LISTENER FOR CLIENT COLLECTION */
             db.collection("client")
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -96,6 +97,7 @@ public class workyApplication extends Application{
                         }
                     });
 
+
             /* INITIALIZE LISTENER FOR JOB COLLECTION */
             db.collection("job")
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -127,6 +129,7 @@ public class workyApplication extends Application{
                             }
                         }
                     });
+
 
             /* INITIIALIZE LISTENER FOR JOBLINK COLLECTION */
             db.collection("joblink")
@@ -178,6 +181,7 @@ public class workyApplication extends Application{
         }
     }
 
+
     /* ADDS A JOB THAT LINKS A CLIENT AND A FREELANCER */
     public void addLinkJob(String jobUserType, String clientUsername, String freelancerUsername,
                            workyJobs job) {
@@ -190,12 +194,9 @@ public class workyApplication extends Application{
         docData.put("job", job.getJobtitle());
 
         db.collection("joblink").add(docData);
-
-        //mLinkJob.add( new workyLinkJob(jobUserType, getClientAcctByUsername(clientUsername),
-        //                    getFreelancerAcctByUsername(freelancerUsername),
-        //                    job) );
         return;
     }
+
 
     /* GET LINKED JOBS FOR A SPECIFIC CLIENT */
     public ArrayList<workyLinkJob> getLinkedJobsByTypeClient(String clientUsername) {
@@ -208,6 +209,7 @@ public class workyApplication extends Application{
         return linkJobs;
     }
 
+
     /* GET LINKED JOBS FOR A SPECIFIC FREELANCER */
     public ArrayList<workyLinkJob> getLinkedJobsByTypeFreelancer(String freelancerUsername) {
         ArrayList<workyLinkJob> linkJobs = new ArrayList<>();
@@ -219,6 +221,7 @@ public class workyApplication extends Application{
         return linkJobs;
     }
 
+
     /* GET CLIENT INDEX BY USERNAME */
     public int getClientIndexByUsername(String username) {
         for (int i = 0; i < mClient.size(); i++) {
@@ -227,6 +230,7 @@ public class workyApplication extends Application{
         }
         return -1;
     }
+
 
     /* GET SPECIFIC JOB BY TYPE, USERNAME, AND TITLE */
     public workyJobs getJobByTypeUsernameTitle(String type, String username, String title) {
@@ -239,6 +243,7 @@ public class workyApplication extends Application{
         return null;
     }
 
+
     /* GET JOB INDEX BY TYPE, USERNAME AND TITLE */
     public int getJobIndexByTypeUsernameTitle(String type, String username, String title) {
         for (int i = 0; i < mJobs.size(); i++) {
@@ -250,6 +255,7 @@ public class workyApplication extends Application{
         return -1;
     }
 
+
     /* GET FREELANCER INDEX BY USERNAME */
     public int getFreelancerIndexByUsername(String username) {
         for (int i = 0; i < mFreelancer.size(); i++) {
@@ -259,12 +265,14 @@ public class workyApplication extends Application{
         return -1;
     }
 
+
     /* ADD FREELANCER ACCOUNT */
     public void addFreelancerAccount(workyFreelancer fAccount) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("freelancer").document(fAccount.getUsername()).set(fAccount);
         return;
     }
+
 
     /* ADD CLIENT ACCOUNT */
     public void addClientAccount(workyClient cAccount) {
@@ -273,12 +281,14 @@ public class workyApplication extends Application{
         return;
     }
 
+
     /* ADD JOB */
     public void addJob(workyJobs job) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("job").document(job.getUsertype() + job.getUsername() + ": " + job.getJobtitle()).set(job);
         return;
     }
+
 
     /* ACCOUNT FREELANCE EXISTENCE VERIFICATION */
     public boolean isFreelancerExistent(String username, String password) {
@@ -301,6 +311,7 @@ public class workyApplication extends Application{
         return false;
     }
 
+
     /* USERNAME FREELANCE TAKEN VERIFICATION */
     public boolean isFreelancerUsernameTaken(String username) {
         for (int i = 0; i < mFreelancer.size(); i++) {
@@ -309,6 +320,7 @@ public class workyApplication extends Application{
         }
         return false;
     }
+
 
     /* USERNAME CLIENT TAKEN VERIFICATION */
     public boolean isClientUsernameTaken(String username) {
@@ -319,10 +331,12 @@ public class workyApplication extends Application{
         return false;
     }
 
+
     /* GET FREELANCER ALL ACCOUNTS */
     public ArrayList<workyFreelancer> getAllFreelancers() {
         return mFreelancer;
     }
+
 
     /* GET FREELANCE ACCOUNT BY USERNAME */
     public workyFreelancer getFreelancerAcctByUsername(String username) {
@@ -334,10 +348,12 @@ public class workyApplication extends Application{
         return mFreelancer.get(index);
     }
 
+
     /* GET CLIENT ALL ACCOUNTS */
     public ArrayList<workyClient> getAllClients() {
         return mClient;
     }
+
 
     /* GET CLIENT ACCOUNT BY USERNAME */
     public workyClient getClientAcctByUsername(String username) {
@@ -349,10 +365,12 @@ public class workyApplication extends Application{
         return mClient.get(index);
     }
 
+
     /* GET JOB ALL ENTRIES */
     public ArrayList<workyJobs> getAllJobs(){
         return mJobs;
     }
+
 
     /* GET JOB ENTRIES BY USERNAME AND USERTYPE */
     public ArrayList<workyJobs> getJobsByUsername(String username, String usertype) {
@@ -365,6 +383,7 @@ public class workyApplication extends Application{
         return outputEntries;
     }
 
+
     /* GET JOB ENTRIES BY JOB CATEGORY */
     public ArrayList<workyJobs> getJobsByField(String jobField) {
         ArrayList<workyJobs> outputEntries = new ArrayList<>();
@@ -374,6 +393,7 @@ public class workyApplication extends Application{
         }
         return outputEntries;
     }
+
 
     /* GET JOB ENTRIES BY JOB TITLE, CATEGORY, USERTYPE */
     public ArrayList<workyJobs> getJobsByTitle(String jobTitle, String jobField,
@@ -387,6 +407,7 @@ public class workyApplication extends Application{
         return outputEntries;
     }
 
+
     /* GET JOB ENTRIES BY MINIMUM SALARY, CATEGORY, USERTYPE */
     public ArrayList<workyJobs> getJobsByMinSalary(float salary, String jobField,
                                                    String userType) {
@@ -398,6 +419,7 @@ public class workyApplication extends Application{
         }
         return outputEntries;
     }
+
 
     /* GET JOB ENTRIES BY MAXIMUM SALARY, CATEGORY, USERTYPE */
     public ArrayList<workyJobs> getJobsByMaxSalary(float salary, String jobField,
@@ -411,6 +433,7 @@ public class workyApplication extends Application{
         return outputEntries;
     }
 
+
     /* GET JOB ENTRIES BY LOCATION, CATEGORY, USERTYPE*/
     public ArrayList<workyJobs> getJobsByLocation(String location, String jobField,
                                                   String userType) {
@@ -422,6 +445,7 @@ public class workyApplication extends Application{
         }
         return outputEntries;
     }
+
 
     /* DELETE JOB ENTRIES */
     public void deleteJob(String username, String usertype, int index) {
@@ -445,6 +469,7 @@ public class workyApplication extends Application{
 
         return;
     }
+
 
     /* EDIT JOB ENTRIES */
     public void editJob(int index, String jobField, String jobTitle, float salary, String location,
@@ -470,6 +495,7 @@ public class workyApplication extends Application{
 
         return;
     }
+
 
     /* EDIT CLIENT ENTRIES */
     public  void editClient(String username, String password, String firstName, String middleName,
@@ -510,6 +536,7 @@ public class workyApplication extends Application{
                     }
                 });
     }
+
 
     /* EDIT FREELANCER ENTRIES */
     public  void editFreelancer(String username, String password, String firstName, String middleName,

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:paddingLeft="5dp"
+        android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:text="Freelancer Dashboard Page"
         android:textSize="20sp"
@@ -30,13 +30,16 @@
             android:id="@+id/imv_f_profpic"
             android:layout_width="121dp"
             android:layout_height="107dp"
+            android:paddingLeft="10dp"
             app:srcCompat="@drawable/freelanceprofile" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <TextView
                 android:id="@+id/txv_f_firstname"
@@ -78,7 +81,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/linearLayout2"
         android:layout_marginTop="15dp"
-        android:paddingLeft="5dp"
+        android:paddingLeft="10dp"
         android:text="What do you want to do?"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -95,11 +98,12 @@
         android:layout_marginEnd="17dp" />
 
     <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/horizontalScrollView"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/lbl_f_selections"
-        android:layout_alignParentStart="true">
+        android:paddingLeft="10dp">
 
         <LinearLayout
             android:id="@+id/linearLayout3"
@@ -163,6 +167,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/horizontalScrollView"
+        android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:text="Previous Transactions:"
         android:textSize="18sp"

@@ -9,7 +9,7 @@
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal">
 
         <ImageView
@@ -32,192 +32,166 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/linearLayout4"
-        android:orientation="vertical"
-        android:paddingTop="10dp">
-
-        <TextView
-            android:id="@+id/txv_f_e_oldcategory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="140dp"
-            android:text="Old Category"
-            android:textAlignment="viewStart"
-            android:textStyle="italic" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/linearLayout4"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/lbl_f_e_jobcategory"
-                android:layout_width="139dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/linearLayout4"
-                android:text="Job Category:"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <Spinner
-                android:id="@+id/spn_f_e_jobcategory"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:entries="@array/jobcategory_array" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/lbl_f_e_jobtitle"
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"
-                android:text="Service Title:"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txv_f_e_oldjobtitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.90"
-                android:paddingLeft="5dp"
-                android:paddingTop="10dp"
-                android:text="Old Job Title"
-                android:textAlignment="viewStart"
-                android:textStyle="italic" />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/txv_f_e_oldsalary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="140dp"
-            android:paddingTop="10dp"
-            android:text="Old Salary"
-            android:textAlignment="viewStart"
-            android:textStyle="italic" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/lbl_f_e_maxpay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.93"
-                android:text="Minimum Pay:"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/edt_f_e_minpay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.85"
-                android:ems="10"
-                android:hint="Minimum Pay"
-                android:inputType="numberDecimal"
-                android:textSize="15sp" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/txv_f_e_oldloc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="140dp"
-            android:paddingTop="10dp"
-            android:text="Old Location"
-            android:textAlignment="viewStart"
-            android:textStyle="italic" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/lbl_f_e_jobloc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Location:"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/edt_f_e_jobloc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.91"
-                android:ems="10"
-                android:hint="Job Location"
-                android:inputType="textPersonName"
-                android:textSize="15sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingTop="5dp"
-            android:weightSum="1">
-
-            <TextView
-                android:id="@+id/lbl_f_e_jobdesc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Job Description:"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txv_f_e_olddesc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingBottom="10dp"
-                android:text="Old Description"
-                android:textAlignment="viewStart"
-                android:textStyle="italic" />
-
-            <EditText
-                android:id="@+id/edt_f_e_jobdesc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="15"
-                android:ems="10"
-                android:hint="Job Description"
-                android:inputType="textMultiLine"
-                android:textSize="15sp" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btn_f_e_editjob"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:text="Edit" />
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:id="@+id/linearLayout5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/linearLayout4"
+            android:orientation="vertical"
+            android:paddingTop="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/lbl_f_e_jobtitle"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:text="Service Title:"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txv_f_e_oldjobtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.90"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="10dp"
+                    android:text="Old Job Title"
+                    android:textAlignment="viewStart"
+                    android:textSize="16sp"
+                    android:textStyle="italic" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/linearLayout4"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/lbl_f_e_jobcategory"
+                    android:layout_width="139dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/linearLayout4"
+                    android:paddingLeft="10dp"
+                    android:text="Job Category:"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/spn_f_e_jobcategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:entries="@array/jobcategory_array"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/lbl_f_e_maxpay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.74"
+                    android:paddingLeft="10dp"
+                    android:text="Minimum Pay:"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/edt_f_e_minpay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.85"
+                    android:ems="10"
+                    android:hint="Minimum Pay"
+                    android:inputType="numberDecimal"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/lbl_f_e_jobloc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:text="Location:"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/edt_f_e_jobloc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.91"
+                    android:ems="10"
+                    android:hint="Job Location"
+                    android:inputType="textPersonName"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/lbl_f_e_jobdesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:text="Job Description:"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/edt_f_e_jobdesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="239dp"
+                    android:ems="10"
+                    android:hint="Job Description"
+                    android:inputType="textMultiLine"
+                    android:paddingLeft="10dp"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_f_e_editjob"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_weight="1"
+                android:text="Edit" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

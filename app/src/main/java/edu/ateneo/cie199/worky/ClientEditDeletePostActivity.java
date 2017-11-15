@@ -33,6 +33,12 @@ public class ClientEditDeletePostActivity extends AppCompatActivity {
         final String cUsername = user.get(workySessionMgt.KEY_USERNAME);
 
 
+        /* SHOW INSTRUCTION */
+        Toast.makeText(ClientEditDeletePostActivity.this,
+                "Short Press to Edit. Long Press to Delete.",
+                Toast.LENGTH_LONG).show();
+
+
         /* LISTVIEW DISPLAY */
         ListView listPostedJobs = (ListView) findViewById(R.id.lsv_c_postedjobs);
         mAdapter = new ArrayAdapter<>(ClientEditDeletePostActivity.this,

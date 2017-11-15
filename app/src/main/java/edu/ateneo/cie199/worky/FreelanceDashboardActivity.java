@@ -50,7 +50,21 @@ public class FreelanceDashboardActivity extends AppCompatActivity {
         txvFeducation.setText(education);
         txvFexpertise.setText(expertise);
 
-        // TODO: View Profile As Seen by Freelancer, Redirect to own Handshaking Page
+
+        /* VIEW PROFILE AS SEEN BY CLIENT */
+        Button btnViewProfile = (Button) findViewById(R.id.btn_f_viewprofile);
+        btnViewProfile.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent launchFreelanceViewAsClientActivity =
+                                new Intent(FreelanceDashboardActivity.this,
+                                        FreelanceViewAsClientActivity.class);
+                        launchFreelanceViewAsClientActivity.putExtra("ORIGIN", "DASHBOARD");
+                        startActivity(launchFreelanceViewAsClientActivity);
+                    }
+                }
+        );
 
         /* LAUNCH FIND FREELANCERS */
         ImageView imvbtnFind = (ImageView) findViewById(R.id.imvbtn_f_find);
@@ -114,8 +128,10 @@ public class FreelanceDashboardActivity extends AppCompatActivity {
             }
         });
 
+        /* Display ListView of Previous Transactions */
         ListView listJobs = (ListView) findViewById(R.id.lsv_f_joborders);
-        ArrayList<workyLinkJob> linkJobs = app.getLinkedJobsByTypeFreelancer(user.get(workySessionMgt.KEY_USERNAME));
+        ArrayList<workyLinkJob> linkJobs =
+                app.getLinkedJobsByTypeFreelancer(user.get(workySessionMgt.KEY_USERNAME));
         ArrayList<String> stringOutput = new ArrayList<>();
         for (int i = 0; i < linkJobs.size(); i++) {
             stringOutput.add("Your Job: " + linkJobs.get(i).getJob().getJobtitle() + "\n"
@@ -123,23 +139,9 @@ public class FreelanceDashboardActivity extends AppCompatActivity {
                     + "Email: " + linkJobs.get(i).getClient().getEmail() + "\n"
                     + "Contact: " + linkJobs.get(i).getClient().getMobile());
         }
-        mAdapter = new ArrayAdapter<String>(FreelanceDashboardActivity.this, android.R.layout.simple_list_item_1, stringOutput);
+        mAdapter = new ArrayAdapter<String>
+                (FreelanceDashboardActivity.this, android.R.layout.simple_list_item_1, stringOutput);
         listJobs.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
-
-        Button btnViewProfile = (Button) findViewById(R.id.btn_f_viewprofile);
-        btnViewProfile.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent launchFreelanceViewAsClientActivity = new Intent(FreelanceDashboardActivity.this,
-                                FreelanceViewAsClientActivity.class);
-                        launchFreelanceViewAsClientActivity.putExtra("ORIGIN", "DASHBOARD");
-                        startActivity(launchFreelanceViewAsClientActivity);
-                    }
-                }
-        );
-
-        // TODO: Display ListView of Previous Transactions
     }
 }

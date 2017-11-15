@@ -40,20 +40,35 @@ public class FreelanceEditPostFieldsActivity extends AppCompatActivity {
         final workyApplication app = (workyApplication) getApplication();
 
 
+        /* DATA USER FIELDS */
+        final Spinner spnJobcategory = (Spinner) findViewById(R.id.spn_f_e_jobcategory);
+        final EditText edtMinpay = (EditText) findViewById(R.id.edt_f_e_minpay);
+        final EditText edtJobloc = (EditText) findViewById(R.id.edt_f_e_jobloc);
+        final EditText edtJobdesc = (EditText) findViewById(R.id.edt_f_e_jobdesc);
+
+
         /* SET INITIAL HINT */
         final workyJobs initialData = app.getJobsByUsername(fUsername, "Freelancer").get(position);
-        TextView txvOldCategory = (TextView) findViewById(R.id.txv_f_e_oldcategory);
         TextView txvOldJobtitle = (TextView) findViewById(R.id.txv_f_e_oldjobtitle);
-        TextView txvOldMaxpay = (TextView) findViewById(R.id.txv_f_e_oldsalary);
-        TextView txvOldLocation = (TextView) findViewById(R.id.txv_f_e_oldloc);
-        TextView txvOldDesc = (TextView) findViewById(R.id.txv_f_e_olddesc);
 
-        txvOldCategory.setText("Old Category: " + initialData.getJobfield());
+            /* CONVERT JOB FIELD TO INT */
+            String initialJobField = initialData.getJobfield();
+
+            int initialJobFieldPos = 0;
+            String[] LOOKUP_JOBCATEGORY = { "Agriculture", "Arts", "Clerical", "Education",
+                    "Engineering", "Finance", "Health", "Hospitality",
+                    "IT", "Legal", "Manufacturing", "Transport", "Others"};
+
+            for (int i=0; i<13; i++) {
+                if (initialJobField.equals(LOOKUP_JOBCATEGORY[i]))
+                    initialJobFieldPos = i;
+            }
+
         txvOldJobtitle.setText(initialData.getJobtitle());
-        txvOldMaxpay.setText("Old Max Pay: " + String.valueOf(initialData.getSalary()));
-        txvOldLocation.setText("Old Location: " + initialData.getLocation());
-        txvOldDesc.setText("Old Description: " + initialData.getDescription());
-
+        spnJobcategory.setSelection(initialJobFieldPos);
+        edtMinpay.setText(String.valueOf(initialData.getSalary()));
+        edtJobloc.setText(initialData.getLocation());
+        edtJobdesc.setText(initialData.getDescription());
 
 
         Button btnEditJob = (Button) findViewById(R.id.btn_f_e_editjob);
@@ -68,13 +83,6 @@ public class FreelanceEditPostFieldsActivity extends AppCompatActivity {
                 String[] LOOKUP_JOBCATEGORY = { "Agriculture", "Arts", "Clerical", "Education",
                         "Engineering", "Finance", "Health", "Hospitality",
                         "IT", "Legal", "Manufacturing", "Transport", "Others"};
-
-
-                /* GET DATA FROM USER FIELDS */
-                Spinner spnJobcategory = (Spinner) findViewById(R.id.spn_f_e_jobcategory);
-                EditText edtMinpay = (EditText) findViewById(R.id.edt_f_e_minpay);
-                EditText edtJobloc = (EditText) findViewById(R.id.edt_f_e_jobloc);
-                EditText edtJobdesc = (EditText) findViewById(R.id.edt_f_e_jobdesc);
 
 
                 /* EXTRACT DATA FROM USER FIELDS */

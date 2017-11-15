@@ -44,20 +44,35 @@ public class ClientEditPostFieldsActivity extends AppCompatActivity {
         final workyApplication app = (workyApplication) getApplication();
 
 
+        /* DATA USER FIELDS */
+        final Spinner spnJobcategory = (Spinner) findViewById(R.id.spn_c_e_jobcategory);
+        final EditText edtMaxpay = (EditText) findViewById(R.id.edt_c_e_maxpay);
+        final EditText edtJobloc = (EditText) findViewById(R.id.edt_c_e_jobloc);
+        final EditText edtJobdesc = (EditText) findViewById(R.id.edt_c_e_jobdesc);
+
         /* SET INITIAL HINT */
         final workyJobs initialData = app.getJobsByUsername(cUsername, "Client").get(position);
-        TextView txvOldCategory = (TextView) findViewById(R.id.txv_c_e_oldcategory);
-        TextView txvOldJobtitle = (TextView) findViewById(R.id.txv_c_e_oldjobtitle);
-        TextView txvOldMaxpay = (TextView) findViewById(R.id.txv_c_e_oldsalary);
-        TextView txvOldLocation = (TextView) findViewById(R.id.txv_c_e_oldloc);
-        TextView txvOldDesc = (TextView) findViewById(R.id.txv_c_e_olddesc);
+        TextView txvCJobTitle = (TextView) findViewById(R.id.txv_c_e_oldjobtitle);
 
-        txvOldCategory.setText("Old Category: " + initialData.getJobfield());
-        txvOldJobtitle.setText(initialData.getJobtitle());
-        txvOldMaxpay.setText("Old Max Pay: " + String.valueOf(initialData.getSalary()));
-        txvOldLocation.setText("Old Location: " + initialData.getLocation());
-        txvOldDesc.setText("Old Description: " + initialData.getDescription());
+            /* CONVERT JOB FIELD TO INT */
+            String initialJobField = initialData.getJobfield();
 
+            int initialJobFieldPos = 0;
+            String[] LOOKUP_JOBCATEGORY = { "Agriculture", "Arts", "Clerical", "Education",
+                    "Engineering", "Finance", "Health", "Hospitality",
+                    "IT", "Legal", "Manufacturing", "Transport", "Others"};
+
+            for (int i=0; i<13; i++) {
+                if (initialJobField.equals(LOOKUP_JOBCATEGORY[i]))
+                    initialJobFieldPos = i;
+            }
+
+
+        txvCJobTitle.setText(initialData.getJobtitle());
+        spnJobcategory.setSelection(initialJobFieldPos);
+        edtMaxpay.setText(String.valueOf(initialData.getSalary()));
+        edtJobloc.setText(initialData.getLocation());
+        edtJobdesc.setText(initialData.getDescription());
 
 
         Button btnEditJob = (Button) findViewById(R.id.btn_c_e_editjob);
@@ -72,13 +87,6 @@ public class ClientEditPostFieldsActivity extends AppCompatActivity {
                 String[] LOOKUP_JOBCATEGORY = { "Agriculture", "Arts", "Clerical", "Education",
                         "Engineering", "Finance", "Health", "Hospitality",
                         "IT", "Legal", "Manufacturing", "Transport", "Others"};
-
-
-                /* GET DATA FROM USER FIELDS */
-                Spinner spnJobcategory = (Spinner) findViewById(R.id.spn_c_e_jobcategory);
-                EditText edtMaxpay = (EditText) findViewById(R.id.edt_c_e_maxpay);
-                EditText edtJobloc = (EditText) findViewById(R.id.edt_c_e_jobloc);
-                EditText edtJobdesc = (EditText) findViewById(R.id.edt_c_e_jobdesc);
 
 
                 /* EXTRACT DATA FROM USER FIELDS */

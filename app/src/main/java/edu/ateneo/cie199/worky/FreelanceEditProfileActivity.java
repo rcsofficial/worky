@@ -30,8 +30,59 @@ public class FreelanceEditProfileActivity extends AppCompatActivity {
 
         /* SET USERNAME */
         TextView txvCusername = (TextView) findViewById(R.id.txv_f_e_username);
-        txvCusername.setText(fUsername + " (Usernames are Permanent)");
+        txvCusername.setText(fUsername);
 
+        /* APPLICATION OBJECT */
+        final workyApplication app = (workyApplication) getApplication();
+        workyFreelancer freelancerAcct = app.getFreelancerAcctByUsername(fUsername);
+        String initialGender = freelancerAcct.getGender();
+        String initialExpertise = freelancerAcct.getExpertise();
+        
+        /* GET EDIT TEXT AND SPIN FIELDS CONTENT */
+        final EditText edtFpassword = (EditText) findViewById(R.id.edt_f_e_password);
+        final EditText edtFfirstname = (EditText) findViewById(R.id.edt_f_e_firstname);
+        final EditText edtFmidname = (EditText) findViewById(R.id.edt_f_e_midname);
+        final EditText edtFlastname = (EditText) findViewById(R.id.edt_f_e_lastname);
+        final EditText edtFage = (EditText) findViewById(R.id.edt_f_e_age);
+        final Spinner spnFgender = (Spinner) findViewById(R.id.spn_f_e_gender);
+        final EditText edtFemail = (EditText) findViewById(R.id.edt_f_e_email);
+        final EditText edtFmobilenum = (EditText) findViewById(R.id.edt_f_e_mobilenum);
+        final EditText edtFprofile = (EditText) findViewById(R.id.edt_f_e_profile);
+        final EditText edtFeduc = (EditText) findViewById(R.id.edt_f_e_educattainment);
+        final Spinner spnFexpertise = (Spinner) findViewById(R.id.spn_f_e_expertise);
+        final EditText edtFcourse = (EditText) findViewById(R.id.edt_f_e_course);
+        final EditText edtFlocation = (EditText) findViewById(R.id.edt_f_e_location);
+        
+        /* CONVERT GENDER AND FIELD TO INT */
+        int initialGenderPos = 0;
+        int initialExpertisePos = 0;
+        String[] LOOKUP_GENDER = { "Male", "Female", "Lesbian", "Gay", "Bisexual",
+                "Transsexual", "Queer", "Intersex", "Asexual"};
+        String[] LOOKUP_FIELD = { "Agriculture", "Arts", "Clerical", "Education",
+                "Engineering", "Finance", "Health", "Hospitality",
+                "IT", "Legal", "Manufacturing", "Transport", "Others"};
+        for (int i=0; i<9; i++) {
+            if (initialGender.equals(LOOKUP_GENDER[i]))
+                initialGenderPos = i;
+        }
+        for (int i=0; i<13; i++) {
+            if (initialExpertise.equals(LOOKUP_FIELD[i]))
+                initialExpertisePos = i;
+        }
+
+        edtFpassword.setText(freelancerAcct.getPassword());
+        edtFfirstname.setText(freelancerAcct.getFirstname());
+        edtFmidname.setText(freelancerAcct.getMiddlename());
+        edtFlastname.setText(freelancerAcct.getLastname());
+        edtFage.setText(String.valueOf(freelancerAcct.getAge()));
+        spnFgender.setSelection(initialGenderPos);
+        edtFemail.setText(freelancerAcct.getEmail());
+        edtFmobilenum.setText(String.valueOf(freelancerAcct.getMobile()));
+        edtFprofile.setText(freelancerAcct.getProfile());
+        edtFeduc.setText(freelancerAcct.getEducation());
+        spnFexpertise.setSelection(initialExpertisePos);
+        edtFcourse.setText(freelancerAcct.getCourse());
+        edtFlocation.setText(freelancerAcct.getLocation());
 
         Button btnFinish = (Button) findViewById(R.id.btn_f_e_editprofile);
         btnFinish.setOnClickListener(new View.OnClickListener() {
@@ -39,26 +90,7 @@ public class FreelanceEditProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent launchLoginActivity = new Intent(FreelanceEditProfileActivity.this,
                         LoginActivity.class);
-
-                /* APPLICATION OBJECT */
-                final workyApplication app = (workyApplication) getApplication();
-
-
-                /* GET EDIT TEXT AND SPIN FIELDS CONTENT */
-                EditText edtFpassword = (EditText) findViewById(R.id.edt_f_e_password);
-                EditText edtFfirstname = (EditText) findViewById(R.id.edt_f_e_firstname);
-                EditText edtFmidname = (EditText) findViewById(R.id.edt_f_e_midname);
-                EditText edtFlastname = (EditText) findViewById(R.id.edt_f_e_lastname);
-                EditText edtFage = (EditText) findViewById(R.id.edt_f_e_age);
-                Spinner spnFgender = (Spinner) findViewById(R.id.spn_f_e_gender);
-                EditText edtFemail = (EditText) findViewById(R.id.edt_f_e_email);
-                EditText edtFmobilenum = (EditText) findViewById(R.id.edt_f_e_mobilenum);
-                EditText edtFprofile = (EditText) findViewById(R.id.edt_f_e_profile);
-                EditText edtFeduc = (EditText) findViewById(R.id.edt_f_e_educattainment);
-                Spinner spnFexpertise = (Spinner) findViewById(R.id.spn_f_e_expertise);
-                EditText edtFcourse = (EditText) findViewById(R.id.edt_f_e_course);
-                EditText edtFlocation = (EditText) findViewById(R.id.edt_f_e_location);
-
+                                
 
                 /* LOOKUP SPINNER TRANSLATION TABLE */
                 String[] LOOKUP_GENDER = { "Male", "Female", "Lesbian", "Gay", "Bisexual",

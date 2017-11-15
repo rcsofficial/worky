@@ -9,8 +9,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.firebase.FirebaseApp;
-
 public class LoginActivity extends AppCompatActivity {
     /* LOGIN SESSION MANAGEMENT */
     workySessionMgt session;
@@ -20,17 +18,12 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Access a Cloud Firestore instance from your Activity
-        FirebaseApp.initializeApp(this);
-
         /* APPLICATION OBJECT */
         final workyApplication app = (workyApplication) getApplication();
 
+
         /* INITIALIZE APPLICATION DATABASE */
         app.initializeApp();
-
-
-        // TODO: Maintain Signin after App is Closed
 
 
         /* LOGIN SESSION MANAGEMENT INITIALIZATION */
@@ -67,9 +60,6 @@ public class LoginActivity extends AppCompatActivity {
 
                             /* CREATE SESSION */
                             session.createLoginSession(username, password, "Freelancer");
-
-                            launchFreelanceDashboardActivity.putExtra("F_USERNAME", username);
-                            launchFreelanceDashboardActivity.putExtra("F_PASSWORD", password);
                             startActivity(launchFreelanceDashboardActivity);
                             finish();
                             return;
@@ -88,9 +78,6 @@ public class LoginActivity extends AppCompatActivity {
 
                             /* CREATE SESSION */
                             session.createLoginSession(username, password, "Client");
-
-                            launchClientDashboardActivity.putExtra("F_USERNAME", username);
-                            launchClientDashboardActivity.putExtra("F_PASSWORD", password);
                             startActivity(launchClientDashboardActivity);
                             finish();
                             return;
@@ -105,8 +92,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
-        // NOTE: You can signup similar usernames as long as usertypes are different.
 
         /* REDIRECTION TO SIGN UP PAGES */
         Button btnSignup = (Button) findViewById(R.id.btn_signup);

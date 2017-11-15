@@ -35,7 +35,61 @@ public class ClientEditProfileActivity extends AppCompatActivity {
 
         /* SET USERNAME */
         TextView txvCusername = (TextView) findViewById(R.id.txv_c_e_username);
-        txvCusername.setText(cUsername + " (Usernames are Permanent)");
+        txvCusername.setText(cUsername);
+
+
+        /* APPLICATION OBJECT */
+        final workyApplication app = (workyApplication) getApplication();
+        workyClient clientAcct = app.getClientAcctByUsername(cUsername);
+        String initialGender = clientAcct.getGender();
+        String initialField = clientAcct.getField();
+
+
+        /* DATA FIELDS */
+        final EditText edtCpassword = (EditText) findViewById(R.id.edt_c_e_password);
+        final EditText edtCfirstname = (EditText) findViewById(R.id.edt_c_e_firstname);
+        final EditText edtCmidname = (EditText) findViewById(R.id.edt_c_e_midname);
+        final EditText edtClastname = (EditText) findViewById(R.id.edt_c_e_lastname);
+        final EditText edtCage = (EditText) findViewById(R.id.edt_c_e_age);
+        final Spinner spnCgender = (Spinner) findViewById(R.id.spn_c_e_gender);
+        final EditText edtCemail = (EditText) findViewById(R.id.edt_c_e_email);
+        final EditText edtCmobilenum = (EditText) findViewById(R.id.edt_c_e_mobilenum);
+        final EditText edtCprofile = (EditText) findViewById(R.id.edt_c_e_profile);
+        final EditText edtCcompany = (EditText) findViewById(R.id.edt_c_e_company);
+        final Spinner spnCfield = (Spinner) findViewById(R.id.spn_c_e_field);
+        final EditText edtCspecialization = (EditText) findViewById(R.id.edt_c_e_specialization);
+        final EditText edtClocation = (EditText) findViewById(R.id.edt_c_e_location);
+
+            /* CONVERT GENDER AND FIELD TO INT */
+            int initialGenderPos = 0;
+            int initialFieldPos = 0;
+            String[] LOOKUP_GENDER = { "Male", "Female", "Lesbian", "Gay", "Bisexual",
+                    "Transsexual", "Queer", "Intersex", "Asexual"};
+            String[] LOOKUP_FIELD = { "Agriculture", "Arts", "Clerical", "Education",
+                    "Engineering", "Finance", "Health", "Hospitality",
+                    "IT", "Legal", "Manufacturing", "Transport", "Others"};
+            for (int i=0; i<9; i++) {
+                if (initialGender.equals(LOOKUP_GENDER[i]))
+                    initialGenderPos = i;
+            }
+            for (int i=0; i<13; i++) {
+                if (initialField.equals(LOOKUP_FIELD[i]))
+                    initialFieldPos = i;
+            }
+
+        edtCpassword.setText(clientAcct.getPassword());
+        edtCfirstname.setText(clientAcct.getFirstname());
+        edtCmidname.setText(clientAcct.getMiddlename());
+        edtClastname.setText(clientAcct.getLastname());
+        edtCage.setText(String.valueOf(clientAcct.getAge()));
+        spnCgender.setSelection(initialGenderPos);
+        edtCemail.setText(clientAcct.getEmail());
+        edtCmobilenum.setText(String.valueOf(clientAcct.getMobile()));
+        edtCprofile.setText(clientAcct.getProfile());
+        edtCcompany.setText(clientAcct.getCompany());
+        spnCfield.setSelection(initialFieldPos);
+        edtCspecialization.setText(clientAcct.getSpecialization());
+        edtClocation.setText(clientAcct.getLocation());
 
 
         Button btnFinish = (Button) findViewById(R.id.btn_c_e_editprofile);
@@ -44,25 +98,6 @@ public class ClientEditProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent launchLoginActivity = new Intent(ClientEditProfileActivity.this,
                         LoginActivity.class);
-
-                /* APPLICATION OBJECT */
-                final workyApplication app = (workyApplication) getApplication();
-
-
-                /* GET EDIT TEXT AND SPIN FIELDS CONTENT */
-                EditText edtCpassword = (EditText) findViewById(R.id.edt_c_e_password);
-                EditText edtCfirstname = (EditText) findViewById(R.id.edt_c_e_firstname);
-                EditText edtCmidname = (EditText) findViewById(R.id.edt_c_e_midname);
-                EditText edtClastname = (EditText) findViewById(R.id.edt_c_e_lastname);
-                EditText edtCage = (EditText) findViewById(R.id.edt_c_e_age);
-                Spinner spnCgender = (Spinner) findViewById(R.id.spn_c_e_gender);
-                EditText edtCemail = (EditText) findViewById(R.id.edt_c_e_email);
-                EditText edtCmobilenum = (EditText) findViewById(R.id.edt_c_e_mobilenum);
-                EditText edtCprofile = (EditText) findViewById(R.id.edt_c_e_profile);
-                EditText edtCcompany = (EditText) findViewById(R.id.edt_c_e_company);
-                Spinner spnCfield = (Spinner) findViewById(R.id.spn_c_e_field);
-                EditText edtCspecialization = (EditText) findViewById(R.id.edt_c_e_specialization);
-                EditText edtClocation = (EditText) findViewById(R.id.edt_c_e_location);
 
 
                 /* LOOKUP SPINNER TRANSLATION TABLE */

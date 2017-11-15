@@ -33,6 +33,12 @@ public class FreelanceEditDeletePostActivity extends AppCompatActivity {
         final String fUsername = user.get(workySessionMgt.KEY_USERNAME);
 
 
+        /* SHOW INSTRUCTION */
+        Toast.makeText(FreelanceEditDeletePostActivity.this,
+                "Short Press to Edit. Long Press to Delete.",
+                Toast.LENGTH_LONG).show();
+
+
         /* LISTVIEW DISPLAY */
         ListView listPostedJobs = (ListView) findViewById(R.id.lsv_f_postedjobs);
         mAdapter = new ArrayAdapter<>(FreelanceEditDeletePostActivity.this,

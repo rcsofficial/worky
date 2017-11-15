@@ -9,7 +9,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -41,7 +43,6 @@ public class ClientDashboardActivity extends AppCompatActivity {
         String company = app.getClientAcctByUsername(cUsername).getCompany();
         String field = app.getClientAcctByUsername(cUsername).getField();
 
-
         /* SET DASHBOARD DATA */
         TextView txvCfirstname = (TextView) findViewById(R.id.txv_c_firstname);
         TextView txvCcompany = (TextView) findViewById(R.id.txv_c_company);
@@ -50,7 +51,21 @@ public class ClientDashboardActivity extends AppCompatActivity {
         txvCcompany.setText(company);
         txvCfield.setText(field);
 
-        // TODO: View Profile As Seen by Freelancer, Redirect to own Handshaking Page
+
+        /* VIEW PROFILE AS SEEN BY FREELANCER */
+        Button btnViewProfile = (Button) findViewById(R.id.btn_c_viewprofile);
+        btnViewProfile.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent launchClientViewAsFreelanceActivity =
+                                new Intent(ClientDashboardActivity.this,
+                                ClientViewAsFreelancerActivity.class);
+                        launchClientViewAsFreelanceActivity.putExtra("ORIGIN", "DASHBOARD");
+                        startActivity(launchClientViewAsFreelanceActivity);
+                    }
+                }
+        );
 
         /* LAUNCH FIND SERVICES OFFERED */
         ImageView imvbtnFind = (ImageView) findViewById(R.id.imvbtn_c_find);
@@ -114,33 +129,22 @@ public class ClientDashboardActivity extends AppCompatActivity {
             }
         });
 
-        // TODO: Display ListView of Previous Transactions
 
+        /* Display ListView of Previous Transactions */
         ListView listJobs = (ListView) findViewById(R.id.lsv_c_joborders);
-        ArrayList<workyLinkJob> linkJobs = app.getLinkedJobsByTypeClient(user.get(workySessionMgt.KEY_USERNAME));
+        ArrayList<workyLinkJob> linkJobs =
+                app.getLinkedJobsByTypeClient(user.get(workySessionMgt.KEY_USERNAME));
         ArrayList<String> stringOutput = new ArrayList<>();
         for (int i = 0; i < linkJobs.size(); i++) {
             stringOutput.add("Your Job: " + linkJobs.get(i).getJob().getJobtitle() + "\n"
-                                + "Freelancer Applied: " + linkJobs.get(i).getFreelancer().getUsername() + "\n"
+                                + "Freelancer Applied: "
+                                + linkJobs.get(i).getFreelancer().getUsername() + "\n"
                                 + "Email: " + linkJobs.get(i).getFreelancer().getEmail() + "\n"
                                 + "Contact: " + linkJobs.get(i).getFreelancer().getMobile());
         }
-        mAdapter = new ArrayAdapter<String>(ClientDashboardActivity.this, android.R.layout.simple_list_item_1, stringOutput);
+        mAdapter = new ArrayAdapter<String>
+                (ClientDashboardActivity.this, android.R.layout.simple_list_item_1, stringOutput);
         listJobs.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
-
-        Button btnViewProfile = (Button) findViewById(R.id.btn_c_viewprofile);
-        btnViewProfile.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent launchClientViewAsFreelanceActivity = new Intent(ClientDashboardActivity.this,
-                                ClientViewAsFreelancerActivity.class);
-                        launchClientViewAsFreelanceActivity.putExtra("ORIGIN", "DASHBOARD");
-                        startActivity(launchClientViewAsFreelanceActivity);
-                    }
-                }
-        );
-
     }
 }

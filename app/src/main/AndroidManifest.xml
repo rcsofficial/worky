@@ -36,7 +36,9 @@
         <activity android:name=".ClientEditDeletePostActivity" />
         <activity android:name=".FreelanceEditDeletePostActivity" />
         <activity android:name=".ClientEditPostFieldsActivity" />
-        <activity android:name=".FreelanceEditPostFieldsActivity"></activity>
+        <activity android:name=".FreelanceEditPostFieldsActivity" />
+        <activity android:name=".FreelanceViewAsClientActivity" />
+        <activity android:name=".ClientViewAsFreelancerActivity"></activity>
     </application>
 
 </manifest>

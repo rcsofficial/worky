@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.ateneo.cie199.worky.FreelanceViewAsClientActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/imageView5"
+        android:layout_marginTop="67dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txv_f_v_age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txv_c_v_fullname"
+            android:layout_toEndOf="@+id/imageView5"
+            android:text="Age"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txv_f_v_gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView7"
+            android:layout_toEndOf="@+id/imageView5"
+            android:text="Gender"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txv_f_v_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/txv_c_v_specialization"
+            android:layout_below="@+id/txv_c_v_specialization"
+            android:text="Location"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txv_f_v_mobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView10"
+            android:layout_below="@+id/textView10"
+            android:text="Mobile"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txv_f_v_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView5"
+            android:layout_toEndOf="@+id/imageView5"
+            android:text="Email"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txv_f_v_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView5"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@+id/imageView5"
+            android:text="Job Field"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txv_f_v_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView5"
+            android:layout_toEndOf="@+id/imageView5"
+            android:text="Job Title"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txv_f_v_salary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView5"
+            android:layout_toEndOf="@+id/imageView5"
+            android:text="Salary"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txv_f_v_job_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView5"
+            android:layout_toEndOf="@+id/imageView5"
+            android:text="Job Location"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txv_f_v_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView5"
+            android:layout_toEndOf="@+id/imageView5"
+            android:text="Job Description"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btn_f_v_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hire" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="match_parent"
+        android:layout_height="107dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="42dp"
+        android:layout_toStartOf="@+id/linearLayout7"
+        app:srcCompat="@drawable/freelanceprofile" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout7"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txv_f_v_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/imageView5"
+            android:paddingLeft="5dp"
+            android:paddingTop="10dp"
+            android:text="Username"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txv_f_v_fullname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txv_c_v_username"
+            android:layout_toEndOf="@+id/imageView5"
+            android:layout_weight="1"
+            android:text="Full Name"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txv_f_v_expertise"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/txv_c_v_company"
+            android:layout_below="@+id/txv_c_v_company"
+            android:text="Expertise" />
+
+        <TextView
+            android:id="@+id/txv_f_v_education"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView11"
+            android:layout_below="@+id/textView11"
+            android:text="Educational attainment" />
+
+        <TextView
+            android:id="@+id/txv_f_v_course"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/txv_c_v_field"
+            android:layout_below="@+id/txv_c_v_field"
+            android:text="Course" />
+
+        <TextView
+            android:id="@+id/txv_f_v_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linearLayout7"
+            android:layout_toEndOf="@+id/imageView5"
+            android:text="profile" />
+
+    </LinearLayout>
+
+</RelativeLayout>

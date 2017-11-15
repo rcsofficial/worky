@@ -33,7 +33,7 @@ public class ClientFindActivity extends AppCompatActivity {
 
 
                 /* DECLARATION OF ARRAY TO BE OUTPUTTED */
-                ArrayList<workyJobs> outputArray;
+                final ArrayList<workyJobs> outputArray;
 
 
                 /* GET SEARCH PARAMETERS FROM USER */
@@ -112,6 +112,15 @@ public class ClientFindActivity extends AppCompatActivity {
                             new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+
+                                    Intent launchFreelanceViewAsClientActivity = new Intent(ClientFindActivity.this,
+                                            FreelanceViewAsClientActivity.class);
+                                    launchFreelanceViewAsClientActivity.putExtra("ORIGIN", "FIND");
+                                    launchFreelanceViewAsClientActivity.putExtra("F_ACCOUNTTYPE", outputArray.get((int) id).getUsertype());
+                                    launchFreelanceViewAsClientActivity.putExtra("F_USERNAME", outputArray.get((int) id).getUsername());
+                                    launchFreelanceViewAsClientActivity.putExtra("F_TITLE", outputArray.get((int) id).getJobtitle());
+                                    startActivity(launchFreelanceViewAsClientActivity);
+
                                     // TODO: Intent to the Profile Handshaking Page of Freelancer when Clicked
                                     // TODO: (Freelancer must accept before proceeding) and Review Feature
                                     // TODO: After Handshaking: Automatic put job experience / order to both freelance and client profiles

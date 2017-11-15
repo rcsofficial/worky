@@ -4,16 +4,21 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FreelanceDashboardActivity extends AppCompatActivity {
 
     /* LOGIN SESSION MANAGEMENT */
     workySessionMgt session;
+
+    private ArrayAdapter<String> mAdapter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +113,33 @@ public class FreelanceDashboardActivity extends AppCompatActivity {
                 startActivity(launchFreelanceEditProfileActivity);
             }
         });
+
+        ListView listJobs = (ListView) findViewById(R.id.lsv_f_joborders);
+        ArrayList<workyLinkJob> linkJobs = app.getLinkedJobsByTypeFreelancer(user.get(workySessionMgt.KEY_USERNAME));
+        ArrayList<String> stringOutput = new ArrayList<>();
+        for (int i = 0; i < linkJobs.size(); i++) {
+            stringOutput.add("Your Job: " + linkJobs.get(i).getJob().getJobtitle() + "\n"
+                    + "Client Applied: " + linkJobs.get(i).getClient().getUsername() + "\n"
+                    + "Email: " + linkJobs.get(i).getClient().getEmail() + "\n"
+                    + "Contact: " + linkJobs.get(i).getClient().getMobile());
+        }
+        mAdapter = new ArrayAdapter<String>(FreelanceDashboardActivity.this, android.R.layout.simple_list_item_1, stringOutput);
+        listJobs.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
+
+        Button btnViewProfile = (Button) findViewById(R.id.btn_f_viewprofile);
+        btnViewProfile.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent launchFreelanceViewAsClientActivity = new Intent(FreelanceDashboardActivity.this,
+                                FreelanceViewAsClientActivity.class);
+                        launchFreelanceViewAsClientActivity.putExtra("ORIGIN", "DASHBOARD");
+                        startActivity(launchFreelanceViewAsClientActivity);
+                    }
+                }
+        );
+
         // TODO: Display ListView of Previous Transactions
     }
 }

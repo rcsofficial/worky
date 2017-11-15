@@ -1,5 +1,6 @@
 package edu.ateneo.cie199.worky;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -32,7 +33,7 @@ public class FreelanceFindActivity extends AppCompatActivity {
 
 
                 /* DECLARATION OF ARRAY TO BE OUTPUTTED */
-                ArrayList<workyJobs> outputArray;
+                final ArrayList<workyJobs> outputArray;
 
 
                 /* GET SEARCH PARAMETERS FROM USER */
@@ -110,6 +111,16 @@ public class FreelanceFindActivity extends AppCompatActivity {
                             new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+
+                                    Intent launchClientViewAsFreelancerActivity = new Intent(FreelanceFindActivity.this,
+                                            ClientViewAsFreelancerActivity.class);
+                                    launchClientViewAsFreelancerActivity.putExtra("ORIGIN", "FIND");
+                                    launchClientViewAsFreelancerActivity.putExtra("C_ACCOUNTTYPE", outputArray.get((int) id).getUsertype());
+                                    launchClientViewAsFreelancerActivity.putExtra("C_USERNAME", outputArray.get((int) id).getUsername());
+                                    launchClientViewAsFreelancerActivity.putExtra("C_TITLE", outputArray.get((int) id).getJobtitle());
+                                    startActivity(launchClientViewAsFreelancerActivity);
+
+
                                     // TODO: Intent to the Profile Handshaking Page of Freelancer when Clicked
                                     // TODO: (Freelancer must accept before proceeding) and Review Feature
                                     // TODO: After Handshaking: Automatic put job experience / order to both freelance and client profiles

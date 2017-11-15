@@ -20,6 +20,7 @@ public class workyApplication extends Application{
     private ArrayList<workyFreelancer> mFreelancer = new ArrayList<>();
     private ArrayList<workyClient> mClient = new ArrayList<>();
     private ArrayList<workyJobs> mJobs = new ArrayList<>();
+    private ArrayList<workyLinkJob> mLinkJob = new ArrayList<>();
     private Boolean initialized = false;
 
     public void initAll() {
@@ -139,6 +140,40 @@ public class workyApplication extends Application{
                 });
     }
 
+    public void linkJob(String jobUserType, String clientUsername, String freelancerUsername,
+                                            workyJobs job) {
+        mLinkJob.add( new workyLinkJob(jobUserType, getClientAcctByUsername(clientUsername),
+                            getFreelancerAcctByUsername(freelancerUsername),
+                            job) );
+        Log.d(TAG, "ADDED LINKED JOB");
+        Log.d(TAG, "Type: " + mLinkJob.get(mLinkJob.size()-1).getJobUsertype());
+        Log.d(TAG, "Client: " + mLinkJob.get(mLinkJob.size()-1).getClient().getUsername());
+        Log.d(TAG, "Freelancer: " + mLinkJob.get(mLinkJob.size()-1).getFreelancer().getUsername());
+        Log.d(TAG, "Job Title: " + mLinkJob.get(mLinkJob.size()-1).getJob().getJobtitle());
+        return;
+    }
+
+    public ArrayList<workyLinkJob> getLinkedJobsByTypeClient(String clientUsername) {
+        ArrayList<workyLinkJob> linkJobs = new ArrayList<>();
+        for (int i = 0; i < mLinkJob.size(); i++) {
+            if ( mLinkJob.get(i).getJobUsertype().equals("Client") &&
+                   mLinkJob.get(i).getClient().getUsername().equals(clientUsername) )
+                linkJobs.add(mLinkJob.get(i));
+        }
+        return linkJobs;
+    }
+
+    public ArrayList<workyLinkJob> getLinkedJobsByTypeFreelancer(String freelancerUsername) {
+        ArrayList<workyLinkJob> linkJobs = new ArrayList<>();
+        for (int i = 0; i < mLinkJob.size(); i++) {
+            if ( mLinkJob.get(i).getJobUsertype().equals("Freelancer") &&
+                    mLinkJob.get(i).getFreelancer().getUsername().equals(freelancerUsername) )
+                linkJobs.add(mLinkJob.get(i));
+        }
+        return linkJobs;
+    }
+
+
     /* GET CLIENT INDEX BY USERNAME */
     public int getClientIndexByUsername(String username) {
         for (int i = 0; i < mClient.size(); i++) {
@@ -147,10 +182,21 @@ public class workyApplication extends Application{
         }
         return -1;
     }
+    // TODO
+    /* GET SPECIFIC JOB BY TITLE, USERNAME AND TITLE */
+    public workyJobs getJobByTypeUsernameTitle(String type, String username, String title) {
+        for (int i = 0; i < mJobs.size(); i++) {
+            if ( mJobs.get(i).getUsertype().equals(type) &&
+                    mJobs.get(i).getUsername().equals(username) &&
+                    mJobs.get(i).getJobtitle().equals(title) )
+                return mJobs.get(i);
+        }
+        return null;
+    }
 
-    /* GET FREELANCER INDEX BY USERNAME */
+    /* GET JOB INDEX BY TYPE, USERNAME AND TITLE */
     public int getJobIndexByTypeUsernameTitle(String type, String username, String title) {
-        for (int i = 0; i < mFreelancer.size(); i++) {
+        for (int i = 0; i < mJobs.size(); i++) {
             if ( mJobs.get(i).getUsertype().equals(type) &&
                  mJobs.get(i).getUsername().equals(username) &&
                  mJobs.get(i).getJobtitle().equals(title) )
@@ -159,7 +205,7 @@ public class workyApplication extends Application{
         return -1;
     }
 
-    /* GET JOB INDEX BY TYPE, USERNAME AND TITLE */
+    /* GET FREELANCER INDEX BY USERNAME */
     public int getFreelancerIndexByUsername(String username) {
         for (int i = 0; i < mFreelancer.size(); i++) {
             if (mFreelancer.get(i).getUsername().equals(username))

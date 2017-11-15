@@ -4,13 +4,18 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ClientDashboardActivity extends AppCompatActivity {
+
+    private ArrayAdapter<String> mAdapter = null;
 
     /* LOGIN SESSION MANAGEMENT */
     workySessionMgt session;
@@ -110,6 +115,32 @@ public class ClientDashboardActivity extends AppCompatActivity {
         });
 
         // TODO: Display ListView of Previous Transactions
+
+        ListView listJobs = (ListView) findViewById(R.id.lsv_c_joborders);
+        ArrayList<workyLinkJob> linkJobs = app.getLinkedJobsByTypeClient(user.get(workySessionMgt.KEY_USERNAME));
+        ArrayList<String> stringOutput = new ArrayList<>();
+        for (int i = 0; i < linkJobs.size(); i++) {
+            stringOutput.add("Your Job: " + linkJobs.get(i).getJob().getJobtitle() + "\n"
+                                + "Freelancer Applied: " + linkJobs.get(i).getFreelancer().getUsername() + "\n"
+                                + "Email: " + linkJobs.get(i).getFreelancer().getEmail() + "\n"
+                                + "Contact: " + linkJobs.get(i).getFreelancer().getMobile());
+        }
+        mAdapter = new ArrayAdapter<String>(ClientDashboardActivity.this, android.R.layout.simple_list_item_1, stringOutput);
+        listJobs.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
+
+        Button btnViewProfile = (Button) findViewById(R.id.btn_c_viewprofile);
+        btnViewProfile.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent launchClientViewAsFreelanceActivity = new Intent(ClientDashboardActivity.this,
+                                ClientViewAsFreelancerActivity.class);
+                        launchClientViewAsFreelanceActivity.putExtra("ORIGIN", "DASHBOARD");
+                        startActivity(launchClientViewAsFreelanceActivity);
+                    }
+                }
+        );
 
     }
 }

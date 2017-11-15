@@ -28,7 +28,7 @@
             android:layout_alignParentTop="true"
             android:fontFamily="sans-serif-condensed"
             android:paddingTop="15dp"
-            android:text="Freelancers Signup Page"
+            android:text="Freelancers Profile Edit Page"
             android:textSize="20sp"
             android:textStyle="bold" />
 

@@ -53,11 +53,11 @@ public class ClientViewAsFreelancerActivity extends AppCompatActivity {
             TextView txvJobLocation = (TextView) findViewById(R.id.txv_c_v_job_location);
             TextView txvDescription = (TextView) findViewById(R.id.txv_c_v_description);
 
-            txvJobField.setText(job.getJobfield());
-            txvTitle.setText(job.getJobtitle());
-            txvSalary.setText(String.valueOf(job.getSalary()));
-            txvJobLocation.setText(job.getLocation());
-            txvDescription.setText(job.getDescription());
+            txvJobField.setText("Job Field: " + job.getJobfield());
+            txvTitle.setText("Job Title: " + job.getJobtitle());
+            txvSalary.setText("Salary: " + String.valueOf(job.getSalary()));
+            txvJobLocation.setText("Location: " + job.getLocation());
+            txvDescription.setText("Job Description: " + job.getDescription());
 
             Button btnSubmit = (Button) findViewById(R.id.btn_c_v_submit);
             btnSubmit.setOnClickListener(
@@ -82,15 +82,24 @@ public class ClientViewAsFreelancerActivity extends AppCompatActivity {
                 + app.getClientAcctByUsername(cUsername).getMiddlename() + " "
                 + app.getClientAcctByUsername(cUsername).getLastname();
         txvFullName.setText(fullname);
-        txvCompany.setText(app.getClientAcctByUsername(cUsername).getCompany());
-        txvField.setText(app.getClientAcctByUsername(cUsername).getField());
-        txvSpecialization.setText(app.getClientAcctByUsername(cUsername).getSpecialization());
-        txvProfile.setText(app.getClientAcctByUsername(cUsername).getProfile());
-        txvAge.setText(Long.toString(app.getClientAcctByUsername(cUsername).getAge()));
-        txvGender.setText(app.getClientAcctByUsername(cUsername).getGender());
-        txvLocation.setText(app.getClientAcctByUsername(cUsername).getLocation());
-        txvMobile.setText(Long.toString(app.getClientAcctByUsername(cUsername).getMobile()));
-        txvEmail.setText(app.getClientAcctByUsername(cUsername).getEmail());
+        txvCompany.setText
+                ("Company: " + app.getClientAcctByUsername(cUsername).getCompany());
+        txvField.setText
+                ("Field: " + app.getClientAcctByUsername(cUsername).getField());
+        txvSpecialization.setText
+                ("Specialization: " + app.getClientAcctByUsername(cUsername).getSpecialization());
+        txvProfile.setText
+                ("Profile: " + app.getClientAcctByUsername(cUsername).getProfile());
+        txvAge.setText
+                ("Age: " + Long.toString(app.getClientAcctByUsername(cUsername).getAge()));
+        txvGender.setText
+                ("Gender: " + app.getClientAcctByUsername(cUsername).getGender());
+        txvLocation.setText
+                ("Location: " + app.getClientAcctByUsername(cUsername).getLocation());
+        txvMobile.setText
+                ("Mobile: " + Long.toString(app.getClientAcctByUsername(cUsername).getMobile()));
+        txvEmail.setText
+                ("Email: " + app.getClientAcctByUsername(cUsername).getEmail());
 
     }
 }

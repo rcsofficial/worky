@@ -170,4 +170,12 @@ public class workyClient {
         mJobOrders.add(jo);
         return;
     }
+
+    /* FOR LISTVIEW OUTPUT */
+    public String toString() {
+        return getFirstname() + " " + getLastname() + "\n" +
+                "Company: " + getCompany() + "\n" +
+                "Field: " + getField() + "\n" +
+                "Specialization: " + getSpecialization();
+    }
 }

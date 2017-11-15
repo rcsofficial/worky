@@ -176,6 +176,8 @@ public class workyFreelancer {
     /* FOR LISTVIEW OUTPUT */
     public String toString() {
         return getFirstname() + " " + getLastname() + "\n" +
-                getEducation() + " - " + getExpertise() + " - " + getCourse();
+                "Education: " + getEducation() + "\n" +
+                "Expertise: " + getExpertise() + "\n" +
+                "Course: " + getCourse();
     }
 }

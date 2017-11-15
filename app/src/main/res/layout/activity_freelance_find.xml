@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/secondarybg"
     tools:context="edu.ateneo.cie199.worky.ClientFindActivity">
 
     <LinearLayout
@@ -25,6 +26,7 @@
             android:layout_height="50dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
+            android:fontFamily="sans-serif-condensed"
             android:paddingTop="15dp"
             android:text="Find Job Offers Page"
             android:textSize="20sp"
@@ -51,6 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:paddingLeft="10dp"
                 android:text="Job Category:"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -72,6 +75,7 @@
                 android:id="@+id/lbl_f_searchfilters"
                 android:layout_width="138dp"
                 android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
                 android:text="Search Filters:"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -99,6 +103,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/linearLayout4"
                 android:layout_weight="0.17"
+                android:paddingLeft="10dp"
                 android:text="Search Keyword:"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -131,7 +136,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/linearLayout5"
-        android:paddingLeft="5dp"
+        android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:text="Search Results:"
         android:textSize="18sp"

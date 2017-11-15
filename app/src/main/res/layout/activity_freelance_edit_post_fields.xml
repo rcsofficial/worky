@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/secondarybg"
     tools:context="edu.ateneo.cie199.worky.ClientPostActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <ImageView
@@ -25,6 +26,7 @@
             android:layout_height="50dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
+            android:fontFamily="sans-serif-condensed"
             android:paddingTop="15dp"
             android:text="Freelance Edit Services Page"
             android:textSize="20sp"
@@ -36,7 +38,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/linearLayout4"
+        android:paddingTop="10dp">
 
         <LinearLayout
             android:id="@+id/linearLayout5"
@@ -84,7 +88,7 @@
 
                 <TextView
                     android:id="@+id/lbl_f_e_jobcategory"
-                    android:layout_width="139dp"
+                    android:layout_width="140dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/linearLayout4"
@@ -139,7 +143,7 @@
                     android:id="@+id/lbl_f_e_jobloc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="0.93"
                     android:paddingLeft="10dp"
                     android:text="Location:"
                     android:textSize="16sp"

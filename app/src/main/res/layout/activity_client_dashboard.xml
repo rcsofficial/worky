@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg"
     tools:context="edu.ateneo.cie199.worky.FreelanceSignupActivity">
 
     <TextView
@@ -12,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:fontFamily="sans-serif-condensed"
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:text="Client Dashboard Page"
@@ -81,6 +83,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/linearLayout2"
         android:layout_marginTop="15dp"
+        android:fontFamily="sans-serif-condensed"
         android:paddingLeft="10dp"
         android:text="What do you want to do?"
         android:textSize="18sp"
@@ -102,8 +105,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/lbl_c_selections"
-        android:paddingLeft="10dp">
+        android:layout_below="@+id/lbl_c_selections">
 
         <LinearLayout
             android:id="@+id/linearLayout3"
@@ -167,6 +169,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/horizontalScrollView"
+        android:fontFamily="sans-serif-condensed"
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:text="Previous Transactions:"

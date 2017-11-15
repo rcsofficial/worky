@@ -84,7 +84,10 @@ public class workyJobs {
 
     /* FOR LISTVIEW OUTPUT */
     public String toString() {
-        return getJobtitle() + " by " + getUsername() + "\n" +
-                getLocation() + " - PhP" + getSalary() + " - " + getJobfield();
+        return getJobtitle() + "\n" +
+                "Posted by: " + getUsername() + "\n" +
+                "Location: " + getLocation() + "\n" +
+                "Salary: PhP" + getSalary() + "\n" +
+                "Field: " + getJobfield();
     }
 }

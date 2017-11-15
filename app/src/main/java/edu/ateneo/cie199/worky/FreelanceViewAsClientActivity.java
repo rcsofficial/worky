@@ -78,14 +78,22 @@ public class FreelanceViewAsClientActivity extends AppCompatActivity {
                 + app.getFreelancerAcctByUsername(cUsername).getMiddlename() + " "
                 + app.getFreelancerAcctByUsername(cUsername).getLastname();
         txvFullName.setText(fullname);
-        txvExpertise.setText(app.getFreelancerAcctByUsername(cUsername).getExpertise());
-        txvCourse.setText(app.getFreelancerAcctByUsername(cUsername).getCourse());
-        txvProfile.setText(app.getFreelancerAcctByUsername(cUsername).getProfile());
-        txvAge.setText(Long.toString(app.getFreelancerAcctByUsername(cUsername).getAge()));
-        txvGender.setText(app.getFreelancerAcctByUsername(cUsername).getGender());
-        txvLocation.setText(app.getFreelancerAcctByUsername(cUsername).getLocation());
-        txvMobile.setText(Long.toString(app.getFreelancerAcctByUsername(cUsername).getMobile()));
-        txvEmail.setText(app.getFreelancerAcctByUsername(cUsername).getEmail());
+        txvExpertise.setText(
+                "Expertise: " + app.getFreelancerAcctByUsername(cUsername).getExpertise());
+        txvCourse.setText
+                ("Course: " + app.getFreelancerAcctByUsername(cUsername).getCourse());
+        txvProfile.setText
+                ("Profile: " + app.getFreelancerAcctByUsername(cUsername).getProfile());
+        txvAge.setText
+                ("Age: " + Long.toString(app.getFreelancerAcctByUsername(cUsername).getAge()));
+        txvGender.setText
+                ("Gender: " + app.getFreelancerAcctByUsername(cUsername).getGender());
+        txvLocation.setText
+                ("Location: " + app.getFreelancerAcctByUsername(cUsername).getLocation());
+        txvMobile.setText
+                ("Mobile: " + Long.toString(app.getFreelancerAcctByUsername(cUsername).getMobile()));
+        txvEmail.setText
+                ("Email: " + app.getFreelancerAcctByUsername(cUsername).getEmail());
 
     }
 

@@ -189,7 +189,9 @@ public class workyApplication extends Application{
                                         Log.d(TAG, "Modified Job Link: " + dc.getDocument().getData());
                                         break;
                                     case REMOVED:
-                                        //mLinkJob.remove(dc.getDocument().toObject(workyLinkJob.class));
+                                        deleteLinkJob(dc.getDocument().get("client").toString(),
+                                                dc.getDocument().get("freelancer").toString(),
+                                                dc.getDocument().get("job").toString());
                                         Log.d(TAG, "Removed Job Link: " + dc.getDocument().getData());
                                         break;
                                 }
@@ -220,7 +222,8 @@ public class workyApplication extends Application{
         docData.put("client", clientUsername);
         docData.put("freelancer", freelancerUsername);
         docData.put("job", job.getJobtitle());
-        db.collection("joblink").add(docData);
+        db.collection("joblink").document(clientUsername + freelancerUsername + job.getJobtitle())
+                .set(docData);
         return;
     }
 
@@ -239,6 +242,27 @@ public class workyApplication extends Application{
                 linkJobs.add(mLinkJob.get(i));
         }
         return linkJobs;
+    }
+
+
+    /**
+     * Deletes a job link based from the username of the client, the username of the freelancer,
+     * and the title of the job.
+     *
+     * @param clientUsername     the username of the client
+     * @param freelancerUsername the username of the freelancer
+     * @param jobTitle           the title of the job
+     */
+    public void deleteLinkJob(String clientUsername, String freelancerUsername, String jobTitle) {
+
+        for (int i = 0; i < mLinkJob.size(); i++) {
+            if (mLinkJob.get(i).getClient().getUsername().equals(clientUsername) &&
+                    mLinkJob.get(i).getFreelancer().getUsername().equals(freelancerUsername) &&
+                    mLinkJob.get(i).getJob().getJobtitle().equals(jobTitle) )
+                mLinkJob.remove(i);
+        }
+
+        return;
     }
 
 
@@ -616,17 +640,39 @@ public class workyApplication extends Application{
 
     /**
      * Deletes a job in the database in the cloud based from the username of the user, the type of
-     * the user, and the index in the array. Change will be detected by the database event
-     * listeners which will change the <code>mJobs</code> array.
+     * the user, and the index in the array. This will also delete all links between the clients
+     * and freelancers. Change will be detected by the database event
+     * listeners which will change the <code>mJobs</code> and <code>mLinkJobs</code> array.
      *
      * @param username the username of the user
      * @param usertype the type of the user
      * @param index    the index of the job in <code>mJobs</code> to be deleted
      */
     public void deleteJob(String username, String usertype, int index) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         workyJobs toDeleteFromMain = getJobsByUsername(username, usertype).get(index);
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        for (int i = 0; i < mLinkJob.size(); i++) {
+                if (mLinkJob.get(i).getJob() == toDeleteFromMain) {
+                    db.collection("joblink").document(mLinkJob.get(i).getClient().getUsername()
+                    + mLinkJob.get(i).getFreelancer().getUsername()
+                    + mLinkJob.get(i).getJob().getJobtitle())
+                            .delete()
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(TAG, "Error deleting document", e);
+                                }
+                            });
+                }
+        }
+
         db.collection("job").document(toDeleteFromMain.getUsertype()+ toDeleteFromMain.getUsername() + ": " + toDeleteFromMain.getJobtitle())
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

@@ -1,6 +1,7 @@
 package edu.ateneo.cie199.worky;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.RunnableFuture;
 
 public class FreelanceDashboardActivity extends AppCompatActivity {
 
@@ -29,10 +31,11 @@ public class FreelanceDashboardActivity extends AppCompatActivity {
         /* APPLICATION OBJECT */
         final workyApplication app = (workyApplication) getApplication();
 
+        app.iniitilizeJobLinks();
 
         /* LOGIN SESSION MANAGEMENT INITIALIZATION */
         session = new workySessionMgt(getApplicationContext());
-        HashMap<String, String> user = session.getUserDetails();
+        final HashMap<String, String> user = session.getUserDetails();
         String fUsername = user.get(workySessionMgt.KEY_USERNAME);
 
 
@@ -129,7 +132,8 @@ public class FreelanceDashboardActivity extends AppCompatActivity {
         });
 
         /* Display ListView of Previous Transactions */
-        ListView listJobs = (ListView) findViewById(R.id.lsv_f_joborders);
+        final ListView listJobs = (ListView) findViewById(R.id.lsv_f_joborders);
+        /*
         ArrayList<workyLinkJob> linkJobs =
                 app.getLinkedJobsByTypeFreelancer(user.get(workySessionMgt.KEY_USERNAME));
         ArrayList<String> stringOutput = new ArrayList<>();
@@ -142,6 +146,39 @@ public class FreelanceDashboardActivity extends AppCompatActivity {
         mAdapter = new ArrayAdapter<String>
                 (FreelanceDashboardActivity.this, android.R.layout.simple_list_item_1, stringOutput);
         listJobs.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
+        */
+        final Handler handler = new Handler();
+        class updateAdapter  implements Runnable {
+            private Handler handler;
+            private ArrayAdapter<String> mAdapter;
+            public updateAdapter(Handler handler, ArrayAdapter<String> mAdapter) {
+                this.handler = handler;
+                this.mAdapter = mAdapter;
+            }
+
+            @Override
+            public void run() {
+                this.handler.postDelayed(this, 500);
+
+                ArrayList<workyLinkJob> linkJobs =
+                        app.getLinkedJobsByTypeFreelancer(user.get(workySessionMgt.KEY_USERNAME));
+                ArrayList<String> stringOutput = new ArrayList<>();
+                for (int i = 0; i < linkJobs.size(); i++) {
+                    stringOutput.add("Your Job: " + linkJobs.get(i).getJob().getJobtitle() + "\n"
+                            + "Client Applied: " + linkJobs.get(i).getClient().getUsername() + "\n"
+                            + "Email: " + linkJobs.get(i).getClient().getEmail() + "\n"
+                            + "Contact: " + linkJobs.get(i).getClient().getMobile());
+                }
+                mAdapter = new ArrayAdapter<String>
+                        (FreelanceDashboardActivity.this, android.R.layout.simple_list_item_1, stringOutput);
+                listJobs.setAdapter(mAdapter);
+
+                this.mAdapter.notifyDataSetChanged();
+            }
+        }
+
+        handler.post(new updateAdapter(handler, mAdapter));
+
+        //]mAdapter.notifyDataSetChanged();
     }
 }

@@ -21,6 +21,11 @@ public class SplashActivity extends AppCompatActivity {
         /* ACCESS A CLOUD FIRESTORE INSTANCE FROM YOUR ACTIVITY */
         FirebaseApp.initializeApp(this);
 
+        /* APPLICATION OBJECT */
+        final workyApplication app = (workyApplication) getApplication();
+
+        /* INITIALIZE APPLICATION DATABASE */
+        app.initializeUsers();
 
         /* LOGIN SESSION MANAGEMENT INITIALIZATION */
         session = new workySessionMgt(getApplicationContext());

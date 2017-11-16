@@ -1,6 +1,7 @@
 package edu.ateneo.cie199.worky;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -31,10 +32,11 @@ public class ClientDashboardActivity extends AppCompatActivity {
         /* APPLICATION OBJECT */
         final workyApplication app = (workyApplication) getApplication();
 
+        app.iniitilizeJobLinks();
 
         /* LOGIN SESSION MANAGEMENT INITIALIZATION */
         session = new workySessionMgt(getApplicationContext());
-        HashMap<String, String> user = session.getUserDetails();
+        final HashMap<String, String> user = session.getUserDetails();
         String cUsername = user.get(workySessionMgt.KEY_USERNAME);
 
 
@@ -131,7 +133,8 @@ public class ClientDashboardActivity extends AppCompatActivity {
 
 
         /* Display ListView of Previous Transactions */
-        ListView listJobs = (ListView) findViewById(R.id.lsv_c_joborders);
+        final ListView listJobs = (ListView) findViewById(R.id.lsv_c_joborders);
+        /*
         ArrayList<workyLinkJob> linkJobs =
                 app.getLinkedJobsByTypeClient(user.get(workySessionMgt.KEY_USERNAME));
         ArrayList<String> stringOutput = new ArrayList<>();
@@ -146,5 +149,43 @@ public class ClientDashboardActivity extends AppCompatActivity {
                 (ClientDashboardActivity.this, android.R.layout.simple_list_item_1, stringOutput);
         listJobs.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
+        */
+
+        final Handler handler = new Handler();
+        class updateAdapter  implements Runnable {
+            private Handler handler;
+            private ArrayAdapter<String> mAdapter;
+            public updateAdapter(Handler handler, ArrayAdapter<String> mAdapter) {
+                this.handler = handler;
+                this.mAdapter = mAdapter;
+            }
+
+            @Override
+            public void run() {
+                this.handler.postDelayed(this, 500);
+
+                ArrayList<workyLinkJob> linkJobs =
+                        app.getLinkedJobsByTypeClient(user.get(workySessionMgt.KEY_USERNAME));
+                ArrayList<String> stringOutput = new ArrayList<>();
+                for (int i = 0; i < linkJobs.size(); i++) {
+                    stringOutput.add("Your Job: " + linkJobs.get(i).getJob().getJobtitle() + "\n"
+                            + "Freelancer Applied: "
+                            + linkJobs.get(i).getFreelancer().getUsername() + "\n"
+                            + "Email: " + linkJobs.get(i).getFreelancer().getEmail() + "\n"
+                            + "Contact: " + linkJobs.get(i).getFreelancer().getMobile());
+                }
+                mAdapter = new ArrayAdapter<String>
+                        (ClientDashboardActivity.this, android.R.layout.simple_list_item_1, stringOutput);
+                listJobs.setAdapter(mAdapter);
+                mAdapter.notifyDataSetChanged();
+
+                this.mAdapter.notifyDataSetChanged();
+            }
+        }
+
+        handler.post(new updateAdapter(handler, mAdapter));
+
+
+
     }
 }

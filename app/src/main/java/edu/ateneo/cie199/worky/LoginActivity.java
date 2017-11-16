@@ -23,7 +23,8 @@ public class LoginActivity extends AppCompatActivity {
 
 
         /* INITIALIZE APPLICATION DATABASE */
-        app.initializeApp();
+        //app.initializeUsers();
+        //app.iniitilizeJobLinks();
 
 
         /* LOGIN SESSION MANAGEMENT INITIALIZATION */

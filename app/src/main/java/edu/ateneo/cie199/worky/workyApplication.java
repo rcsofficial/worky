@@ -7,14 +7,12 @@ import android.util.Log;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 
@@ -25,11 +23,12 @@ public class workyApplication extends Application{
     private ArrayList<workyClient> mClient = new ArrayList<>();
     private ArrayList<workyJobs> mJobs = new ArrayList<>();
     private ArrayList<workyLinkJob> mLinkJob = new ArrayList<>();
-    private Boolean initialized = false;
+    private Boolean usersInitialized = false;
+    private Boolean jobsInitialized = false;
 
-    public void initializeApp() {
-        if (!initialized) {
-            initialized = true;
+    public void initializeUsers() {
+        if (!usersInitialized) {
+            usersInitialized = true;
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
             /* INITIALIZE LISTENERS FOR FREELANCER COLLECTION */
@@ -64,7 +63,6 @@ public class workyApplication extends Application{
                         }
                     });
 
-
             /* INITIALIZE LISTENER FOR CLIENT COLLECTION */
             db.collection("client")
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -97,7 +95,6 @@ public class workyApplication extends Application{
                         }
                     });
 
-
             /* INITIALIZE LISTENER FOR JOB COLLECTION */
             db.collection("job")
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -129,8 +126,14 @@ public class workyApplication extends Application{
                             }
                         }
                     });
+        }
+    }
 
 
+    public void iniitilizeJobLinks() {
+        if (!jobsInitialized) {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            jobsInitialized = true;
             /* INITIIALIZE LISTENER FOR JOBLINK COLLECTION */
             db.collection("joblink")
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -161,18 +164,17 @@ public class workyApplication extends Application{
                                                     getJobByTypeUsernameTitle(usertype, jobUsername, jobTitle));
 
                                             mLinkJob.add(linkJob);
-                                        }
-                                        catch (NullPointerException err) {
+                                        } catch (NullPointerException err) {
                                             Log.e(TAG, err.toString());
                                         }
-                                        Log.d(TAG, "New client: " + dc.getDocument().getData());
+                                        Log.d(TAG, "New Job Link: " + dc.getDocument().getData());
                                         break;
                                     case MODIFIED:
-                                        Log.d(TAG, "Modified client: " + dc.getDocument().getData());
+                                        Log.d(TAG, "Modified Job Link: " + dc.getDocument().getData());
                                         break;
                                     case REMOVED:
                                         //mLinkJob.remove(dc.getDocument().toObject(workyLinkJob.class));
-                                        Log.d(TAG, "Removed client: " + dc.getDocument().getData());
+                                        Log.d(TAG, "Removed Job Link: " + dc.getDocument().getData());
                                         break;
                                 }
                             }
@@ -192,7 +194,6 @@ public class workyApplication extends Application{
         docData.put("client", clientUsername);
         docData.put("freelancer", freelancerUsername);
         docData.put("job", job.getJobtitle());
-
         db.collection("joblink").add(docData);
         return;
     }

@@ -2,8 +2,10 @@ package edu.ateneo.cie199.worky;
 
 import java.util.ArrayList;
 
+/**
+ * The client class. Each instance of this class represents one account of type client.
+ */
 public class workyFreelancer {
-
     private String mUsername;
     private String mPassword;
     private String mFirstname;
@@ -20,9 +22,30 @@ public class workyFreelancer {
     private String mLocation;
     private ArrayList<String> mExperiences = new ArrayList<>();
 
-    /* CONSTRUCTOR */
+    /**
+     * Instantiates a new freelancer.
+     */
     public workyFreelancer () {}
 
+    /**
+     * Instantiates a new freelancer instance taking in all required parameters.
+     *
+     * @param mUsername    the username of the freelancer
+     * @param mPassword    the password of the freelancer
+     * @param mFirstname   the firstname of the freelancer
+     * @param mMiddlename  the middlename of the freelancer
+     * @param mLastname    the lastname of the freelancer
+     * @param mAge         the age of the freelancer
+     * @param mGender      the gender of the freelancer
+     * @param mEmail       the email of the freelancer
+     * @param mMobile      the mobile of the freelancer
+     * @param mProfile     the profile of the freelancer
+     * @param mEducation   the education of the freelancer
+     * @param mExpertise   the expertise of the freelancer
+     * @param mCourse      the course of the freelancer
+     * @param mLocation    the location of the freelancer
+     * @param mExperiences the experiences of the freelancer
+     */
     public workyFreelancer(String mUsername, String mPassword, String mFirstname,
                            String mMiddlename, String mLastname, int mAge, String mGender,
                            String mEmail, long mMobile, String mProfile, String mEducation,
@@ -173,7 +196,10 @@ public class workyFreelancer {
         return;
     }
 
-    /* FOR LISTVIEW OUTPUT */
+    /**
+     * Overrides the <code>toString</code> so that the desired <code>String</code> output
+     * is intended by the user.
+     */
     public String toString() {
         return getFirstname() + " " + getLastname() + "\n" +
                 "Education: " + getEducation() + "\n" +

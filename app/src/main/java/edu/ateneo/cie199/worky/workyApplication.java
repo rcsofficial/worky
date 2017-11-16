@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -18,6 +19,11 @@ import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
+/**
+ * workyApplication is where all data needed by the Worky application to run are stored. It is made
+ * global across the application by inheriting the Application class. It contains member variables
+ * where the database in the cloud are stored to.
+ */
 public class workyApplication extends Application{
     private ArrayList<workyFreelancer> mFreelancer = new ArrayList<>();
     private ArrayList<workyClient> mClient = new ArrayList<>();
@@ -26,9 +32,15 @@ public class workyApplication extends Application{
     private Boolean usersInitialized = false;
     private Boolean jobsInitialized = false;
 
+    /**
+     * Initializes the database listeners for the "freelancer", "client", and "job", collections
+     * in the cloud. When a collection change, the member variable changes accordingly.
+     */
     public void initializeUsers() {
         if (!usersInitialized) {
             usersInitialized = true;
+            /* ACCESS A CLOUD FIRESTORE INSTANCE FROM YOUR ACTIVITY */
+            FirebaseApp.initializeApp(this);
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
             /* INITIALIZE LISTENERS FOR FREELANCER COLLECTION */
@@ -130,11 +142,15 @@ public class workyApplication extends Application{
     }
 
 
-    public void iniitilizeJobLinks() {
+    /**
+     * Initialize the database listener for the "joblink" collection in the cloud. When the "joblink"
+     * collection changes, the member variable is also changed.
+     */
+    public void initializeJobLinks() {
         if (!jobsInitialized) {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             jobsInitialized = true;
-            /* INITIIALIZE LISTENER FOR JOBLINK COLLECTION */
+            /* INITIALIZE LISTENER FOR JOBLINK COLLECTION */
             db.collection("joblink")
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
@@ -184,6 +200,16 @@ public class workyApplication extends Application{
     }
 
 
+    /**
+     * Adds a link between a client and user based from a job posted to the database in the cloud.
+     * The change will be detected by the database listener which will update the
+     * <code>mLinkJob</code> array.
+     *
+     * @param jobUserType        the user type of the job poster
+     * @param clientUsername     the username of the client
+     * @param freelancerUsername the username of the freelancer
+     * @param job                the job
+     */
     /* ADDS A JOB THAT LINKS A CLIENT AND A FREELANCER */
     public void addLinkJob(String jobUserType, String clientUsername, String freelancerUsername,
                            workyJobs job) {
@@ -199,7 +225,12 @@ public class workyApplication extends Application{
     }
 
 
-    /* GET LINKED JOBS FOR A SPECIFIC CLIENT */
+    /**
+     * Gets all jobs of a specific client that are linked to freelancers.
+     *
+     * @param clientUsername the username of the client
+     * @return the array of all jobs linked to the username
+     */
     public ArrayList<workyLinkJob> getLinkedJobsByTypeClient(String clientUsername) {
         ArrayList<workyLinkJob> linkJobs = new ArrayList<>();
         for (int i = 0; i < mLinkJob.size(); i++) {
@@ -211,7 +242,12 @@ public class workyApplication extends Application{
     }
 
 
-    /* GET LINKED JOBS FOR A SPECIFIC FREELANCER */
+    /**
+     * Gets all jobs of a specific freelancer that are linked to clients.
+     *
+     * @param freelancerUsername the username of the freelancer
+     * @return the array of all jobs linked to the freelancer
+     */
     public ArrayList<workyLinkJob> getLinkedJobsByTypeFreelancer(String freelancerUsername) {
         ArrayList<workyLinkJob> linkJobs = new ArrayList<>();
         for (int i = 0; i < mLinkJob.size(); i++) {
@@ -223,6 +259,12 @@ public class workyApplication extends Application{
     }
 
 
+    /**
+     * Gets the index of the specific client in the <code>mClient</code> array.
+     *
+     * @param username the username
+     * @return the client index by username
+     */
     /* GET CLIENT INDEX BY USERNAME */
     public int getClientIndexByUsername(String username) {
         for (int i = 0; i < mClient.size(); i++) {
@@ -233,7 +275,14 @@ public class workyApplication extends Application{
     }
 
 
-    /* GET SPECIFIC JOB BY TYPE, USERNAME, AND TITLE */
+    /**
+     * Gets a job based on the type of the user, the username, and the job title.
+     *
+     * @param type     the type of the user
+     * @param username the username of the user
+     * @param title    the title of the job
+     * @return <code>null</code> when the job is the not in the array; the specific job otherwise.
+     */
     public workyJobs getJobByTypeUsernameTitle(String type, String username, String title) {
         for (int i = 0; i < mJobs.size(); i++) {
             if ( mJobs.get(i).getUsertype().equals(type) &&
@@ -245,7 +294,15 @@ public class workyApplication extends Application{
     }
 
 
-    /* GET JOB INDEX BY TYPE, USERNAME AND TITLE */
+    /**
+     * Gets the index of the job based on the user, the username, and the job title in the
+     * <code>mJobs</code> array.
+     *
+     * @param type     the type of the user
+     * @param username the username of the user
+     * @param title    the title of the job
+     * @return -1 when the job is not found; the index otherwise
+     */
     public int getJobIndexByTypeUsernameTitle(String type, String username, String title) {
         for (int i = 0; i < mJobs.size(); i++) {
             if ( mJobs.get(i).getUsertype().equals(type) &&
@@ -257,7 +314,13 @@ public class workyApplication extends Application{
     }
 
 
-    /* GET FREELANCER INDEX BY USERNAME */
+    /**
+     * Gets the index of the freelancer based on the username in the <code>mFreelancer</code>
+     * array.
+     *
+     * @param username the username of the freelancer
+     * @return -1 when the freelancer is not found; the index otherwise
+     */
     public int getFreelancerIndexByUsername(String username) {
         for (int i = 0; i < mFreelancer.size(); i++) {
             if (mFreelancer.get(i).getUsername().equals(username))
@@ -267,7 +330,12 @@ public class workyApplication extends Application{
     }
 
 
-    /* ADD FREELANCER ACCOUNT */
+    /**
+     * Adds a new freelancer account on the database in the cloud. The change in the database will be detected
+     * by the listeners which will change the <code>mFreelancer</code> array.
+     *
+     * @param fAccount the freelancer object to be added
+     */
     public void addFreelancerAccount(workyFreelancer fAccount) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("freelancer").document(fAccount.getUsername()).set(fAccount);
@@ -275,7 +343,12 @@ public class workyApplication extends Application{
     }
 
 
-    /* ADD CLIENT ACCOUNT */
+    /**
+     * Adds a new client account on the database in the cloud. The change in the database will be
+     * detected by the listeners which will change the <code>mClient</code> array.
+     *
+     * @param cAccount the account object to be added
+     */
     public void addClientAccount(workyClient cAccount) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("client").document(cAccount.getUsername()).set(cAccount);
@@ -283,7 +356,12 @@ public class workyApplication extends Application{
     }
 
 
-    /* ADD JOB */
+    /**
+     * Adds a new job to the database in teh cloud. The change in the database will be detected
+     * by the listeners which will change the <code>mJob</code> array.
+     *
+     * @param job the job object to be added
+     */
     public void addJob(workyJobs job) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("job").document(job.getUsertype() + job.getUsername() + ": " + job.getJobtitle()).set(job);
@@ -291,8 +369,15 @@ public class workyApplication extends Application{
     }
 
 
-    /* ACCOUNT FREELANCE EXISTENCE VERIFICATION */
-    public boolean isFreelancerExistent(String username, String password) {
+    /**
+     * Checks if the freelancer account is existing in the <code>mFreelancer</code> array
+     * based from its username and password.
+     *
+     * @param username the username of the freelancer
+     * @param password the password of the freelancer
+     * @return <code>true</code> when the freelancer is found; <code>false</code> otherwise
+     */
+   public boolean isFreelancerExistent(String username, String password) {
         for (int i=0; i<mFreelancer.size(); i++) {
             if (mFreelancer.get(i).getUsername().equals(username) &&
                     mFreelancer.get(i).getPassword().equals(password))
@@ -302,7 +387,14 @@ public class workyApplication extends Application{
     }
 
 
-    /* ACCOUNT CLIENT EXISTENCE VERIFICATION */
+    /**
+     * Checks if the client account is existing in the <code>mClient</code> array based from its
+     * username and password.
+     *
+     * @param username the username of the client
+     * @param password the password of the client
+     * @return <code>true</code> when the freelancer is found; <code>false</code> otherwise
+     */
     public boolean isClientExistent(String username, String password) {
         for (int i=0; i<mClient.size(); i++) {
             if (mClient.get(i).getUsername().equals(username) &&
@@ -313,7 +405,14 @@ public class workyApplication extends Application{
     }
 
 
-    /* USERNAME FREELANCE TAKEN VERIFICATION */
+    /**
+     * Verifies if the username of the freelancer exists in the <code>mFreelancer</code>
+     * object array.
+     *
+     * @param username the username of the freelancer
+     * @return <code>true</code> when the username of the freelancer exists, <code>false</code>
+     * otherwise
+     */
     public boolean isFreelancerUsernameTaken(String username) {
         for (int i = 0; i < mFreelancer.size(); i++) {
             if (mFreelancer.get(i).getUsername().equals(username))
@@ -323,7 +422,12 @@ public class workyApplication extends Application{
     }
 
 
-    /* USERNAME CLIENT TAKEN VERIFICATION */
+    /**
+     * Verifies if the username of the client is exists in the <code>mClient</code> object array.
+     *
+     * @param username the username of the client
+     * @return <code>true</code> when the username of the client exists, <cdoe>false</cdoe> otherwise
+     */
     public boolean isClientUsernameTaken(String username) {
         for (int i = 0; i < mClient.size(); i++) {
             if (mClient.get(i).getUsername().equals(username))
@@ -333,13 +437,22 @@ public class workyApplication extends Application{
     }
 
 
-    /* GET FREELANCER ALL ACCOUNTS */
+    /**
+     * Gets all the freelancers stored in the <code>mFreelancer</code> array
+     *
+     * @return <code>mFreelancer</code>
+     */
     public ArrayList<workyFreelancer> getAllFreelancers() {
         return mFreelancer;
     }
 
 
-    /* GET FREELANCE ACCOUNT BY USERNAME */
+    /**
+     * Gets the specific freelancer based from its username in the <code>mFreelancer</code> array.
+     *
+     * @param username the username of the freelancer
+     * @return the freelancer object
+     */
     public workyFreelancer getFreelancerAcctByUsername(String username) {
         int index = -1;
         for (int i = 0; i < mFreelancer.size(); i++) {
@@ -350,13 +463,22 @@ public class workyApplication extends Application{
     }
 
 
-    /* GET CLIENT ALL ACCOUNTS */
+    /**
+     * Gets all clients stored in the <code>mClient</code> array.
+     *
+     * @return <code>mClient</code>
+     */
     public ArrayList<workyClient> getAllClients() {
         return mClient;
     }
 
 
-    /* GET CLIENT ACCOUNT BY USERNAME */
+    /**
+     * Gets the specific client based from its username in the <code>mClient</code> array.
+     *
+     * @param username the username of the client
+     * @return the client object
+     */
     public workyClient getClientAcctByUsername(String username) {
         int index = -1;
         for (int i = 0; i < mClient.size(); i++) {
@@ -367,13 +489,23 @@ public class workyApplication extends Application{
     }
 
 
-    /* GET JOB ALL ENTRIES */
+    /**
+     * Get all jobs stored in the <code>mJobs</code> array
+     *
+     * @return <code>mJobs</code>
+     */
     public ArrayList<workyJobs> getAllJobs(){
         return mJobs;
     }
 
 
-    /* GET JOB ENTRIES BY USERNAME AND USERTYPE */
+    /**
+     * Gets jobs based from the username and the type of the user.
+     *
+     * @param username the username of the user
+     * @param usertype the type of the user
+     * @return the jobs by username
+     */
     public ArrayList<workyJobs> getJobsByUsername(String username, String usertype) {
         ArrayList<workyJobs> outputEntries = new ArrayList<>();
         for (int i = 0; i < mJobs.size(); i++) {
@@ -385,7 +517,12 @@ public class workyApplication extends Application{
     }
 
 
-    /* GET JOB ENTRIES BY JOB CATEGORY */
+    /**
+     * Gets all the jobs based from its job field or category.
+     *
+     * @param jobField the field of the job
+     * @return array of jobs
+     */
     public ArrayList<workyJobs> getJobsByField(String jobField) {
         ArrayList<workyJobs> outputEntries = new ArrayList<>();
         for (int i = 0; i < mJobs.size(); i++) {
@@ -396,7 +533,14 @@ public class workyApplication extends Application{
     }
 
 
-    /* GET JOB ENTRIES BY JOB TITLE, CATEGORY, USERTYPE */
+    /**
+     * Gets jobs based from the job title, category, and user type in the <code>mJobs</code> array.
+     *
+     * @param jobTitle the title of the job
+     * @param jobField the field of the job
+     * @param userType the type of the user
+     * @return array of jobs
+     */
     public ArrayList<workyJobs> getJobsByTitle(String jobTitle, String jobField,
                                                String userType) {
         ArrayList<workyJobs> outputEntries = new ArrayList<>();
@@ -409,9 +553,16 @@ public class workyApplication extends Application{
     }
 
 
-    /* GET JOB ENTRIES BY MINIMUM SALARY, CATEGORY, USERTYPE */
-    public ArrayList<workyJobs> getJobsByMinSalary(float salary, String jobField,
-                                                   String userType) {
+    /**
+     * Gets jobs by based from the field, the user type, and where the salary is greater than the
+     * given salary in the <code>mJobs</code> array.
+     *
+     * @param salary   the minimum salary
+     * @param jobField the field of the job
+     * @param userType the type of the user
+     * @return array of jobs
+     */
+   public ArrayList<workyJobs> getJobsByMinSalary(float salary, String jobField, String userType) {
         ArrayList<workyJobs> outputEntries = new ArrayList<>();
         for (int i = 0; i < getJobsByField(jobField).size(); i++) {
             if (getJobsByField(jobField).get(i).getSalary() >= salary &&
@@ -422,7 +573,15 @@ public class workyApplication extends Application{
     }
 
 
-    /* GET JOB ENTRIES BY MAXIMUM SALARY, CATEGORY, USERTYPE */
+    /**
+     * Gets jobs based from the field, the user type, and where the salary is lesser than the given
+     * salary in the <code>mJobs</code> salary.
+     *
+     * @param salary   the maximum salary
+     * @param jobField the field of the job
+     * @param userType the type of the user
+     * @return array of jobs
+     */
     public ArrayList<workyJobs> getJobsByMaxSalary(float salary, String jobField,
                                                    String userType) {
         ArrayList<workyJobs> outputEntries = new ArrayList<>();
@@ -435,7 +594,14 @@ public class workyApplication extends Application{
     }
 
 
-    /* GET JOB ENTRIES BY LOCATION, CATEGORY, USERTYPE*/
+    /**
+     * Gets jobs by the location, field, and the type of the user in the <code>mJobs</code> array.
+     *
+     * @param location the location of the job
+     * @param jobField the field of the job
+     * @param userType the type of the user
+     * @return array of jobs
+     */
     public ArrayList<workyJobs> getJobsByLocation(String location, String jobField,
                                                   String userType) {
         ArrayList<workyJobs> outputEntries = new ArrayList<>();
@@ -448,7 +614,15 @@ public class workyApplication extends Application{
     }
 
 
-    /* DELETE JOB ENTRIES */
+    /**
+     * Deletes a job in the database in the cloud based from the username of the user, the type of
+     * the user, and the index in the array. Change will be detected by the database event
+     * listeners which will change the <code>mJobs</code> array.
+     *
+     * @param username the username of the user
+     * @param usertype the type of the user
+     * @param index    the index of the job in <code>mJobs</code> to be deleted
+     */
     public void deleteJob(String username, String usertype, int index) {
         workyJobs toDeleteFromMain = getJobsByUsername(username, usertype).get(index);
 
@@ -472,7 +646,20 @@ public class workyApplication extends Application{
     }
 
 
-    /* EDIT JOB ENTRIES */
+    /**
+     * Edits a specific job in the database in the cloud based from all of its member variables.
+     * The change will be detected by the database listener which will then change the specific job
+     * in the <code>mJobs</code> array.
+     *
+     * @param index       the index of the job in <code>mJobs</code>
+     * @param jobField    the field of the job
+     * @param jobTitle    the title of the job
+     * @param salary      the salary of the job
+     * @param location    the location of the job
+     * @param description the description of the job
+     * @param username    the username of the user
+     * @param usertype    the type of the user
+     */
     public void editJob(int index, String jobField, String jobTitle, float salary, String location,
                         String description, String username, String usertype) {
         workyJobs toEditFromMain = getJobsByUsername(username, usertype).get(index);
@@ -498,7 +685,26 @@ public class workyApplication extends Application{
     }
 
 
-    /* EDIT CLIENT ENTRIES */
+    /**
+     * Edits a specific client in the database in the cloud based from all of its member variables.
+     * The change will be detected by the database listener which will then change the specific client
+     * in the <code>mClient</code> array.
+     *
+     * @param username       the username of the client
+     * @param password       the password of the client
+     * @param firstName      the first name of the client
+     * @param middleName     the middle name of the client
+     * @param lastName       the last name of the client
+     * @param age            the age of the client
+     * @param gender         the gender of the client
+     * @param email          the email of the client
+     * @param mobile         the mobile of the client
+     * @param profile        the profile of the client
+     * @param company        the company of the client
+     * @param field          the field of the client
+     * @param specialization the specialization of the client
+     * @param location       the location of the client
+     */
     public  void editClient(String username, String password, String firstName, String middleName,
                             String lastName, int age, String gender, String email, long mobile,
                             String profile, String company, String field, String specialization,
@@ -539,7 +745,26 @@ public class workyApplication extends Application{
     }
 
 
-    /* EDIT FREELANCER ENTRIES */
+    /**
+     * Edits a specific freelancer in the database in the cloud based from all of its member variables.
+     * The change will be detected by the database listener which will then change the specific freelancer
+     * in the <code>mFreelancer</code> array.
+     *
+     * @param username   the username of the freelancer
+     * @param password   the password of the freelancer
+     * @param firstName  the first name of the freelancer
+     * @param middleName the middle name of the freelancer
+     * @param lastName   the last name of the freelancer
+     * @param age        the age of the freelancer
+     * @param gender     the gender of the freelancer
+     * @param email      the email of the freelancer
+     * @param mobile     the mobile of the freelancer
+     * @param profile    the profile of the freelancer
+     * @param educ       the educ of the freelancer
+     * @param expertise  the expertise of the freelancer
+     * @param course     the course of the freelancer
+     * @param location   the location of the freelancer
+     */
     public  void editFreelancer(String username, String password, String firstName, String middleName,
                                 String lastName, int age, String gender, String email, long mobile,
                                 String profile, String educ, String expertise, String course,

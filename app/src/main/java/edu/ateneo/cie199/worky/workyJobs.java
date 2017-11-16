@@ -1,9 +1,8 @@
 package edu.ateneo.cie199.worky;
 
 /**
- * Created by Richmond Sim on 12/11/2017.
+ * The job class. Each instance of this class represents one job.
  */
-
 public class workyJobs {
     private String mJobfield;
     private String mJobtitle;
@@ -13,9 +12,23 @@ public class workyJobs {
     private String mUsername;
     private String mUsertype;
 
+    /**
+     * Instantiates a new Worky jobs.
+     */
     public workyJobs() {}
 
-    public workyJobs(String mJobfield, String mJobtitle, float mSalary, 
+    /**
+     * Instantiates a new jobs instance taking all required parameters.
+     *
+     * @param mJobfield    the field of the job
+     * @param mJobtitle    the title of the jobs
+     * @param mSalary      the salary of the job
+     * @param mLocation    the location of the job
+     * @param mDescription the description of the job
+     * @param mUsername    the username of the job's owner
+     * @param mUsertype    the user type of the job's owner
+     */
+    public workyJobs(String mJobfield, String mJobtitle, float mSalary,
                      String mLocation, String mDescription, String mUsername, String mUsertype) {
         this.mJobfield = mJobfield;
         this.mJobtitle = mJobtitle;
@@ -82,6 +95,10 @@ public class workyJobs {
         this.mUsertype = mUsertype;
     }
 
+    /**
+     * Overrides the <code>toString</code> so that the desired <code>String</code> output
+     * is intended by the user.
+     */
     /* FOR LISTVIEW OUTPUT */
     public String toString() {
         return getJobtitle() + "\n" +

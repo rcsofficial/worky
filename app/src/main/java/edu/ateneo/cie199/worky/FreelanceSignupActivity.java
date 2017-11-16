@@ -10,6 +10,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * The activity class where the user signups for a new freelancer account. Redirects to
+ * <code>FreelanceDashboardActivity</code> in a successful signup.
+ *
+ * @see ClientDashboardActivity
+ */
 public class FreelanceSignupActivity extends AppCompatActivity {
     /* LOGIN SESSION MANAGEMENT */
     workySessionMgt session;

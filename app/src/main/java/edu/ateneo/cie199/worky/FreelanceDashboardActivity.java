@@ -13,8 +13,24 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.RunnableFuture;
 
+/**
+ * The activity class for the freelancer dash board. <code>LoginActivity</code> redirects here when
+ * user signed up as a freelancer. <code>FreelancerSignupActivity</code> also redirects here when a freelancer
+ * is able to successfully sign up. From here the client can redirect to <code>FreelanceEditDeletePostActivity</code>
+ * where the he can edit or delete his jobs, <code>FreelanceEditProfileActivity</code> where he
+ * can edit his profile, <code>FreelanceFindActivity</code> where he can find jobs,
+ * <code>FreelancePostActivity</code> where he can post jobs, and <code>FreelanceViewAsClientActivity</code>
+ * where he can view his profile as seen by freelancers.
+ *
+ * @see LoginActivity
+ * @see ClientSignupActivity
+ * @see ClientEditDeletePostActivity
+ * @see ClientFindActivity
+ * @see ClientEditProfileActivity
+ * @see ClientPostActivity
+ * @see ClientViewAsFreelancerActivity
+ */
 public class FreelanceDashboardActivity extends AppCompatActivity {
 
     /* LOGIN SESSION MANAGEMENT */
@@ -31,7 +47,7 @@ public class FreelanceDashboardActivity extends AppCompatActivity {
         /* APPLICATION OBJECT */
         final workyApplication app = (workyApplication) getApplication();
 
-        app.iniitilizeJobLinks();
+        app.initializeJobLinks();
 
         /* LOGIN SESSION MANAGEMENT INITIALIZATION */
         session = new workySessionMgt(getApplicationContext());
@@ -133,20 +149,6 @@ public class FreelanceDashboardActivity extends AppCompatActivity {
 
         /* Display ListView of Previous Transactions */
         final ListView listJobs = (ListView) findViewById(R.id.lsv_f_joborders);
-        /*
-        ArrayList<workyLinkJob> linkJobs =
-                app.getLinkedJobsByTypeFreelancer(user.get(workySessionMgt.KEY_USERNAME));
-        ArrayList<String> stringOutput = new ArrayList<>();
-        for (int i = 0; i < linkJobs.size(); i++) {
-            stringOutput.add("Your Job: " + linkJobs.get(i).getJob().getJobtitle() + "\n"
-                    + "Client Applied: " + linkJobs.get(i).getClient().getUsername() + "\n"
-                    + "Email: " + linkJobs.get(i).getClient().getEmail() + "\n"
-                    + "Contact: " + linkJobs.get(i).getClient().getMobile());
-        }
-        mAdapter = new ArrayAdapter<String>
-                (FreelanceDashboardActivity.this, android.R.layout.simple_list_item_1, stringOutput);
-        listJobs.setAdapter(mAdapter);
-        */
         final Handler handler = new Handler();
         class updateAdapter  implements Runnable {
             private Handler handler;
@@ -176,9 +178,6 @@ public class FreelanceDashboardActivity extends AppCompatActivity {
                 this.mAdapter.notifyDataSetChanged();
             }
         }
-
         handler.post(new updateAdapter(handler, mAdapter));
-
-        //]mAdapter.notifyDataSetChanged();
     }
 }

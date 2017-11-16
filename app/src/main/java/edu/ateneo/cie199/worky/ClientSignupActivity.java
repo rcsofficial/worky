@@ -12,6 +12,12 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+/**
+ * The activity class where the user signups for a new client account. Redirects to
+ * <code>ClientDashboardActivity</code> in a successful signup.
+ *
+ * @see ClientDashboardActivity
+ */
 public class ClientSignupActivity extends AppCompatActivity {
     /* LOGIN SESSION MANAGEMENT */
     workySessionMgt session;

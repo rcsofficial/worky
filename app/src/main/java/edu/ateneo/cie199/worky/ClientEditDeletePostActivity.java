@@ -11,6 +11,9 @@ import android.widget.Toast;
 
 import java.util.HashMap;
 
+/**
+ * The activity class where the client can edit or delete his past jobs.
+ */
 public class ClientEditDeletePostActivity extends AppCompatActivity {
 
     /* LOGIN SESSION MANAGEMENT */

@@ -14,6 +14,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+/**
+ * The activity class where a client can add a job. Redirects to
+ * <code>ClientDashboardActivity</code> when a job is successfully added.
+ *
+ * @see ClientDashboardActivity
+ */
 public class ClientPostActivity extends AppCompatActivity {
 
     /* LOGIN SESSION MANAGEMENT */

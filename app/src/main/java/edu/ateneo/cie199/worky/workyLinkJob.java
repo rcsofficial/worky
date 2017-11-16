@@ -1,11 +1,22 @@
 package edu.ateneo.cie199.worky;
 
+/**
+ * The job link class. Each instance of this class represents one link.
+ */
 public class workyLinkJob {
     private String mJobUsertype;
     private workyClient mClient;
     private workyFreelancer mFreelancer;
     private workyJobs mJob;
 
+    /**
+     * Instantiates a job link class taking in all required parameters.
+     *
+     * @param jobUsertype the type of the job's owner
+     * @param client      the client of the job
+     * @param freelancer  the freelancer of the job
+     * @param job         the job
+     */
     public workyLinkJob(String jobUsertype, workyClient client, workyFreelancer freelancer, workyJobs job) {
         this.mJobUsertype = jobUsertype;
         this.mClient = client;

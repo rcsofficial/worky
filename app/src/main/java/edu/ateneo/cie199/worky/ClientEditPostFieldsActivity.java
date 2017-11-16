@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+/**
+ * The activity class where the client can edit his jobs.
+ */
 public class ClientEditPostFieldsActivity extends AppCompatActivity {
 
     /* LOGIN SESSION MANAGEMENT */

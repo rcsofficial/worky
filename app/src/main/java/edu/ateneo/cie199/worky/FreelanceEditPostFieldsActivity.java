@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 import java.util.HashMap;
 
+/**
+ * The activity class where a freelancer can edit his jobs.
+ */
 public class FreelanceEditPostFieldsActivity extends AppCompatActivity {
 
     /* LOGIN SESSION MANAGEMENT */

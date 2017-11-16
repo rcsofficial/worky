@@ -9,6 +9,11 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 
+/**
+ * It the class for the activity where a client can view his profile as a freelancer. A freelancer
+ * views this when selecting a job posted by a client where the client details and the job is
+ * listed.
+ */
 public class ClientViewAsFreelancerActivity extends AppCompatActivity {
     workySessionMgt session;
     @Override

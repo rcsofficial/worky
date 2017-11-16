@@ -16,6 +16,9 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * The activity class where a client can edit his details.
+ */
 public class ClientEditProfileActivity extends AppCompatActivity {
 
     /* LOGIN SESSION MANAGEMENT */

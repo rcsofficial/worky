@@ -14,6 +14,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+/**
+ * The activity class where a freelancer can add a job. Redirects to
+ * <code>FreelanceDashboardActivity</code> when a job is successfully added.
+ *
+ * @see ClientDashboardActivity
+ */
 public class FreelancePostActivity extends AppCompatActivity {
 
     /* LOGIN SESSION MANAGEMENT */

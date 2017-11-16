@@ -11,6 +11,9 @@ import android.widget.Toast;
 
 import java.util.HashMap;
 
+/**
+ * The activity class where the freelancer can edit or delete his past jobs.
+ */
 public class FreelanceEditDeletePostActivity extends AppCompatActivity {
 
     /* LOGIN SESSION MANAGEMENT */

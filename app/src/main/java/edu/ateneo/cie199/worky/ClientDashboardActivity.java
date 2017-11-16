@@ -10,12 +10,27 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * The activity class for the client dash board. <code>LoginActivity</code> redirects here when
+ * user signed up as a client. <code>ClientSignupActivity</code> also redirects here when a client
+ * is able to successfully sign up. From here the client can redirect to <code>ClientEditDeletePostActivity</code>
+ * where the he can edit or delete his jobs, <code>ClientEditProfileActivity</code> where he
+ * can edit his profile, <code>ClientFindActivity</code> where he can find jobs,
+ * <code>ClientPostActivity</code> where he can post jobs, and <code>ClientViewAsFreelancerActivity</code>
+ * where he can view his profile as seen by freelancers.
+ *
+ * @see LoginActivity
+ * @see ClientSignupActivity
+ * @see ClientEditDeletePostActivity
+ * @see ClientFindActivity
+ * @see ClientEditProfileActivity
+ * @see ClientPostActivity
+ * @see ClientViewAsFreelancerActivity
+ */
 public class ClientDashboardActivity extends AppCompatActivity {
 
     private ArrayAdapter<String> mAdapter = null;
@@ -32,7 +47,7 @@ public class ClientDashboardActivity extends AppCompatActivity {
         /* APPLICATION OBJECT */
         final workyApplication app = (workyApplication) getApplication();
 
-        app.iniitilizeJobLinks();
+        app.initializeJobLinks();
 
         /* LOGIN SESSION MANAGEMENT INITIALIZATION */
         session = new workySessionMgt(getApplicationContext());
@@ -134,23 +149,6 @@ public class ClientDashboardActivity extends AppCompatActivity {
 
         /* Display ListView of Previous Transactions */
         final ListView listJobs = (ListView) findViewById(R.id.lsv_c_joborders);
-        /*
-        ArrayList<workyLinkJob> linkJobs =
-                app.getLinkedJobsByTypeClient(user.get(workySessionMgt.KEY_USERNAME));
-        ArrayList<String> stringOutput = new ArrayList<>();
-        for (int i = 0; i < linkJobs.size(); i++) {
-            stringOutput.add("Your Job: " + linkJobs.get(i).getJob().getJobtitle() + "\n"
-                                + "Freelancer Applied: "
-                                + linkJobs.get(i).getFreelancer().getUsername() + "\n"
-                                + "Email: " + linkJobs.get(i).getFreelancer().getEmail() + "\n"
-                                + "Contact: " + linkJobs.get(i).getFreelancer().getMobile());
-        }
-        mAdapter = new ArrayAdapter<String>
-                (ClientDashboardActivity.this, android.R.layout.simple_list_item_1, stringOutput);
-        listJobs.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
-        */
-
         final Handler handler = new Handler();
         class updateAdapter  implements Runnable {
             private Handler handler;
@@ -184,8 +182,5 @@ public class ClientDashboardActivity extends AppCompatActivity {
         }
 
         handler.post(new updateAdapter(handler, mAdapter));
-
-
-
     }
 }

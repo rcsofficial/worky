@@ -15,6 +15,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
+/**
+ * The activity class where a freelancer can find jobs posted by clients.
+ */
 public class FreelanceFindActivity extends AppCompatActivity {
 
     private ArrayAdapter<workyJobs> mAdapter = null;

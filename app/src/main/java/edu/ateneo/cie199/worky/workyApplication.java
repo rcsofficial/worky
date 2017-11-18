@@ -652,6 +652,7 @@ public class workyApplication extends Application{
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         workyJobs toDeleteFromMain = getJobsByUsername(username, usertype).get(index);
 
+        /*
         for (int i = 0; i < mLinkJob.size(); i++) {
                 if (mLinkJob.get(i).getJob() == toDeleteFromMain) {
                     db.collection("joblink").document(mLinkJob.get(i).getClient().getUsername()
@@ -672,7 +673,7 @@ public class workyApplication extends Application{
                             });
                 }
         }
-
+        */
         db.collection("job").document(toDeleteFromMain.getUsertype()+ toDeleteFromMain.getUsername() + ": " + toDeleteFromMain.getJobtitle())
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

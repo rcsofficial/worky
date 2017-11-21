@@ -150,6 +150,9 @@ public class ClientDashboardActivity extends AppCompatActivity {
         /* Display ListView of Previous Transactions */
         final ListView listJobs = (ListView) findViewById(R.id.lsv_c_joborders);
         final Handler handler = new Handler();
+        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+        listJobs.setAdapter(mAdapter);
+
         class updateAdapter  implements Runnable {
             private Handler handler;
             private ArrayAdapter<String> mAdapter;
@@ -172,12 +175,9 @@ public class ClientDashboardActivity extends AppCompatActivity {
                             + "Email: " + linkJobs.get(i).getFreelancer().getEmail() + "\n"
                             + "Contact: " + linkJobs.get(i).getFreelancer().getMobile());
                 }
-                mAdapter = new ArrayAdapter<String>
-                        (ClientDashboardActivity.this, android.R.layout.simple_list_item_1, stringOutput);
-                listJobs.setAdapter(mAdapter);
+                mAdapter.clear();
+                mAdapter.addAll(stringOutput);
                 mAdapter.notifyDataSetChanged();
-
-                this.mAdapter.notifyDataSetChanged();
             }
         }
 

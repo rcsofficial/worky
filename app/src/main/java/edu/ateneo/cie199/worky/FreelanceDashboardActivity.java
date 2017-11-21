@@ -150,6 +150,9 @@ public class FreelanceDashboardActivity extends AppCompatActivity {
         /* Display ListView of Previous Transactions */
         final ListView listJobs = (ListView) findViewById(R.id.lsv_f_joborders);
         final Handler handler = new Handler();
+        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+        listJobs.setAdapter(mAdapter);
+
         class updateAdapter  implements Runnable {
             private Handler handler;
             private ArrayAdapter<String> mAdapter;
@@ -171,11 +174,9 @@ public class FreelanceDashboardActivity extends AppCompatActivity {
                             + "Email: " + linkJobs.get(i).getClient().getEmail() + "\n"
                             + "Contact: " + linkJobs.get(i).getClient().getMobile());
                 }
-                mAdapter = new ArrayAdapter<String>
-                        (FreelanceDashboardActivity.this, android.R.layout.simple_list_item_1, stringOutput);
-                listJobs.setAdapter(mAdapter);
-
-                this.mAdapter.notifyDataSetChanged();
+                mAdapter.clear();
+                mAdapter.addAll(stringOutput);
+                mAdapter.notifyDataSetChanged();
             }
         }
         handler.post(new updateAdapter(handler, mAdapter));

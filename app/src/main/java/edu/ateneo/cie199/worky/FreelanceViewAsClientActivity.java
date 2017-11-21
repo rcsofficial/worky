@@ -48,7 +48,7 @@ public class FreelanceViewAsClientActivity extends AppCompatActivity {
             String title = recvdIntent.getStringExtra("F_TITLE");
             final workyJobs job = app.getJobByTypeUsernameTitle(accountType, cUsername, title);
 
-            TextView txvField = (TextView) findViewById(R.id.txv_f_v_field);
+            TextView txvField = (TextView) findViewById(R.id.txv_f_v_job_field);
             TextView txvTitle = (TextView) findViewById(R.id.txv_f_v_title);
             TextView txvSalary = (TextView) findViewById(R.id.txv_f_v_salary);
             TextView txvJobLocation = (TextView) findViewById(R.id.txv_f_v_job_location);

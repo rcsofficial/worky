@@ -131,7 +131,11 @@ public class workyApplication extends Application{
                                         Log.d(TAG, "Modified job: " + dc.getDocument().getData());
                                         break;
                                     case REMOVED:
-                                        mJobs.remove(dc.getDocument().toObject(workyJobs.class));
+                                        workyJobs jobA = dc.getDocument().toObject(workyJobs.class);
+
+                                        mJobs.remove(getJobIndexByTypeUsernameTitle(jobA.getUsertype(), jobA.getUsername(), jobA.getJobtitle()));
+
+                                        //mJobs.remove(dc.getDocument().toObject(workyJobs.class));
                                         Log.d(TAG, "Removed job: " + dc.getDocument().getData());
                                         break;
                                 }
@@ -674,6 +678,7 @@ public class workyApplication extends Application{
                 }
         }
         */
+
         db.collection("job").document(toDeleteFromMain.getUsertype()+ toDeleteFromMain.getUsername() + ": " + toDeleteFromMain.getJobtitle())
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

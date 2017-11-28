@@ -41,8 +41,9 @@
                 android:hint="Username"
                 android:inputType="textPersonName"
                 android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/black"
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/edt_password"
@@ -55,7 +56,8 @@
                 android:inputType="textPassword"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:textColorHint="@android:color/black"
+                android:textSize="16sp" />
 
             <Spinner
                 android:id="@+id/spn_usertype"
@@ -70,30 +72,28 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="75dp"
                 android:layout_alignEnd="@+id/spn_usertype"
                 android:layout_alignStart="@+id/spn_usertype"
                 android:layout_below="@+id/spn_usertype"
                 android:orientation="horizontal"
                 android:paddingTop="20dp">
 
-                <Button
+                <ImageView
                     android:id="@+id/btn_signin"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
-                    android:backgroundTint="@color/dirtywhite"
-                    android:text="Sign in"
-                    android:textSize="14sp" />
+                    android:paddingLeft="5dp"
+                    app:srcCompat="@drawable/signinbtn" />
 
-                <Button
+                <ImageView
                     android:id="@+id/btn_signup"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
-                    android:backgroundTint="@color/dirtywhite"
-                    android:text="Sign up"
-                    android:textSize="14sp" />
+                    android:paddingRight="5dp"
+                    app:srcCompat="@drawable/signupbtn" />
             </LinearLayout>
 
         </LinearLayout>

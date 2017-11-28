@@ -7,98 +7,69 @@
     android:background="@drawable/bg"
     tools:context="edu.ateneo.cie199.worky.FreelanceSignupActivity">
 
-    <TextView
-        android:id="@+id/lbl_c_dashboardpage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:fontFamily="sans-serif-condensed"
-        android:paddingLeft="10dp"
-        android:paddingTop="10dp"
-        android:text="Client Dashboard Page"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
     <LinearLayout
+        android:background="@color/colorPrimaryDark"
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lbl_c_dashboardpage"
-        android:orientation="horizontal"
-        android:paddingTop="10dp">
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="121dp"
-            android:layout_height="107dp"
-            android:paddingLeft="10dp"
-            app:srcCompat="@drawable/clientprofile" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
-
-            <TextView
-                android:id="@+id/txv_c_firstname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Insert First Name"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txv_c_company"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Insert Company" />
-
-            <TextView
-                android:id="@+id/txv_c_field"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Insert Field" />
-
-            <Button
-                android:id="@+id/btn_c_viewprofile"
-                android:layout_width="match_parent"
-                android:layout_height="38dp"
-                android:text="View Profile as Freelancer" />
-
-        </LinearLayout>
-
+        android:layout_height="80dp"
+        android:orientation="horizontal">
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imv_c_profpic"
+        android:layout_width="wrap_content"
+        android:layout_height="110dp"
+        android:layout_marginTop="10dp"
+        app:srcCompat="@drawable/clientprofile" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_below="@+id/linearLayout2">
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txv_c_firstname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imv_c_profpic"
+        android:paddingTop="15dp"
+        android:text="Insert First Name"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txv_c_company"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txv_c_firstname"
+        android:text="Insert Company"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/txv_c_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txv_c_company"
+        android:text="Insert Field"
+        android:textAlignment="center" />
 
     <TextView
         android:id="@+id/lbl_c_selections"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/linearLayout2"
+        android:layout_below="@+id/txv_c_field"
         android:layout_marginTop="15dp"
         android:fontFamily="sans-serif-condensed"
-        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
         android:text="What do you want to do?"
+        android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/lbl_c_selinstructions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Swipe to see more >>"
-        android:textSize="10sp"
-        android:textStyle="italic"
-        android:layout_above="@+id/horizontalScrollView"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="17dp" />
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"
@@ -113,8 +84,7 @@
             android:layout_height="130dp"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/lbl_c_selections"
-            android:orientation="horizontal"
-            android:paddingTop="10dp">
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/imvbtn_c_find"
@@ -167,12 +137,13 @@
         android:id="@+id/lbl_c_joborders"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/horizontalScrollView"
         android:fontFamily="sans-serif-condensed"
-        android:paddingLeft="10dp"
-        android:paddingTop="10dp"
-        android:text="Previous Transactions:"
+        android:paddingTop="15dp"
+        android:text="Previous Transactions"
+        android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold" />
 

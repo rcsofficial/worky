@@ -24,12 +24,12 @@
         app:srcCompat="@drawable/freelanceprofile" />
 
     <TextView
-        android:id="@+id/txv_f_v_fullname"
+        android:id="@+id/txv_f_v_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Job Title"
         android:layout_marginStart="140dp"
         android:layout_marginTop="48dp"
-        android:text="Full Name"
         android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -45,201 +45,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginStart="140dp"
-            android:layout_marginTop="10dp">
-
-            <TextView
-                android:id="@+id/lbl_f_v_username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Username:"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txv_f_v_username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Username"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/lbl_f_v_education"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:text="Education:"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txv_f_v_education"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Education" />
-
-            <TextView
-                android:id="@+id/lbl_f_v_expertise"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:text="Expertise:"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txv_f_v_expertise"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Expertise" />
-
-            <TextView
-                android:id="@+id/lbl_f_v_course"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:text="Course:"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txv_f_v_course"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Course" />
-
-            <TextView
-                android:id="@+id/lbl_f_v_profile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:text="Profile:"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txv_f_v_profile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Profile" />
-
-            <TextView
-                android:id="@+id/lbl_f_v_Age"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:text="Age:"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txv_f_v_age"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Age"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/lbl_f_v_gender"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:text="Gender:"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txv_f_v_gender"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Gender"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/lbl_f_v_location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:text="Location:"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txv_f_v_location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Location"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/lbl_f_v_mobile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:text="Mobile:"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txv_f_v_mobile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Mobile"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/lbl_f_v_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:text="Email:"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txv_f_v_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Email"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/lbl_f_v_jobinfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingTop="15dp"
-                android:text="Job Info"
-                android:textAlignment="viewStart"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/lbl_f_v_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:text="Job Title:"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txv_f_v_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Job Title"
-                android:textSize="14sp" />
+            android:layout_marginTop="10dp"
+            android:paddingBottom="20dp">
 
             <TextView
                 android:id="@+id/lbl_f_v_jobfield"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
                 android:text="Job Field:"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -256,7 +68,7 @@
                 android:id="@+id/lbl_f_v_salary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="10dp"
                 android:text="Salary:"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -273,7 +85,7 @@
                 android:id="@+id/lbl_f_v_job_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="10dp"
                 android:text="Job Location:"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -290,7 +102,7 @@
                 android:id="@+id/lbl_f_v_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="10dp"
                 android:text="Job Description:"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -301,6 +113,194 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Job Description"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/lbl_f_v_about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="25dp"
+                android:text="About the Freelancer"
+                android:textAlignment="viewStart"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/lbl_f_v_fullname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Full Name:"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txv_f_v_fullname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Full Name"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/lbl_f_v_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Username:"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txv_f_v_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Username"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/lbl_f_v_education"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Education:"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txv_f_v_education"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Education" />
+
+            <TextView
+                android:id="@+id/lbl_f_v_expertise"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Expertise:"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txv_f_v_expertise"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Expertise" />
+
+            <TextView
+                android:id="@+id/lbl_f_v_course"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Course:"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txv_f_v_course"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Course" />
+
+            <TextView
+                android:id="@+id/lbl_f_v_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Profile:"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txv_f_v_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Profile" />
+
+            <TextView
+                android:id="@+id/lbl_f_v_Age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Age:"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txv_f_v_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Age"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/lbl_f_v_gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Gender:"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txv_f_v_gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Gender"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/lbl_f_v_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Location:"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txv_f_v_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Location"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/lbl_f_v_mobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Mobile:"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txv_f_v_mobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Mobile"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/lbl_f_v_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Email:"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txv_f_v_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Email"
                 android:textSize="14sp" />
         </LinearLayout>
     </ScrollView>

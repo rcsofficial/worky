@@ -26,18 +26,20 @@ public class ClientViewAsFreelancerActivity extends AppCompatActivity {
         /* SET FONT OF HEADER */
         Typeface font = Typeface.createFromAsset(ClientViewAsFreelancerActivity.this.getAssets(),
                 "nunito.ttf");
-        TextView lblJobInfo = (TextView) findViewById(R.id.lbl_c_v_jobinfo);
-        lblJobInfo.setTypeface(font);
+        TextView lblAbout = (TextView) findViewById(R.id.lbl_f_v_about);
+        lblAbout.setTypeface(font);
 
+        /* APPLICATION OBJECT */
         final workyApplication app = (workyApplication)getApplication();
 
+        /* LOGIN SESSION MANAGEMENT */
         session = new workySessionMgt(getApplicationContext());
         final HashMap<String, String> user = session.getUserDetails();
         String cUsername;
 
         final Intent recvdIntent = getIntent();
 
-
+        /* GET INFO AND SET TEXT VIEWS ACCORDINGLY */
         TextView txvUserName = (TextView) findViewById(R.id.txv_c_v_username);
         TextView txvFullName = (TextView) findViewById(R.id.txv_c_v_fullname);
         TextView txvCompany = (TextView) findViewById(R.id.txv_c_v_company);
@@ -49,8 +51,6 @@ public class ClientViewAsFreelancerActivity extends AppCompatActivity {
         TextView txvLocation = (TextView) findViewById(R.id.txv_c_v_location);
         TextView txvMobile = (TextView) findViewById(R.id.txv_c_v_mobile);
         TextView txvEmail = (TextView) findViewById(R.id.txv_c_v_email);
-        txvFullName.setTypeface(font);
-
 
         if (recvdIntent.getStringExtra("ORIGIN").equals("DASHBOARD")){
             cUsername = user.get(workySessionMgt.KEY_USERNAME);
@@ -66,12 +66,13 @@ public class ClientViewAsFreelancerActivity extends AppCompatActivity {
             TextView txvSalary = (TextView) findViewById(R.id.txv_c_v_salary);
             TextView txvJobLocation = (TextView) findViewById(R.id.txv_c_v_job_location);
             TextView txvDescription = (TextView) findViewById(R.id.txv_c_v_description);
+            txvTitle.setTypeface(font);
 
-            txvJobField.setText("Job Field: " + job.getJobfield());
-            txvTitle.setText("Job Title: " + job.getJobtitle());
-            txvSalary.setText("Salary: " + String.valueOf(job.getSalary()));
-            txvJobLocation.setText("Location: " + job.getLocation());
-            txvDescription.setText("Job Description: " + job.getDescription());
+            txvJobField.setText(job.getJobfield());
+            txvTitle.setText(job.getJobtitle());
+            txvSalary.setText(String.valueOf(job.getSalary()));
+            txvJobLocation.setText(job.getLocation());
+            txvDescription.setText(job.getDescription());
 
             ImageView btnSubmit = (ImageView) findViewById(R.id.btn_c_v_submit);
             btnSubmit.setOnClickListener(
@@ -97,23 +98,23 @@ public class ClientViewAsFreelancerActivity extends AppCompatActivity {
                 + app.getClientAcctByUsername(cUsername).getLastname();
         txvFullName.setText(fullname);
         txvCompany.setText
-                ("Company: " + app.getClientAcctByUsername(cUsername).getCompany());
+                (app.getClientAcctByUsername(cUsername).getCompany());
         txvField.setText
-                ("Field: " + app.getClientAcctByUsername(cUsername).getField());
+                (app.getClientAcctByUsername(cUsername).getField());
         txvSpecialization.setText
-                ("Specialization: " + app.getClientAcctByUsername(cUsername).getSpecialization());
+                (app.getClientAcctByUsername(cUsername).getSpecialization());
         txvProfile.setText
-                ("Profile: " + app.getClientAcctByUsername(cUsername).getProfile());
+                (app.getClientAcctByUsername(cUsername).getProfile());
         txvAge.setText
-                ("Age: " + Long.toString(app.getClientAcctByUsername(cUsername).getAge()));
+                (Long.toString(app.getClientAcctByUsername(cUsername).getAge()));
         txvGender.setText
-                ("Gender: " + app.getClientAcctByUsername(cUsername).getGender());
+                (app.getClientAcctByUsername(cUsername).getGender());
         txvLocation.setText
-                ("Location: " + app.getClientAcctByUsername(cUsername).getLocation());
+                (app.getClientAcctByUsername(cUsername).getLocation());
         txvMobile.setText
-                ("Mobile: " + Long.toString(app.getClientAcctByUsername(cUsername).getMobile()));
+                (Long.toString(app.getClientAcctByUsername(cUsername).getMobile()));
         txvEmail.setText
-                ("Email: " + app.getClientAcctByUsername(cUsername).getEmail());
+                (app.getClientAcctByUsername(cUsername).getEmail());
 
     }
 }

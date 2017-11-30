@@ -51,8 +51,8 @@ public class FreelanceEditDeletePostActivity extends AppCompatActivity {
 
         /* LISTVIEW DISPLAY */
         ListView listPostedJobs = (ListView) findViewById(R.id.lsv_f_postedjobs);
-        mAdapter = new ArrayAdapter<>(FreelanceEditDeletePostActivity.this,
-                android.R.layout.simple_list_item_1,
+        mAdapter = new workyJobLsvAdapter
+                (FreelanceEditDeletePostActivity.this,
                 app.getJobsByUsername(fUsername, "Freelancer"));
         listPostedJobs.setAdapter(mAdapter);
 
@@ -91,7 +91,7 @@ public class FreelanceEditDeletePostActivity extends AppCompatActivity {
                                         Toast.makeText(FreelanceEditDeletePostActivity.this,
                                                 "SUCCESS. Service offer deleted from list.",
                                                 Toast.LENGTH_SHORT).show();
-                                        finish();
+                                        dialog.cancel();
                                     }
                                 })
                                 .setNegativeButton("No", new DialogInterface.OnClickListener() {

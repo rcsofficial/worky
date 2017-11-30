@@ -109,10 +109,7 @@ public class ClientFindActivity extends AppCompatActivity {
                     else
                         outputArray = app.getAllJobs();
 
-
-                    mAdapter = new ArrayAdapter<>(ClientFindActivity.this,
-                            android.R.layout.simple_list_item_1,
-                            outputArray);
+                    mAdapter = new workyJobLsvAdapter(ClientFindActivity.this, outputArray);
                     listArticles.setAdapter(mAdapter);
 
                     /* REDIRECTION TO PROFILE PAGES */

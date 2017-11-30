@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 /**
  * The activity class where a freelancer can find jobs posted by clients.
@@ -109,9 +107,7 @@ public class FreelanceFindActivity extends AppCompatActivity {
                         outputArray = app.getAllJobs();
 
 
-                    mAdapter = new ArrayAdapter<>(FreelanceFindActivity.this,
-                            android.R.layout.simple_list_item_1,
-                            outputArray);
+                    mAdapter = new workyJobLsvAdapter(FreelanceFindActivity.this, outputArray);
                     listArticles.setAdapter(mAdapter);
 
 

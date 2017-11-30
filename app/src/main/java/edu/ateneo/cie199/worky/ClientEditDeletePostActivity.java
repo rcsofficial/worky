@@ -51,9 +51,9 @@ public class ClientEditDeletePostActivity extends AppCompatActivity {
 
         /* LISTVIEW DISPLAY */
         ListView listPostedJobs = (ListView) findViewById(R.id.lsv_c_postedjobs);
-        mAdapter = new ArrayAdapter<>(ClientEditDeletePostActivity.this,
-                android.R.layout.simple_list_item_1,
-                app.getJobsByUsername(cUsername, "Client"));
+        mAdapter = new workyJobLsvAdapter
+                (ClientEditDeletePostActivity.this,
+                        app.getJobsByUsername(cUsername, "Client"));
         listPostedJobs.setAdapter(mAdapter);
 
         /* REDIRECT TO EDIT FIELDS WHEN ITEM CLICKED */
@@ -92,7 +92,7 @@ public class ClientEditDeletePostActivity extends AppCompatActivity {
                                     Toast.makeText(ClientEditDeletePostActivity.this,
                                             "SUCCESS. Job offer deleted from list.",
                                             Toast.LENGTH_SHORT).show();
-                                    finish();
+                                    dialog.cancel();
                                 }
                             })
                             .setNegativeButton("No", new DialogInterface.OnClickListener() {

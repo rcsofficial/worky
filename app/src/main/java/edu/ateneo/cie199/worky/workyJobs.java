@@ -4,6 +4,7 @@ package edu.ateneo.cie199.worky;
  * The job class. Each instance of this class represents one job.
  */
 public class workyJobs {
+    private int mJobicon;
     private String mJobfield;
     private String mJobtitle;
     private float mSalary;
@@ -37,6 +38,41 @@ public class workyJobs {
         this.mDescription = mDescription;
         this.mUsername = mUsername;
         this.mUsertype = mUsertype;
+
+        if (mJobfield.equals("Agriculture"))
+            this.mJobicon = 0;
+        else if (mJobfield.equals("Arts"))
+            this.mJobicon = 1;
+        else if (mJobfield.equals("Clerical"))
+            this.mJobicon = 2;
+        else if (mJobfield.equals("Education"))
+            this.mJobicon = 3;
+        else if (mJobfield.equals("Engineering"))
+            this.mJobicon = 4;
+        else if (mJobfield.equals("Finance"))
+            this.mJobicon = 5;
+        else if (mJobfield.equals("Health"))
+            this.mJobicon = 6;
+        else if (mJobfield.equals("Hospitality"))
+            this.mJobicon = 7;
+        else if (mJobfield.equals("IT"))
+            this.mJobicon = 8;
+        else if (mJobfield.equals("Legal"))
+            this.mJobicon = 9;
+        else if (mJobfield.equals("Manufacturing"))
+            this.mJobicon = 10;
+        else if (mJobfield.equals("Transport"))
+            this.mJobicon = 11;
+        else if (mJobfield.equals("Others"))
+            this.mJobicon = 12;
+    }
+
+    public int getJobicon() {
+        return mJobicon;
+    }
+
+    public void setJobicon(int mJobicon) {
+        this.mJobicon = mJobicon;
     }
 
     public String getJobfield() {

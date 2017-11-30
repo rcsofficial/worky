@@ -22,20 +22,24 @@ public class FreelanceViewAsClientActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_freelance_view_as_client);
-        final workyApplication app = (workyApplication)getApplication();
 
         /* SET FONT OF HEADER */
         Typeface font = Typeface.createFromAsset(FreelanceViewAsClientActivity.this.getAssets(),
                 "nunito.ttf");
-        TextView lblJobInfo = (TextView) findViewById(R.id.lbl_f_v_jobinfo);
-        lblJobInfo.setTypeface(font);
+        TextView lblAbout = (TextView) findViewById(R.id.lbl_c_v_about);
+        lblAbout.setTypeface(font);
 
+        /* APPLICATION OBJECT */
+        final workyApplication app = (workyApplication)getApplication();
+
+        /* LOGIN SESSION MANAGEMENT */
         session = new workySessionMgt(getApplicationContext());
         final HashMap<String, String> user = session.getUserDetails();
         String cUsername;
 
         final Intent recvdIntent = getIntent();
 
+        /* GET INFO AND SET TEXT VIEWS ACCORDINGLY */
         TextView txvUserName = (TextView) findViewById(R.id.txv_f_v_username);
         TextView txvFullName = (TextView) findViewById(R.id.txv_f_v_fullname);
         TextView txvExpertise = (TextView) findViewById(R.id.txv_f_v_expertise);
@@ -46,7 +50,6 @@ public class FreelanceViewAsClientActivity extends AppCompatActivity {
         TextView txvLocation = (TextView) findViewById(R.id.txv_f_v_location);
         TextView txvMobile = (TextView) findViewById(R.id.txv_f_v_mobile);
         TextView txvEmail = (TextView) findViewById(R.id.txv_f_v_email);
-        txvFullName.setTypeface(font);
 
         if (recvdIntent.getStringExtra("ORIGIN").equals("DASHBOARD")){
             cUsername = user.get(workySessionMgt.KEY_USERNAME);
@@ -57,11 +60,12 @@ public class FreelanceViewAsClientActivity extends AppCompatActivity {
             String title = recvdIntent.getStringExtra("F_TITLE");
             final workyJobs job = app.getJobByTypeUsernameTitle(accountType, cUsername, title);
 
-            TextView txvField = (TextView) findViewById(R.id.txv_f_v_job_field);
             TextView txvTitle = (TextView) findViewById(R.id.txv_f_v_title);
+            TextView txvField = (TextView) findViewById(R.id.txv_f_v_job_field);
             TextView txvSalary = (TextView) findViewById(R.id.txv_f_v_salary);
             TextView txvJobLocation = (TextView) findViewById(R.id.txv_f_v_job_location);
             TextView txvDescription = (TextView) findViewById(R.id.txv_f_v_description);
+            txvTitle.setTypeface(font);
 
             txvField.setText(job.getJobfield());
             txvTitle.setText(job.getJobtitle());
@@ -92,22 +96,22 @@ public class FreelanceViewAsClientActivity extends AppCompatActivity {
                 + app.getFreelancerAcctByUsername(cUsername).getMiddlename() + " "
                 + app.getFreelancerAcctByUsername(cUsername).getLastname();
         txvFullName.setText(fullname);
-        txvExpertise.setText(
-                "Expertise: " + app.getFreelancerAcctByUsername(cUsername).getExpertise());
+        txvExpertise.setText
+                (app.getFreelancerAcctByUsername(cUsername).getExpertise());
         txvCourse.setText
-                ("Course: " + app.getFreelancerAcctByUsername(cUsername).getCourse());
+                (app.getFreelancerAcctByUsername(cUsername).getCourse());
         txvProfile.setText
-                ("Profile: " + app.getFreelancerAcctByUsername(cUsername).getProfile());
+                (app.getFreelancerAcctByUsername(cUsername).getProfile());
         txvAge.setText
-                ("Age: " + Long.toString(app.getFreelancerAcctByUsername(cUsername).getAge()));
+                (Long.toString(app.getFreelancerAcctByUsername(cUsername).getAge()));
         txvGender.setText
-                ("Gender: " + app.getFreelancerAcctByUsername(cUsername).getGender());
+                (app.getFreelancerAcctByUsername(cUsername).getGender());
         txvLocation.setText
-                ("Location: " + app.getFreelancerAcctByUsername(cUsername).getLocation());
+                (app.getFreelancerAcctByUsername(cUsername).getLocation());
         txvMobile.setText
-                ("Mobile: " + Long.toString(app.getFreelancerAcctByUsername(cUsername).getMobile()));
+                (Long.toString(app.getFreelancerAcctByUsername(cUsername).getMobile()));
         txvEmail.setText
-                ("Email: " + app.getFreelancerAcctByUsername(cUsername).getEmail());
+                (app.getFreelancerAcctByUsername(cUsername).getEmail());
 
     }
 

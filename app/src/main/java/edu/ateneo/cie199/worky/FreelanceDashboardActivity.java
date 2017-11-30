@@ -1,6 +1,7 @@
 package edu.ateneo.cie199.worky;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -43,6 +44,13 @@ public class FreelanceDashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_freelance_dashboard);
 
+        /* SET FONT OF HEADER */
+        Typeface font = Typeface.createFromAsset(FreelanceDashboardActivity.this.getAssets(),
+                "nunito.ttf");
+        TextView txvSelections = (TextView) findViewById(R.id.lbl_f_selections);
+        TextView txvJobOrders = (TextView) findViewById(R.id.lbl_f_joborders);
+        txvSelections.setTypeface(font);
+        txvJobOrders.setTypeface(font);
 
         /* APPLICATION OBJECT */
         final workyApplication app = (workyApplication) getApplication();
@@ -66,24 +74,10 @@ public class FreelanceDashboardActivity extends AppCompatActivity {
         TextView txvFeducation = (TextView) findViewById(R.id.txv_f_education);
         TextView txvFexpertise = (TextView) findViewById(R.id.txv_f_expertise);
         txvFfirstname.setText(firstname);
+        txvFfirstname.setTypeface(font);
         txvFeducation.setText(education);
         txvFexpertise.setText(expertise);
 
-
-        /* VIEW PROFILE AS SEEN BY CLIENT */
-        Button btnViewProfile = (Button) findViewById(R.id.btn_f_viewprofile);
-        btnViewProfile.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent launchFreelanceViewAsClientActivity =
-                                new Intent(FreelanceDashboardActivity.this,
-                                        FreelanceViewAsClientActivity.class);
-                        launchFreelanceViewAsClientActivity.putExtra("ORIGIN", "DASHBOARD");
-                        startActivity(launchFreelanceViewAsClientActivity);
-                    }
-                }
-        );
 
         /* LAUNCH FIND FREELANCERS */
         ImageView imvbtnFind = (ImageView) findViewById(R.id.imvbtn_f_find);

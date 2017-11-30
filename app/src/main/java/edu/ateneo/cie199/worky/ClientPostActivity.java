@@ -1,11 +1,13 @@
 package edu.ateneo.cie199.worky;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +33,13 @@ public class ClientPostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_post);
 
+        /* SET FONT OF HEADER */
+        Typeface font = Typeface.createFromAsset(ClientPostActivity.this.getAssets(),
+                "nunito.ttf");
+        TextView lblPost = (TextView) findViewById(R.id.lbl_c_postpage);
+        TextView lblTips = (TextView) findViewById(R.id.lbl_c_tips);
+        lblPost.setTypeface(font);
+        lblTips.setTypeface(font);
 
         /* LOGIN SESSION MANAGEMENT INITIALIZATION */
         session = new workySessionMgt(getApplicationContext());
@@ -38,23 +47,19 @@ public class ClientPostActivity extends AppCompatActivity {
         final String cUsername = user.get(workySessionMgt.KEY_USERNAME);
         final String cUsertype = user.get(workySessionMgt.KEY_USERTYPE);
 
-
         /* EDIT TEXTVIEW FOR POSTING TIPS WITH RANDOM TIPS */
         TextView txvCtips = (TextView) findViewById(R.id.txv_c_tips);
         txvCtips.setText(randomTipsGen());
 
-
-        Button btnPostJob = (Button) findViewById(R.id.btn_c_postjob);
+        ImageView btnPostJob = (ImageView) findViewById(R.id.btn_c_postjob);
         btnPostJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent launchClientDashboardActivity = new Intent(ClientPostActivity.this,
                         ClientDashboardActivity.class);
 
-
                 /* APPLICATION OBJECT */
                 final workyApplication app = (workyApplication) getApplication();
-
 
                 /* GET DATA FROM USER FIELDS */
                 Spinner spnJobcategory = (Spinner) findViewById(R.id.spn_c_jobcategory);
@@ -63,12 +68,10 @@ public class ClientPostActivity extends AppCompatActivity {
                 EditText edtJobloc = (EditText) findViewById(R.id.edt_c_jobloc);
                 EditText edtJobdesc = (EditText) findViewById(R.id.edt_c_jobdesc);
 
-
                 /* LOOKUP TRANSLATION TABLE FOR SPINNER */
                 String[] LOOKUP_JOBCATEGORY = { "Agriculture", "Arts", "Clerical", "Education",
                         "Engineering", "Finance", "Health", "Hospitality",
                         "IT", "Legal", "Manufacturing", "Transport", "Others"};
-
 
                 /* EXTRACT DATA FROM USER FIELDS */
                 String jobcategory = LOOKUP_JOBCATEGORY[spnJobcategory.getSelectedItemPosition()];
@@ -77,11 +80,9 @@ public class ClientPostActivity extends AppCompatActivity {
                 String jobloc = edtJobloc.getText().toString();
                 String jobdesc = edtJobdesc.getText().toString();
 
-
                 /* ENSURE THAT FLOAT FIELD IS NEVER EMPTY TO AVOID CRASH*/
                 try {
                     maxpay = Float.parseFloat(edtMaxpay.getText().toString());
-
 
                     /* CHECKS IF ANY FIELDS ARE EMPTY */
                     if (jobcategory.isEmpty() || jobtitle.isEmpty() || jobloc.isEmpty() ||
@@ -90,11 +91,11 @@ public class ClientPostActivity extends AppCompatActivity {
                                 "ERROR. You cannot leave fields empty.",
                                 Toast.LENGTH_SHORT).show();
                     }
+
                     else {
                     /* CREATE JOB IF NO FIELD IS EMPTY*/
                         app.addJob(new workyJobs(jobcategory, jobtitle, maxpay, jobloc,
                                 jobdesc, cUsername, cUsertype));
-
 
                     /* ALERT THAT MAXIMUM SALARY SET TO FREE IF BLANK */
                         if (maxpay == 0.0f){
@@ -102,13 +103,13 @@ public class ClientPostActivity extends AppCompatActivity {
                                     "NOTICE. Maximum salary assumed free. Job added to list.",
                                     Toast.LENGTH_SHORT).show();
                         }
+
                     /* GENERAL ALERT WHEN JOB IS ADDED */
                         else {
                             Toast.makeText(ClientPostActivity.this,
                                     "SUCCESS. Job added to list.",
                                     Toast.LENGTH_SHORT).show();
                         }
-
 
                     /* REDIRECT TO CLIENT DASHBOARD ACTIVITY */
                         startActivity(launchClientDashboardActivity);

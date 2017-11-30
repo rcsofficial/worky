@@ -1,10 +1,12 @@
 package edu.ateneo.cie199.worky;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -20,6 +22,12 @@ public class ClientViewAsFreelancerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_view_as_freelancer);
+
+        /* SET FONT OF HEADER */
+        Typeface font = Typeface.createFromAsset(ClientViewAsFreelancerActivity.this.getAssets(),
+                "nunito.ttf");
+        TextView lblJobInfo = (TextView) findViewById(R.id.lbl_c_v_jobinfo);
+        lblJobInfo.setTypeface(font);
 
         final workyApplication app = (workyApplication)getApplication();
 
@@ -41,6 +49,7 @@ public class ClientViewAsFreelancerActivity extends AppCompatActivity {
         TextView txvLocation = (TextView) findViewById(R.id.txv_c_v_location);
         TextView txvMobile = (TextView) findViewById(R.id.txv_c_v_mobile);
         TextView txvEmail = (TextView) findViewById(R.id.txv_c_v_email);
+        txvFullName.setTypeface(font);
 
 
         if (recvdIntent.getStringExtra("ORIGIN").equals("DASHBOARD")){
@@ -64,7 +73,7 @@ public class ClientViewAsFreelancerActivity extends AppCompatActivity {
             txvJobLocation.setText("Location: " + job.getLocation());
             txvDescription.setText("Job Description: " + job.getDescription());
 
-            Button btnSubmit = (Button) findViewById(R.id.btn_c_v_submit);
+            ImageView btnSubmit = (ImageView) findViewById(R.id.btn_c_v_submit);
             btnSubmit.setOnClickListener(
                     new View.OnClickListener() {
                         @Override

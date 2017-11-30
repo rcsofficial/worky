@@ -1,11 +1,13 @@
 package edu.ateneo.cie199.worky;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,17 +31,20 @@ public class ClientEditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_edit_profile);
 
+        /* SET FONT OF HEADER */
+        Typeface font = Typeface.createFromAsset(ClientEditProfileActivity.this.getAssets(),
+                "nunito.ttf");
+        TextView lblEditProfile = (TextView) findViewById(R.id.lbl_c_e_editprofile);
+        lblEditProfile.setTypeface(font);
         
         /* LOGIN SESSION MANAGEMENT INITIALIZATION */
         session = new workySessionMgt(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
         final String cUsername = user.get(workySessionMgt.KEY_USERNAME);
 
-
         /* SET USERNAME */
         TextView txvCusername = (TextView) findViewById(R.id.txv_c_e_username);
         txvCusername.setText(cUsername);
-
 
         /* APPLICATION OBJECT */
         final workyApplication app = (workyApplication) getApplication();
@@ -95,7 +100,7 @@ public class ClientEditProfileActivity extends AppCompatActivity {
         edtClocation.setText(clientAcct.getLocation());
 
 
-        Button btnFinish = (Button) findViewById(R.id.btn_c_e_editprofile);
+        ImageView btnFinish = (ImageView) findViewById(R.id.btn_c_e_editprofile);
         btnFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

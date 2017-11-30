@@ -1,6 +1,7 @@
 package edu.ateneo.cie199.worky;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,8 +9,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -27,35 +30,38 @@ public class ClientFindActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_find);
 
-        Button btnSearch = (Button) findViewById(R.id.btn_c_search);
+        /* SET FONT OF HEADER */
+        Typeface font = Typeface.createFromAsset(ClientFindActivity.this.getAssets(),
+                "nunito.ttf");
+        TextView lblFind = (TextView) findViewById(R.id.lbl_c_findpage);
+        TextView lblResult = (TextView) findViewById(R.id.lbl_c_searchresults);
+        lblFind.setTypeface(font);
+        lblResult.setTypeface(font);
+
+        ImageView btnSearch = (ImageView) findViewById(R.id.btn_c_search);
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 /* APPLICATION OBJECT */
                 final workyApplication app = (workyApplication) getApplication();
 
-
                 /* DECLARATION OF ARRAY TO BE OUTPUTTED */
                 final ArrayList<workyJobs> outputArray;
-
 
                 /* GET SEARCH PARAMETERS FROM USER */
                 Spinner spnJobcategory = (Spinner) findViewById(R.id.spn_c_jobcategory);
                 Spinner spnSearchfilter = (Spinner) findViewById(R.id.spn_c_searchfilters);
                 EditText edtSearch = (EditText) findViewById(R.id.edt_c_search);
 
-
                 /* LOOKUP TRANSLATION TABLE FOR SPINNER */
                 String[] LOOKUP_JOBCATEGORY = { "Agriculture", "Arts", "Clerical", "Education",
                         "Engineering", "Finance", "Health", "Hospitality",
                         "IT", "Legal", "Manufacturing", "Transport", "Others"};
 
-
                 /* EXTRACT SEARCH PARAMETERS FROM USER */
                 String jobCategory = LOOKUP_JOBCATEGORY[spnJobcategory.getSelectedItemPosition()];
                 int searchFilter = spnSearchfilter.getSelectedItemPosition();
                 String search = edtSearch.getText().toString();
-
 
                 /* CHECKS THAT KEYWORD IS NOT EMPTY */
                 if (search.isEmpty()) {
@@ -109,7 +115,6 @@ public class ClientFindActivity extends AppCompatActivity {
                             outputArray);
                     listArticles.setAdapter(mAdapter);
 
-
                     /* REDIRECTION TO PROFILE PAGES */
                     listArticles.setOnItemClickListener(
                             new AdapterView.OnItemClickListener() {
@@ -123,11 +128,6 @@ public class ClientFindActivity extends AppCompatActivity {
                                     launchFreelanceViewAsClientActivity.putExtra("F_USERNAME", outputArray.get((int) id).getUsername());
                                     launchFreelanceViewAsClientActivity.putExtra("F_TITLE", outputArray.get((int) id).getJobtitle());
                                     startActivity(launchFreelanceViewAsClientActivity);
-
-                                    // TODO: Intent to the Profile Handshaking Page of Freelancer when Clicked
-                                    // TODO: (Freelancer must accept before proceeding) and Review Feature
-                                    // TODO: After Handshaking: Automatic put job experience / order to both freelance and client profiles
-                                    // TODO: After Handshaking: Redirect back to Dashboard
                                     return;
                                 }
                             }

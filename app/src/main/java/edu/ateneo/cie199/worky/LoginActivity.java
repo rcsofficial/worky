@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -37,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         /* REDIRECTION TO SIGN IN DASHBOARDS */
-        Button btnSignin = (Button) findViewById(R.id.btn_signin);
+        ImageView btnSignin = (ImageView) findViewById(R.id.btn_signin);
         btnSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         /* REDIRECTION TO SIGN UP PAGES */
-        Button btnSignup = (Button) findViewById(R.id.btn_signup);
+        ImageView btnSignup = (ImageView) findViewById(R.id.btn_signup);
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -8,38 +8,32 @@
     tools:context="edu.ateneo.cie199.worky.ClientFindActivity">
 
     <LinearLayout
+        android:background="@color/colorPrimaryDark"
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/lbl_f_findpage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/linearLayout4">
-
-        <ImageView
-            android:id="@+id/imv_f_findicon"
-            android:layout_width="61dp"
-            android:layout_height="50dp"
-            android:paddingTop="10dp"
-            app:srcCompat="@drawable/freelancefind" />
-
-        <TextView
-            android:id="@+id/lbl_f_findpage"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:fontFamily="sans-serif-condensed"
-            android:paddingTop="15dp"
-            android:text="Find Job Offers Page"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="25dp"
+        android:text="Find Jobs Posted"
+        android:textSize="24sp"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/linearLayout4"
+        android:layout_below="@+id/linearLayout2"
         android:orientation="vertical"
         android:paddingTop="10dp">
 
@@ -53,6 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginTop="10dp"
                 android:paddingLeft="10dp"
                 android:text="Job Category:"
                 android:textSize="16sp"
@@ -60,6 +55,7 @@
 
             <Spinner
                 android:id="@+id/spn_f_jobcategory"
+                android:layout_marginTop="10dp"
                 android:layout_width="246dp"
                 android:layout_height="wrap_content"
                 android:entries="@array/jobcategory_array" />
@@ -92,18 +88,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/linearLayout4"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/lbl_f_search"
                 android:layout_width="129dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/linearLayout4"
                 android:layout_weight="0.17"
-                android:paddingLeft="10dp"
+                android:layout_marginTop="2dp"
+                android:paddingStart="10dp"
                 android:text="Search Keyword:"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -115,18 +108,20 @@
                 android:layout_weight="1.32"
                 android:ems="10"
                 android:hint="Keyword"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="10dp"
                 android:inputType="textPersonName"
                 android:textSize="15sp" />
 
         </LinearLayout>
 
-        <Button
+        <ImageView
             android:id="@+id/btn_f_search"
             android:layout_width="match_parent"
             android:layout_height="38dp"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/linearLayout5"
-            android:text="Search" />
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            app:srcCompat="@drawable/searchbtn"/>
 
     </LinearLayout>
 

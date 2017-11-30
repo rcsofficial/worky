@@ -1,11 +1,13 @@
 package edu.ateneo.cie199.worky;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,29 +32,33 @@ public class FreelancePostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_freelance_post);
 
+        /* SET FONT OF HEADER */
+        Typeface font = Typeface.createFromAsset(FreelancePostActivity.this.getAssets(),
+                "nunito.ttf");
+        TextView lblPost = (TextView) findViewById(R.id.lbl_f_postpage);
+        TextView lblTips = (TextView) findViewById(R.id.lbl_f_tips);
+        lblPost.setTypeface(font);
+        lblTips.setTypeface(font);
+
         /* LOGIN SESSION MANAGEMENT INITIALIZATION */
         session = new workySessionMgt(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
         final String cUsername = user.get(workySessionMgt.KEY_USERNAME);
         final String cUsertype = user.get(workySessionMgt.KEY_USERTYPE);
 
-
         /* EDIT TEXTVIEW FOR POSTING TIPS WITH RANDOM TIPS */
         TextView txvCtips = (TextView) findViewById(R.id.txv_f_tips);
         txvCtips.setText(randomTipsGen());
 
-
-        Button btnPostJob = (Button) findViewById(R.id.btn_f_postjob);
+        ImageView btnPostJob = (ImageView) findViewById(R.id.btn_f_postjob);
         btnPostJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent launchFreelanceDashboardActivity = new Intent(FreelancePostActivity.this,
                         FreelanceDashboardActivity.class);
 
-
                 /* APPLICATION OBJECT */
                 final workyApplication app = (workyApplication) getApplication();
-
 
                 /* GET DATA FROM USER FIELDS */
                 Spinner spnJobcategory = (Spinner) findViewById(R.id.spn_f_jobcategory);
@@ -61,12 +67,10 @@ public class FreelancePostActivity extends AppCompatActivity {
                 EditText edtJobloc = (EditText) findViewById(R.id.edt_f_jobloc);
                 EditText edtJobdesc = (EditText) findViewById(R.id.edt_f_jobdesc);
 
-
                 /* LOOKUP TRANSLATION TABLE FOR SPINNER */
                 String[] LOOKUP_JOBCATEGORY = { "Agriculture", "Arts", "Clerical", "Education",
                         "Engineering", "Finance", "Health", "Hospitality",
                         "IT", "Legal", "Manufacturing", "Transport", "Others"};
-
 
                 /* EXTRACT DATA FROM USER FIELDS */
                 String jobcategory = LOOKUP_JOBCATEGORY[spnJobcategory.getSelectedItemPosition()];
@@ -75,11 +79,9 @@ public class FreelancePostActivity extends AppCompatActivity {
                 String jobloc = edtJobloc.getText().toString();
                 String jobdesc = edtJobdesc.getText().toString();
 
-
                 /* ENSURE THAT FLOAT FIELD IS NEVER EMPTY TO AVOID CRASH*/
                 try {
                     minpay = Float.parseFloat(edtMinpay.getText().toString());
-
 
                     /* CHECKS IF ANY FIELDS ARE EMPTY */
                     if (jobcategory.isEmpty() || jobtitle.isEmpty() || jobloc.isEmpty() ||
@@ -88,11 +90,11 @@ public class FreelancePostActivity extends AppCompatActivity {
                                 "ERROR. You cannot leave fields empty.",
                                 Toast.LENGTH_SHORT).show();
                     }
+
                     else {
                     /* CREATE JOB IF NO FIELD IS EMPTY*/
                         app.addJob(new workyJobs(jobcategory, jobtitle, minpay, jobloc,
                                 jobdesc, cUsername, cUsertype));
-
 
                     /* ALERT THAT MINIMUM SALARY SET TO FREE IF BLANK */
                         if (minpay == 0.0f){
@@ -100,13 +102,13 @@ public class FreelancePostActivity extends AppCompatActivity {
                                     "NOTICE. Minimum salary assumed free. Job added to list.",
                                     Toast.LENGTH_SHORT).show();
                         }
+
                     /* GENERAL ALERT WHEN JOB IS ADDED */
                         else {
                             Toast.makeText(FreelancePostActivity.this,
                                     "SUCCESS. Job added to list.",
                                     Toast.LENGTH_SHORT).show();
                         }
-
 
                     /* REDIRECT TO FREELANCE DASHBOARD ACTIVITY */
                         startActivity(launchFreelanceDashboardActivity);
@@ -118,9 +120,6 @@ public class FreelancePostActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-
-
             }
         });
     }

@@ -1,11 +1,13 @@
 package edu.ateneo.cie199.worky;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +31,11 @@ public class ClientEditPostFieldsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_edit_post_fields);
 
+        /* SET HEADER FONT */
+        Typeface font = Typeface.createFromAsset(ClientEditPostFieldsActivity.this.getAssets(),
+                "nunito.ttf");
+        TextView lblEditPost = (TextView) findViewById(R.id.lbl_c_e_editpostpage);
+        lblEditPost.setTypeface(font);
 
         /* LOGIN SESSION MANAGEMENT INITIALIZATION */
         session = new workySessionMgt(getApplicationContext());
@@ -36,16 +43,13 @@ public class ClientEditPostFieldsActivity extends AppCompatActivity {
         final String cUsername = user.get(workySessionMgt.KEY_USERNAME);
         final String cUsertype = user.get(workySessionMgt.KEY_USERTYPE);
 
-
         /* SET USERNAME BASED FROM EDIT FIELD IN LOGIN ACTIVITY */
         Intent intentFromClientEditDeletePostActivity = getIntent();
         if (intentFromClientEditDeletePostActivity == null) { return; }
         final int position = intentFromClientEditDeletePostActivity.getIntExtra("C_POST_POS", 0);
 
-
         /* APPLICATION OBJECT */
         final workyApplication app = (workyApplication) getApplication();
-
 
         /* DATA USER FIELDS */
         final Spinner spnJobcategory = (Spinner) findViewById(R.id.spn_c_e_jobcategory);
@@ -70,15 +74,13 @@ public class ClientEditPostFieldsActivity extends AppCompatActivity {
                     initialJobFieldPos = i;
             }
 
-
         txvCJobTitle.setText(initialData.getJobtitle());
         spnJobcategory.setSelection(initialJobFieldPos);
         edtMaxpay.setText(String.valueOf(initialData.getSalary()));
         edtJobloc.setText(initialData.getLocation());
         edtJobdesc.setText(initialData.getDescription());
 
-
-        Button btnEditJob = (Button) findViewById(R.id.btn_c_e_editjob);
+        ImageView btnEditJob = (ImageView) findViewById(R.id.btn_c_e_editjob);
         btnEditJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,7 +93,6 @@ public class ClientEditPostFieldsActivity extends AppCompatActivity {
                         "Engineering", "Finance", "Health", "Hospitality",
                         "IT", "Legal", "Manufacturing", "Transport", "Others"};
 
-
                 /* EXTRACT DATA FROM USER FIELDS */
                 String jobcategory = LOOKUP_JOBCATEGORY[spnJobcategory.getSelectedItemPosition()];
                 String jobtitle = initialData.getJobtitle();
@@ -99,11 +100,9 @@ public class ClientEditPostFieldsActivity extends AppCompatActivity {
                 String jobloc = edtJobloc.getText().toString();
                 String jobdesc = edtJobdesc.getText().toString();
 
-
                 /* ENSURE THAT FLOAT FIELD IS NEVER EMPTY TO AVOID CRASH*/
                 try {
                     maxpay = Float.parseFloat(edtMaxpay.getText().toString());
-
 
                     /* CHECKS IF ANY FIELDS ARE EMPTY */
                     if (jobcategory.isEmpty() || jobtitle.isEmpty() || jobloc.isEmpty() ||
@@ -117,20 +116,19 @@ public class ClientEditPostFieldsActivity extends AppCompatActivity {
                         app.editJob(position, jobcategory, jobtitle, maxpay, jobloc,
                                 jobdesc, cUsername, cUsertype);
 
-
                     /* ALERT THAT MAXIMUM SALARY SET TO FREE IF BLANK */
                         if (maxpay == 0.0f){
                             Toast.makeText(ClientEditPostFieldsActivity.this,
                                     "NOTICE. Maximum salary assumed free. Job edited.",
                                     Toast.LENGTH_SHORT).show();
                         }
+
                     /* GENERAL ALERT WHEN JOB IS ADDED */
                         else {
                             Toast.makeText(ClientEditPostFieldsActivity.this,
                                     "SUCCESS. Job details edited.",
                                     Toast.LENGTH_SHORT).show();
                         }
-
 
                     /* REDIRECT TO CLIENT DASHBOARD ACTIVITY */
                         startActivity(launchClientDashboardActivity);

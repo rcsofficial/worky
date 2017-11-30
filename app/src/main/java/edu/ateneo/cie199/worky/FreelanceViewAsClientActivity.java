@@ -1,10 +1,12 @@
 package edu.ateneo.cie199.worky;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -22,6 +24,12 @@ public class FreelanceViewAsClientActivity extends AppCompatActivity {
         setContentView(R.layout.activity_freelance_view_as_client);
         final workyApplication app = (workyApplication)getApplication();
 
+        /* SET FONT OF HEADER */
+        Typeface font = Typeface.createFromAsset(FreelanceViewAsClientActivity.this.getAssets(),
+                "nunito.ttf");
+        TextView lblJobInfo = (TextView) findViewById(R.id.lbl_f_v_jobinfo);
+        lblJobInfo.setTypeface(font);
+
         session = new workySessionMgt(getApplicationContext());
         final HashMap<String, String> user = session.getUserDetails();
         String cUsername;
@@ -38,6 +46,7 @@ public class FreelanceViewAsClientActivity extends AppCompatActivity {
         TextView txvLocation = (TextView) findViewById(R.id.txv_f_v_location);
         TextView txvMobile = (TextView) findViewById(R.id.txv_f_v_mobile);
         TextView txvEmail = (TextView) findViewById(R.id.txv_f_v_email);
+        txvFullName.setTypeface(font);
 
         if (recvdIntent.getStringExtra("ORIGIN").equals("DASHBOARD")){
             cUsername = user.get(workySessionMgt.KEY_USERNAME);
@@ -60,7 +69,7 @@ public class FreelanceViewAsClientActivity extends AppCompatActivity {
             txvJobLocation.setText(job.getLocation());
             txvDescription.setText(job.getDescription());
 
-            Button btnSubmit = (Button) findViewById(R.id.btn_f_v_submit);
+            ImageView btnSubmit = (ImageView) findViewById(R.id.btn_f_v_submit);
             btnSubmit.setOnClickListener(
                     new View.OnClickListener() {
                         @Override

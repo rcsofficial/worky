@@ -1,14 +1,18 @@
 package edu.ateneo.cie199.worky;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 
@@ -25,11 +29,16 @@ public class FreelanceEditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_freelance_edit_profile);
 
+        /* SET FONT OF HEADER */
+        Typeface font = Typeface.createFromAsset(FreelanceEditProfileActivity.this.getAssets(),
+                "nunito.ttf");
+        TextView lblEditProfile = (TextView) findViewById(R.id.lbl_f_e_editprofile);
+        lblEditProfile.setTypeface(font);
+
         /* LOGIN SESSION MANAGEMENT INITIALIZATION */
         session = new workySessionMgt(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
         final String fUsername = user.get(workySessionMgt.KEY_USERNAME);
-
 
         /* SET USERNAME */
         TextView txvCusername = (TextView) findViewById(R.id.txv_f_e_username);
@@ -87,7 +96,7 @@ public class FreelanceEditProfileActivity extends AppCompatActivity {
         edtFcourse.setText(freelancerAcct.getCourse());
         edtFlocation.setText(freelancerAcct.getLocation());
 
-        Button btnFinish = (Button) findViewById(R.id.btn_f_e_editprofile);
+        ImageView btnFinish = (ImageView) findViewById(R.id.btn_f_e_editprofile);
         btnFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

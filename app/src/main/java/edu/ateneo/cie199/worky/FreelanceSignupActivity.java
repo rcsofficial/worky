@@ -1,11 +1,14 @@
 package edu.ateneo.cie199.worky;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,9 +28,14 @@ public class FreelanceSignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_freelance_signup);
 
+        /* SET FONT OF HEADER */
+        Typeface font = Typeface.createFromAsset(FreelanceSignupActivity.this.getAssets(),
+                "nunito.ttf");
+        TextView lblSignup = (TextView) findViewById(R.id.lbl_f_signuppage);
+        lblSignup.setTypeface(font);
+
         /* LOGIN SESSION MANAGEMENT INITIALIZATION */
         session = new workySessionMgt(getApplicationContext());
-
 
         /* SET USERNAME BASED FROM EDIT FIELD IN LOGIN ACTIVITY */
         Intent intentFromLogin = getIntent();
@@ -37,7 +45,7 @@ public class FreelanceSignupActivity extends AppCompatActivity {
         final String fPassword = intentFromLogin.getStringExtra("F_PASSWORD");
         txvFusername.setText(fUsername);
 
-        Button btnFinish = (Button) findViewById(R.id.btn_f_submitsignup);
+        ImageView btnFinish = (ImageView) findViewById(R.id.btn_f_submitsignup);
         btnFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

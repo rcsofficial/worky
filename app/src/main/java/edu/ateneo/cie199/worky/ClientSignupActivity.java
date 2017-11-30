@@ -1,11 +1,13 @@
 package edu.ateneo.cie199.worky;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,9 +29,14 @@ public class ClientSignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_signup);
 
+        /* SET FONT OF HEADER */
+        Typeface font = Typeface.createFromAsset(ClientSignupActivity.this.getAssets(),
+                "nunito.ttf");
+        TextView lblSignup = (TextView) findViewById(R.id.lbl_c_signuppage);
+        lblSignup.setTypeface(font);
+
         /* LOGIN SESSION MANAGEMENT INITIALIZATION */
         session = new workySessionMgt(getApplicationContext());
-
 
         /* SET USERNAME BASED FROM EDIT FIELD IN LOGIN ACTIVITY */
         Intent intentFromLogin = getIntent();
@@ -39,7 +46,7 @@ public class ClientSignupActivity extends AppCompatActivity {
         final String cPassword = intentFromLogin.getStringExtra("C_PASSWORD");
         txvCusername.setText(cUsername);
 
-        Button btnFinish = (Button) findViewById(R.id.btn_c_submitsignup);
+        ImageView btnFinish = (ImageView) findViewById(R.id.btn_c_submitsignup);
         btnFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

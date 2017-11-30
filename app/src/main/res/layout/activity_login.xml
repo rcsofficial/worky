@@ -10,13 +10,13 @@
     <ImageView
         android:id="@+id/imv_logo"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="50dp"
         android:layout_above="@+id/scrollView2"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:paddingLeft="75dp"
         android:paddingRight="75dp"
-        android:paddingTop="85dp"
+        android:paddingTop="100dp"
         app:srcCompat="@drawable/worky" />
 
     <ScrollView
@@ -55,7 +55,7 @@
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:textAlignment="center"
-                android:textColor="@color/white"
+                android:textColor="@android:color/black"
                 android:textColorHint="@android:color/black"
                 android:textSize="16sp" />
 

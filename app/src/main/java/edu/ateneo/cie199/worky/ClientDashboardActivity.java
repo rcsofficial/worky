@@ -75,6 +75,10 @@ public class ClientDashboardActivity extends AppCompatActivity {
         txvCcompany.setText(company);
         txvCfield.setText(field);
 
+        /* Set Client Avatar */
+        int icons[] = {R.drawable.profpic1, R.drawable.profpic2, R.drawable.profpic3, R.drawable.profpic4};
+        ImageView imvProfPic = (ImageView) findViewById(R.id.imv_c_profpic);
+        imvProfPic.setImageResource(icons[app.getClientAcctByUsername(cUsername).getIconCode()]);
 
         /* LAUNCH FIND SERVICES OFFERED */
         ImageView imvbtnFind = (ImageView) findViewById(R.id.imvbtn_c_find);

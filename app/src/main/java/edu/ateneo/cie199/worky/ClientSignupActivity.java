@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +25,7 @@ import java.util.ArrayList;
 public class ClientSignupActivity extends AppCompatActivity {
     /* LOGIN SESSION MANAGEMENT */
     workySessionMgt session;
+    int cIconCode = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,24 @@ public class ClientSignupActivity extends AppCompatActivity {
         final String cUsername = intentFromLogin.getStringExtra("C_USERNAME");
         final String cPassword = intentFromLogin.getStringExtra("C_PASSWORD");
         txvCusername.setText(cUsername);
+
+        final ImageView imvIcon = (ImageView) findViewById(R.id.imv_c_icon);
+        final int icons[] = {R.drawable.profpic1, R.drawable.profpic2, R.drawable.profpic3, R.drawable.profpic4};
+
+        /* ICON ONPRESS LISTENER */
+        imvIcon.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (cIconCode < icons.length - 1)
+                            cIconCode ++;
+                        else
+                            cIconCode = 0;
+
+                        imvIcon.setImageResource(icons[cIconCode]);
+                    }
+                }
+        );
 
         ImageView btnFinish = (ImageView) findViewById(R.id.btn_c_submitsignup);
         btnFinish.setOnClickListener(new View.OnClickListener() {
@@ -106,7 +127,7 @@ public class ClientSignupActivity extends AppCompatActivity {
                         /* ADD CLIENT ACCOUNT */
                         app.addClientAccount(new workyClient(cUsername, cPassword, cFirstname,
                                 cMidname, cLastname, cAge, cGender, cEmail, cMobilenum, cProfile,
-                                cCompany, cField, cSpecialization, cLocation, null));
+                                cCompany, cField, cSpecialization, cLocation, cIconCode, null));
 
                         /* CREATE SESSION */
                         session.createLoginSession(cUsername, cPassword, "Client");

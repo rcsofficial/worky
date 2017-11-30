@@ -87,6 +87,7 @@ public class ClientViewAsFreelancerActivity extends AppCompatActivity {
                                     user.get(workySessionMgt.KEY_USERNAME), job);
 
                             startActivity(launchFreelanceDashboardActivity);
+                            finish();
                         }
                     }
             );

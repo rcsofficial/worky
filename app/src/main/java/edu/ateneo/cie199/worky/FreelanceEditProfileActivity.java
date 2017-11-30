@@ -23,6 +23,7 @@ public class FreelanceEditProfileActivity extends AppCompatActivity {
 
     /* LOGIN SESSION MANAGEMENT */
     workySessionMgt session;
+    int fIconCode = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +97,27 @@ public class FreelanceEditProfileActivity extends AppCompatActivity {
         edtFcourse.setText(freelancerAcct.getCourse());
         edtFlocation.setText(freelancerAcct.getLocation());
 
+        /* Set Freelancer Avatar */
+        final int icons[] = {R.drawable.profpic1, R.drawable.profpic2, R.drawable.profpic3, R.drawable.profpic4};
+        ImageView imvProfPic = (ImageView) findViewById(R.id.imv_f_e_icon);
+        imvProfPic.setImageResource(icons[freelancerAcct.getIconCode()]);
+
+        final ImageView imvIcon = (ImageView) findViewById(R.id.imv_f_e_icon);
+        /* ICON ONPRESS LISTENER */
+        imvIcon.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (fIconCode < icons.length - 1)
+                            fIconCode ++;
+                        else
+                            fIconCode = 0;
+
+                        imvIcon.setImageResource(icons[fIconCode]);
+                    }
+                }
+        );
+
         ImageView btnFinish = (ImageView) findViewById(R.id.btn_f_e_editprofile);
         btnFinish.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,7 +168,7 @@ public class FreelanceEditProfileActivity extends AppCompatActivity {
                         /* EDIT FREELANCER ACCOUNT */
                         app.editFreelancer(fUsername, fPassword, fFirstname, fMidname, fLastname,
                                 fAge, fGender, fEmail, fMobilenum, fProfile, fEduc,
-                                fExpertise, fCourse, fLocation);
+                                fExpertise, fCourse, fLocation, fIconCode);
 
                         startActivity(launchLoginActivity);
 

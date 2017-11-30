@@ -760,7 +760,7 @@ public class workyApplication extends Application{
     public  void editClient(String username, String password, String firstName, String middleName,
                             String lastName, int age, String gender, String email, long mobile,
                             String profile, String company, String field, String specialization,
-                            String location) {
+                            String location, int iconCode) {
 
         workyClient client = new workyClient();
         client.setUsername(username);
@@ -777,6 +777,7 @@ public class workyApplication extends Application{
         client.setField(field);
         client.setSpecialization(specialization);
         client.setLocation(location);
+        client.setIconCode(iconCode);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -820,7 +821,7 @@ public class workyApplication extends Application{
     public  void editFreelancer(String username, String password, String firstName, String middleName,
                                 String lastName, int age, String gender, String email, long mobile,
                                 String profile, String educ, String expertise, String course,
-                                String location) {
+                                String location, int iconCode) {
         workyFreelancer freelancer = new workyFreelancer();
         freelancer.setUsername(username);
         freelancer.setPassword(password);
@@ -836,6 +837,7 @@ public class workyApplication extends Application{
         freelancer.setExpertise(expertise);
         freelancer.setCourse(course);
         freelancer.setLocation(location);
+        freelancer.setIconCode(iconCode);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 

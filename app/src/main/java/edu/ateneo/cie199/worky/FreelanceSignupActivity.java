@@ -22,6 +22,7 @@ import android.widget.Toast;
 public class FreelanceSignupActivity extends AppCompatActivity {
     /* LOGIN SESSION MANAGEMENT */
     workySessionMgt session;
+    int fIconCode = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,24 @@ public class FreelanceSignupActivity extends AppCompatActivity {
         final String fUsername = intentFromLogin.getStringExtra("F_USERNAME");
         final String fPassword = intentFromLogin.getStringExtra("F_PASSWORD");
         txvFusername.setText(fUsername);
+
+        final ImageView imvIcon = (ImageView) findViewById(R.id.imv_f_icon);
+        final int icons[] = {R.drawable.profpic1, R.drawable.profpic2, R.drawable.profpic3, R.drawable.profpic4};
+
+        /* ICON ONPRESS LISTENER */
+        imvIcon.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (fIconCode < icons.length - 1)
+                            fIconCode ++;
+                        else
+                            fIconCode = 0;
+
+                        imvIcon.setImageResource(icons[fIconCode]);
+                    }
+                }
+        );
 
         ImageView btnFinish = (ImageView) findViewById(R.id.btn_f_submitsignup);
         btnFinish.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +124,7 @@ public class FreelanceSignupActivity extends AppCompatActivity {
                         /* ADD FREELANCER ACCOUNT */
                         app.addFreelancerAccount(new workyFreelancer(fUsername, fPassword, fFirstname,
                                 fMidname, fLastname, fAge, fGender, fEmail, fMobilenum, fProfile,
-                                fEduc, fExpertise, fCourse, fLocation, null));
+                                fEduc, fExpertise, fCourse, fLocation, fIconCode, null));
 
                         /* CREATE SESSION */
                         session.createLoginSession(fUsername, fPassword, "Freelancer");

@@ -50,6 +50,7 @@ public class FreelanceViewAsClientActivity extends AppCompatActivity {
         TextView txvLocation = (TextView) findViewById(R.id.txv_f_v_location);
         TextView txvMobile = (TextView) findViewById(R.id.txv_f_v_mobile);
         TextView txvEmail = (TextView) findViewById(R.id.txv_f_v_email);
+        ImageView imvProfPic = (ImageView) findViewById(R.id.imv_f_v_profpic);
 
         if (recvdIntent.getStringExtra("ORIGIN").equals("DASHBOARD")){
             cUsername = user.get(workySessionMgt.KEY_USERNAME);
@@ -84,8 +85,8 @@ public class FreelanceViewAsClientActivity extends AppCompatActivity {
 
                             app.addLinkJob("Freelancer", user.get(workySessionMgt.KEY_USERNAME),
                                     recvdIntent.getStringExtra("F_USERNAME"), job);
-
                             startActivity(launchClientDashboardActivity);
+                            finish();
                         }
                     }
             );
@@ -112,6 +113,10 @@ public class FreelanceViewAsClientActivity extends AppCompatActivity {
                 (Long.toString(app.getFreelancerAcctByUsername(cUsername).getMobile()));
         txvEmail.setText
                 (app.getFreelancerAcctByUsername(cUsername).getEmail());
+
+        /* Set Client Avatar */
+        int icons[] = {R.drawable.profpic1, R.drawable.profpic2, R.drawable.profpic3, R.drawable.profpic4};
+        imvProfPic.setImageResource(icons[app.getFreelancerAcctByUsername(cUsername).getIconCode()]);
 
     }
 

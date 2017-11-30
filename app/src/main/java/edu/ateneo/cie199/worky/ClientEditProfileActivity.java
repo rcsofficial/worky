@@ -25,7 +25,7 @@ public class ClientEditProfileActivity extends AppCompatActivity {
 
     /* LOGIN SESSION MANAGEMENT */
     workySessionMgt session;
-    
+    int cIconCode = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +99,27 @@ public class ClientEditProfileActivity extends AppCompatActivity {
         edtCspecialization.setText(clientAcct.getSpecialization());
         edtClocation.setText(clientAcct.getLocation());
 
+        /* Set Client Avatar */
+        final int icons[] = {R.drawable.profpic1, R.drawable.profpic2, R.drawable.profpic3, R.drawable.profpic4};
+        ImageView imvProfPic = (ImageView) findViewById(R.id.imv_c_e_icon);
+        imvProfPic.setImageResource(icons[clientAcct.getIconCode()]);
+
+        final ImageView imvIcon = (ImageView) findViewById(R.id.imv_c_e_icon);
+        /* ICON ONPRESS LISTENER */
+        imvIcon.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (cIconCode < icons.length - 1)
+                            cIconCode ++;
+                        else
+                            cIconCode = 0;
+
+                        imvIcon.setImageResource(icons[cIconCode]);
+                    }
+                }
+        );
+
 
         ImageView btnFinish = (ImageView) findViewById(R.id.btn_c_e_editprofile);
         btnFinish.setOnClickListener(new View.OnClickListener() {
@@ -150,7 +171,7 @@ public class ClientEditProfileActivity extends AppCompatActivity {
                         /* EDIT CLIENT ACCOUNT */
                         app.editClient(cUsername, cPassword, cFirstname, cMidname, cLastname,
                                 cAge, cGender, cEmail, cMobilenum, cProfile, cCompany,
-                                cField, cSpecialization, cLocation);
+                                cField, cSpecialization, cLocation, cIconCode);
                     }
                 }
                 /* LAUNCH LOGIN ACTIVITY */

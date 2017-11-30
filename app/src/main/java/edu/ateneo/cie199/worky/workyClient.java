@@ -20,6 +20,7 @@ public class workyClient {
     private String mField;
     private String mSpecialization;
     private String mLocation;
+    private int mIconCode;
     private ArrayList<String> mJobOrders = new ArrayList<>();
 
     /**
@@ -49,7 +50,7 @@ public class workyClient {
     public workyClient(String mUsername, String mPassword, String mFirstname, String mMiddlename,
                        String mLastname, int mAge, String mGender, String mEmail, long mMobile,
                        String mProfile, String mCompany, String mField, String mSpecialization,
-                       String mLocation, ArrayList<String> mJobOrders) {
+                       String mLocation, int mIconCode, ArrayList<String> mJobOrders) {
         this.mUsername = mUsername;
         this.mPassword = mPassword;
         this.mFirstname = mFirstname;
@@ -64,6 +65,7 @@ public class workyClient {
         this.mField = mField;
         this.mSpecialization = mSpecialization;
         this.mLocation = mLocation;
+        this.mIconCode = mIconCode;
         this.mJobOrders = mJobOrders;
     }
 
@@ -179,6 +181,14 @@ public class workyClient {
 
     public void setLocation(String mLocation) {
         this.mLocation = mLocation;
+    }
+
+    public int getIconCode() {
+        return mIconCode;
+    }
+
+    public void setIconCode(int mIconCode) {
+        this.mIconCode = mIconCode;
     }
 
     public ArrayList<String> getJobOrders() {

@@ -78,6 +78,10 @@ public class FreelanceDashboardActivity extends AppCompatActivity {
         txvFeducation.setText(education);
         txvFexpertise.setText(expertise);
 
+        /* Set Freelancer Avatar */
+        int icons[] = {R.drawable.profpic1, R.drawable.profpic2, R.drawable.profpic3, R.drawable.profpic4};
+        ImageView imvProfPic = (ImageView) findViewById(R.id.imv_f_profpic);
+        imvProfPic.setImageResource(icons[app.getFreelancerAcctByUsername(fUsername).getIconCode()]);
 
         /* LAUNCH FIND FREELANCERS */
         ImageView imvbtnFind = (ImageView) findViewById(R.id.imvbtn_f_find);

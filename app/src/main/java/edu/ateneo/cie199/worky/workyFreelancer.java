@@ -20,6 +20,7 @@ public class workyFreelancer {
     private String mExpertise;
     private String mCourse;
     private String mLocation;
+    private int mIconCode;
     private ArrayList<String> mExperiences = new ArrayList<>();
 
     /**
@@ -49,7 +50,7 @@ public class workyFreelancer {
     public workyFreelancer(String mUsername, String mPassword, String mFirstname,
                            String mMiddlename, String mLastname, int mAge, String mGender,
                            String mEmail, long mMobile, String mProfile, String mEducation,
-                           String mExpertise, String mCourse, String mLocation,
+                           String mExpertise, String mCourse, String mLocation, int mIconCode,
                            ArrayList<String> mExperiences) {
         this.mUsername = mUsername;
         this.mPassword = mPassword;
@@ -65,6 +66,7 @@ public class workyFreelancer {
         this.mExpertise = mExpertise;
         this.mCourse = mCourse;
         this.mLocation = mLocation;
+        this.mIconCode = mIconCode;
         this.mExperiences = mExperiences;
     }
     
@@ -180,6 +182,14 @@ public class workyFreelancer {
 
     public void setLocation(String mLocation) {
         this.mLocation = mLocation;
+    }
+
+    public int getIconCode() {
+        return mIconCode;
+    }
+
+    public void setIconCode(int mIconCode) {
+        this.mIconCode = mIconCode;
     }
 
     public ArrayList<String> getExperiences() {

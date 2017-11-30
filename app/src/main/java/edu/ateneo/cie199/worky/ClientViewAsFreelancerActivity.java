@@ -26,7 +26,7 @@ public class ClientViewAsFreelancerActivity extends AppCompatActivity {
         /* SET FONT OF HEADER */
         Typeface font = Typeface.createFromAsset(ClientViewAsFreelancerActivity.this.getAssets(),
                 "nunito.ttf");
-        TextView lblAbout = (TextView) findViewById(R.id.lbl_f_v_about);
+        TextView lblAbout = (TextView) findViewById(R.id.lbl_c_v_about);
         lblAbout.setTypeface(font);
 
         /* APPLICATION OBJECT */
@@ -51,6 +51,7 @@ public class ClientViewAsFreelancerActivity extends AppCompatActivity {
         TextView txvLocation = (TextView) findViewById(R.id.txv_c_v_location);
         TextView txvMobile = (TextView) findViewById(R.id.txv_c_v_mobile);
         TextView txvEmail = (TextView) findViewById(R.id.txv_c_v_email);
+        ImageView imvProfPic = (ImageView) findViewById(R.id.imv_c_v_profpic);
 
         if (recvdIntent.getStringExtra("ORIGIN").equals("DASHBOARD")){
             cUsername = user.get(workySessionMgt.KEY_USERNAME);
@@ -116,6 +117,10 @@ public class ClientViewAsFreelancerActivity extends AppCompatActivity {
                 (Long.toString(app.getClientAcctByUsername(cUsername).getMobile()));
         txvEmail.setText
                 (app.getClientAcctByUsername(cUsername).getEmail());
+
+        /* Set Client Avatar */
+        int icons[] = {R.drawable.profpic1, R.drawable.profpic2, R.drawable.profpic3, R.drawable.profpic4};
+        imvProfPic.setImageResource(icons[app.getClientAcctByUsername(cUsername).getIconCode()]);
 
     }
 }

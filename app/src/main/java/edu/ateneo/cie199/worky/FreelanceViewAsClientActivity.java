@@ -26,7 +26,7 @@ public class FreelanceViewAsClientActivity extends AppCompatActivity {
         /* SET FONT OF HEADER */
         Typeface font = Typeface.createFromAsset(FreelanceViewAsClientActivity.this.getAssets(),
                 "nunito.ttf");
-        TextView lblAbout = (TextView) findViewById(R.id.lbl_c_v_about);
+        TextView lblAbout = (TextView) findViewById(R.id.lbl_f_v_about);
         lblAbout.setTypeface(font);
 
         /* APPLICATION OBJECT */

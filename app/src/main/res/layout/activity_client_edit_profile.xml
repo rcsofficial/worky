@@ -43,6 +43,25 @@
             android:paddingEnd="10dp">
 
             <TextView
+                android:id="@+id/lbl_c_e_icon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textAlignment="center"
+                android:text="Tap to Change Avatar"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/imv_c_e_icon"
+                android:layout_width="match_parent"
+                android:layout_height="123dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/profpic1" />
+
+            <TextView
                 android:id="@+id/lbl_c_e_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -54,16 +73,17 @@
                 android:id="@+id/txv_c_e_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:paddingLeft="5dp"
                 android:text="Uneditable Username"
                 android:textSize="18sp"
-                android:textStyle="italic" />
+                android:paddingBottom="10dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="10dp" />
 
             <TextView
                 android:id="@+id/lbl_c_e_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="Password:"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -75,22 +95,6 @@
                 android:ems="10"
                 android:hint="Password"
                 android:inputType="textPassword" />
-
-            <TextView
-                android:id="@+id/lbl_c_e_icon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:text="Tap to Change Avatar"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/imv_c_e_icon"
-                android:layout_width="135dp"
-                android:layout_height="123dp"
-                android:paddingTop="10dp"
-                android:src="@drawable/profpic1" />
 
             <TextView
                 android:id="@+id/lbl_c_e_firstname"

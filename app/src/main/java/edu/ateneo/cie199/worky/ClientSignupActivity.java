@@ -143,6 +143,7 @@ public class ClientSignupActivity extends AppCompatActivity {
         });
     }
 
+    /* CHECKS IF ANY INT FIELDS ARE LEFT BLANK */
     protected boolean areIntFieldsBlank(EditText age, EditText mobilenum) {
         if (age.getText().toString().isEmpty() || mobilenum.getText().toString().isEmpty()) {
             Toast.makeText(ClientSignupActivity.this,
@@ -154,6 +155,7 @@ public class ClientSignupActivity extends AppCompatActivity {
             return false;
     }
 
+    /* CHECKS IF ANY STRING FIELDS ARE LEFT BLANK */
     protected boolean areStrFieldsBlank(String firstname, String midname, String lastname,
                                      String email, String profile, String company,
                                      String specialization, String location) {

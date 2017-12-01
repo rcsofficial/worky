@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.HashMap;
 
@@ -51,7 +52,7 @@ public class ClientViewAsFreelancerActivity extends AppCompatActivity {
         TextView txvLocation = (TextView) findViewById(R.id.txv_c_v_location);
         TextView txvMobile = (TextView) findViewById(R.id.txv_c_v_mobile);
         TextView txvEmail = (TextView) findViewById(R.id.txv_c_v_email);
-        ImageView imvProfPic = (ImageView) findViewById(R.id.imv_c_v_profpic);
+        ImageView imvJobIcon = (ImageView) findViewById(R.id.imv_c_v_jobicon);
 
         if (recvdIntent.getStringExtra("ORIGIN").equals("DASHBOARD")){
             cUsername = user.get(workySessionMgt.KEY_USERNAME);
@@ -75,6 +76,24 @@ public class ClientViewAsFreelancerActivity extends AppCompatActivity {
             txvJobLocation.setText(job.getLocation());
             txvDescription.setText(job.getDescription());
 
+            int icons[] = {
+                    R.drawable.job1,
+                    R.drawable.job2,
+                    R.drawable.job3,
+                    R.drawable.job4,
+                    R.drawable.job5,
+                    R.drawable.job6,
+                    R.drawable.job7,
+                    R.drawable.job8,
+                    R.drawable.job9,
+                    R.drawable.job10,
+                    R.drawable.job11,
+                    R.drawable.job12,
+                    R.drawable.job13
+            };
+            imvJobIcon.setImageResource(icons[job.getJobicon()]);
+
+            /* ADDS JOB LINK WHEN INTERESTED, REDIRECT TO DASHBOARD */
             ImageView btnSubmit = (ImageView) findViewById(R.id.btn_c_v_submit);
             btnSubmit.setOnClickListener(
                     new View.OnClickListener() {
@@ -87,6 +106,10 @@ public class ClientViewAsFreelancerActivity extends AppCompatActivity {
                             app.addLinkJob("Client", recvdIntent.getStringExtra("C_USERNAME"),
                                     user.get(workySessionMgt.KEY_USERNAME), job);
 
+                            Toast.makeText(ClientViewAsFreelancerActivity.this,
+                                    "The client has been informed of your interest.",
+                                    Toast.LENGTH_SHORT).show();
+
                             startActivity(launchFreelanceDashboardActivity);
                             finish();
                         }
@@ -94,6 +117,7 @@ public class ClientViewAsFreelancerActivity extends AppCompatActivity {
             );
         }
 
+        /* SET ABOUT CLIENT DETAILS */
         txvUserName.setText(cUsername);
         String fullname = app.getClientAcctByUsername(cUsername).getFirstname() + " "
                 + app.getClientAcctByUsername(cUsername).getMiddlename() + " "
@@ -117,10 +141,6 @@ public class ClientViewAsFreelancerActivity extends AppCompatActivity {
                 (Long.toString(app.getClientAcctByUsername(cUsername).getMobile()));
         txvEmail.setText
                 (app.getClientAcctByUsername(cUsername).getEmail());
-
-        /* Set Client Avatar */
-        int icons[] = {R.drawable.profpic1, R.drawable.profpic2, R.drawable.profpic3, R.drawable.profpic4};
-        imvProfPic.setImageResource(icons[app.getClientAcctByUsername(cUsername).getIconCode()]);
 
     }
 }

@@ -23,6 +23,7 @@ public class FreelanceEditDeletePostActivity extends AppCompatActivity {
     /* LOGIN SESSION MANAGEMENT */
     workySessionMgt session;
 
+    /* LISTVIEW ARRAY ADAPTER */
     private ArrayAdapter<workyJobs> mAdapter = null;
 
     @Override

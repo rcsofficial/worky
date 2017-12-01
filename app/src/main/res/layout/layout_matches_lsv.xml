@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imv_avatar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@drawable/profpic1" />
+
+    <TextView
+        android:id="@+id/txv_jobtitlelink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/imv_avatar"
+        android:layout_marginTop="10dp"
+        android:text="Job Title"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/lbl_match"
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txv_jobtitlelink"
+        android:layout_toEndOf="@+id/imv_avatar"
+        android:text="Matched:"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/lbl_email"
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lbl_match"
+        android:layout_toEndOf="@+id/imv_avatar"
+        android:text="Email:"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/lbl_mobilenum"
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/lbl_email"
+        android:layout_below="@+id/lbl_email"
+        android:layout_marginBottom="10dp"
+        android:text="Mobile:"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txv_match"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/lbl_match"
+        android:layout_toEndOf="@+id/lbl_match"
+        android:text="Applicant Name" />
+
+    <TextView
+        android:id="@+id/txv_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lbl_match"
+        android:layout_toEndOf="@+id/lbl_email"
+        android:text="Email Address" />
+
+    <TextView
+        android:id="@+id/txv_mobilenum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txv_email"
+        android:layout_marginBottom="10dp"
+        android:layout_toEndOf="@+id/lbl_mobilenum"
+        android:text="Mobile Number" />
+
+</RelativeLayout>

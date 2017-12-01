@@ -4,315 +4,268 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/secondarybg"
-    tools:context="edu.ateneo.cie199.worky.ClientViewAsFreelancerActivity">
+    tools:context="edu.ateneo.cie199.worky.FreelanceProfileActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout7"
         android:background="@color/colorPrimaryDark"
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:orientation="horizontal">
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/imv_f_v_jobicon"
-        android:layout_width="122dp"
-        android:layout_height="107dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="10dp"
-        app:srcCompat="@drawable/job1" />
+        android:id="@+id/imv_f_vp_profpic"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/freelanceprofile" />
 
     <TextView
-        android:id="@+id/txv_f_v_title"
-        android:layout_width="match_parent"
+        android:id="@+id/lbl_f_vp_freelanceprofile"
+        android:layout_below="@+id/imv_f_vp_profpic"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Job Title"
-        android:layout_marginStart="140dp"
-        android:layout_marginTop="48dp"
-        android:textColor="@color/white"
-        android:textSize="24sp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:paddingTop="15dp"
+        android:text="Freelance Profile Details"
+        android:textAlignment="center"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/linearLayout7">
+        android:layout_height="175dp"
+        android:layout_below="@+id/lbl_f_vp_freelanceprofile" >
 
         <LinearLayout
             android:id="@+id/linearLayout9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginStart="140dp"
-            android:layout_marginTop="10dp"
             android:paddingBottom="20dp">
 
             <TextView
-                android:id="@+id/lbl_f_v_jobfield"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Job Field:"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txv_f_v_job_field"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Job Field"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/lbl_f_v_salary"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Salary:"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txv_f_v_salary"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Salary"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/lbl_f_v_job_location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Job Location:"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txv_f_v_job_location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Job Location"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/lbl_f_v_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Job Description:"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txv_f_v_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Job Description"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/lbl_f_v_about"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginTop="25dp"
-                android:text="About the Freelancer"
-                android:textAlignment="viewStart"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/lbl_f_v_fullname"
+                android:id="@+id/lbl_f_vp_fullname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Full Name:"
+                android:textAlignment="center"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txv_f_v_fullname"
+                android:id="@+id/txv_f_vp_fullname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Full Name"
+                android:textAlignment="center"
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/lbl_f_v_username"
+                android:id="@+id/lbl_f_vp_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:textAlignment="center"
                 android:text="Username:"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txv_f_v_username"
+                android:id="@+id/txv_f_vp_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textAlignment="center"
                 android:text="Username"
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/lbl_f_v_education"
+                android:id="@+id/lbl_f_vp_education"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:textAlignment="center"
                 android:text="Education:"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txv_f_v_education"
+                android:id="@+id/txv_f_vp_education"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textAlignment="center"
                 android:text="Education" />
 
             <TextView
-                android:id="@+id/lbl_f_v_expertise"
+                android:id="@+id/lbl_f_vp_expertise"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:textAlignment="center"
                 android:text="Expertise:"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txv_f_v_expertise"
+                android:id="@+id/txv_f_vp_expertise"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textAlignment="center"
                 android:text="Expertise" />
 
             <TextView
-                android:id="@+id/lbl_f_v_course"
+                android:id="@+id/lbl_f_vp_course"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:textAlignment="center"
                 android:text="Course:"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txv_f_v_course"
+                android:id="@+id/txv_f_vp_course"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textAlignment="center"
                 android:text="Course" />
 
             <TextView
-                android:id="@+id/lbl_f_v_profile"
+                android:id="@+id/lbl_f_vp_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:textAlignment="center"
                 android:text="Profile:"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txv_f_v_profile"
+                android:id="@+id/txv_f_vp_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textAlignment="center"
                 android:text="Profile" />
 
             <TextView
-                android:id="@+id/lbl_f_v_Age"
+                android:id="@+id/lbl_f_vp_Age"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:textAlignment="center"
                 android:text="Age:"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txv_f_v_age"
+                android:id="@+id/txv_f_vp_age"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textAlignment="center"
                 android:text="Age"
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/lbl_f_v_gender"
+                android:id="@+id/lbl_f_vp_gender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:textAlignment="center"
                 android:text="Gender:"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txv_f_v_gender"
+                android:id="@+id/txv_f_vp_gender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textAlignment="center"
                 android:text="Gender"
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/lbl_f_v_location"
+                android:id="@+id/lbl_f_vp_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:textAlignment="center"
                 android:text="Location:"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txv_f_v_location"
+                android:id="@+id/txv_f_vp_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textAlignment="center"
                 android:text="Location"
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/lbl_f_v_mobile"
+                android:id="@+id/lbl_f_vp_mobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:textAlignment="center"
                 android:text="Mobile:"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txv_f_v_mobile"
+                android:id="@+id/txv_f_vp_mobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textAlignment="center"
                 android:text="Mobile"
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/lbl_f_v_email"
+                android:id="@+id/lbl_f_vp_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:textAlignment="center"
                 android:text="Email:"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txv_f_v_email"
+                android:id="@+id/txv_f_vp_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textAlignment="center"
                 android:text="Email"
                 android:textSize="14sp" />
         </LinearLayout>
     </ScrollView>
 
-    <ImageView
-        android:id="@+id/btn_f_v_submit"
+    <TextView
+        android:id="@+id/lbl_f_vp_joborders"
+        android:layout_below="@+id/scrollView"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        app:srcCompat="@drawable/interestedbtn"
-        android:layout_marginTop="3dp"
-        android:layout_below="@+id/imv_f_v_jobicon"
-        android:layout_alignStart="@+id/imv_f_v_jobicon"
-        android:layout_alignEnd="@+id/imv_f_v_jobicon" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp"
+        android:text="Display All User Matches"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <ListView
+        android:id="@+id/lsv_f_vp_matches"
+        android:layout_below="@+id/lbl_f_vp_joborders"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

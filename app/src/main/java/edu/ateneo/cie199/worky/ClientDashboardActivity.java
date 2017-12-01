@@ -6,8 +6,8 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,7 +34,7 @@ import java.util.HashMap;
  */
 public class ClientDashboardActivity extends AppCompatActivity {
 
-    private ArrayAdapter<String> mAdapter = null;
+    private ArrayAdapter<workyLinkJob> mAdapter = null;
 
     /* LOGIN SESSION MANAGEMENT */
     workySessionMgt session;
@@ -59,7 +59,7 @@ public class ClientDashboardActivity extends AppCompatActivity {
         /* LOGIN SESSION MANAGEMENT INITIALIZATION */
         session = new workySessionMgt(getApplicationContext());
         final HashMap<String, String> user = session.getUserDetails();
-        String cUsername = user.get(workySessionMgt.KEY_USERNAME);
+        final String cUsername = user.get(workySessionMgt.KEY_USERNAME);
 
         /* GET USER DATA BASED FROM USERNAME IN SESSION */
         String firstname = app.getClientAcctByUsername(cUsername).getFirstname();
@@ -139,16 +139,34 @@ public class ClientDashboardActivity extends AppCompatActivity {
             }
         });
 
-        /* DISPLAY LISTVIEW OF PREVIOUS TRANSACTIONS */
+        /* DISPLAY LISTVIEW OF INTERESTED TRANSACTIONS */
         final ListView listJobs = (ListView) findViewById(R.id.lsv_c_joborders);
         final Handler handler = new Handler();
-        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+        mAdapter = new workyMatchesLsvAdapter
+                (ClientDashboardActivity.this,
+                        app.getLinkedJobsByTypeClient(cUsername));
+
         listJobs.setAdapter(mAdapter);
 
-        class updateAdapter  implements Runnable {
+        /* REDIRECT TO FREELANCER PROFILE WHEN ITEM CLICKED */
+        listJobs.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent launchFreelanceProfileActivity =
+                                new Intent(ClientDashboardActivity.this,
+                                        FreelanceProfileActivity.class);
+                        launchFreelanceProfileActivity.putExtra("C_USERNAME", cUsername);
+                        launchFreelanceProfileActivity.putExtra("F_PROF_POS", position);
+                        startActivity(launchFreelanceProfileActivity);
+                    }
+                }
+        );
+
+        class updateAdapter implements Runnable {
             private Handler handler;
-            private ArrayAdapter<String> mAdapter;
-            public updateAdapter(Handler handler, ArrayAdapter<String> mAdapter) {
+            private ArrayAdapter<workyLinkJob> mAdapter;
+            public updateAdapter(Handler handler, ArrayAdapter<workyLinkJob> mAdapter) {
                 this.handler = handler;
                 this.mAdapter = mAdapter;
             }
@@ -159,16 +177,8 @@ public class ClientDashboardActivity extends AppCompatActivity {
 
                 ArrayList<workyLinkJob> linkJobs =
                         app.getLinkedJobsByTypeClient(user.get(workySessionMgt.KEY_USERNAME));
-                ArrayList<String> stringOutput = new ArrayList<>();
-                for (int i = 0; i < linkJobs.size(); i++) {
-                    stringOutput.add("Your Job: " + linkJobs.get(i).getJob().getJobtitle() + "\n"
-                            + "Freelancer Applied: "
-                            + linkJobs.get(i).getFreelancer().getUsername() + "\n"
-                            + "Email: " + linkJobs.get(i).getFreelancer().getEmail() + "\n"
-                            + "Contact: " + linkJobs.get(i).getFreelancer().getMobile());
-                }
                 mAdapter.clear();
-                mAdapter.addAll(stringOutput);
+                mAdapter.addAll(linkJobs);
                 mAdapter.notifyDataSetChanged();
             }
         }

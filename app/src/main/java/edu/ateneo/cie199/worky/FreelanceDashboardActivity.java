@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -37,7 +38,7 @@ public class FreelanceDashboardActivity extends AppCompatActivity {
     /* LOGIN SESSION MANAGEMENT */
     workySessionMgt session;
 
-    private ArrayAdapter<String> mAdapter = null;
+    private ArrayAdapter<workyLinkJob> mAdapter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,7 @@ public class FreelanceDashboardActivity extends AppCompatActivity {
         /* LOGIN SESSION MANAGEMENT INITIALIZATION */
         session = new workySessionMgt(getApplicationContext());
         final HashMap<String, String> user = session.getUserDetails();
-        String fUsername = user.get(workySessionMgt.KEY_USERNAME);
+        final String fUsername = user.get(workySessionMgt.KEY_USERNAME);
 
 
         /* GET USER DATA BASED FROM USERNAME IN SESSION */
@@ -69,18 +70,24 @@ public class FreelanceDashboardActivity extends AppCompatActivity {
         String expertise = app.getFreelancerAcctByUsername(fUsername).getExpertise();
 
 
-        /* SET DASHBOARD DATA */
+        /* SET DASHBOARD DATA AND AVATAR*/
         TextView txvFfirstname = (TextView) findViewById(R.id.txv_f_firstname);
         TextView txvFeducation = (TextView) findViewById(R.id.txv_f_education);
         TextView txvFexpertise = (TextView) findViewById(R.id.txv_f_expertise);
+        ImageView imvProfPic = (ImageView) findViewById(R.id.imv_f_profpic);
+
         txvFfirstname.setText(firstname);
         txvFfirstname.setTypeface(font);
         txvFeducation.setText(education);
         txvFexpertise.setText(expertise);
 
-        /* Set Freelancer Avatar */
-        int icons[] = {R.drawable.profpic1, R.drawable.profpic2, R.drawable.profpic3, R.drawable.profpic4};
-        ImageView imvProfPic = (ImageView) findViewById(R.id.imv_f_profpic);
+        int icons[] = {
+                R.drawable.profpic1,
+                R.drawable.profpic2,
+                R.drawable.profpic3,
+                R.drawable.profpic4
+        };
+
         imvProfPic.setImageResource(icons[app.getFreelancerAcctByUsername(fUsername).getIconCode()]);
 
         /* LAUNCH FIND FREELANCERS */
@@ -94,7 +101,6 @@ public class FreelanceDashboardActivity extends AppCompatActivity {
             }
         });
 
-
         /* LAUNCH POST JOB OFFERS */
         ImageView imvbtnPost = (ImageView) findViewById(R.id.imvbtn_f_post);
         imvbtnPost.setOnClickListener(new View.OnClickListener() {
@@ -106,7 +112,6 @@ public class FreelanceDashboardActivity extends AppCompatActivity {
             }
         });
 
-
         /* LAUNCH CLIENT EDIT/DELETE POSTS ACTIVITY */
         ImageView imvbtnEditPost = (ImageView) findViewById(R.id.imvbtn_f_editpost);
         imvbtnEditPost.setOnClickListener(new View.OnClickListener() {
@@ -117,7 +122,6 @@ public class FreelanceDashboardActivity extends AppCompatActivity {
                 startActivity(launchFreelanceEditDeletePostActivity);
             }
         });
-
 
         /* LAUNCH LOGIN ACTIVITY AFTER LOGOUT */
         ImageView imvbtnLogout = (ImageView) findViewById(R.id.imvbtn_f_logout);
@@ -133,7 +137,6 @@ public class FreelanceDashboardActivity extends AppCompatActivity {
             }
         });
 
-
         /* LAUNCH FREELANCER EDIT PROFILE ACTIVITY */
         ImageView imvbtnEditProfile = (ImageView) findViewById(R.id.imvbtn_f_editprofile);
         imvbtnEditProfile.setOnClickListener(new View.OnClickListener() {
@@ -145,16 +148,33 @@ public class FreelanceDashboardActivity extends AppCompatActivity {
             }
         });
 
-        /* Display ListView of Previous Transactions */
+        /* DISPLAY LISTVIEW OF INTERESTED TRANSACTIONS */
         final ListView listJobs = (ListView) findViewById(R.id.lsv_f_joborders);
         final Handler handler = new Handler();
-        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+        mAdapter = new workyMatchesLsvAdapter
+                (FreelanceDashboardActivity.this,
+                        app.getLinkedJobsByTypeClient(fUsername));
         listJobs.setAdapter(mAdapter);
 
-        class updateAdapter  implements Runnable {
+        /* REDIRECT TO CLIENT PROFILE WHEN ITEM CLICKED */
+        listJobs.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent launchClientProfileActivity =
+                                new Intent(FreelanceDashboardActivity.this,
+                                        ClientProfileActivity.class);
+                        launchClientProfileActivity.putExtra("F_USERNAME", fUsername);
+                        launchClientProfileActivity.putExtra("C_PROF_POS", position);
+                        startActivity(launchClientProfileActivity);
+                    }
+                }
+        );
+
+        class updateAdapter implements Runnable {
             private Handler handler;
-            private ArrayAdapter<String> mAdapter;
-            public updateAdapter(Handler handler, ArrayAdapter<String> mAdapter) {
+            private ArrayAdapter<workyLinkJob> mAdapter;
+            public updateAdapter(Handler handler, ArrayAdapter<workyLinkJob> mAdapter) {
                 this.handler = handler;
                 this.mAdapter = mAdapter;
             }
@@ -165,18 +185,12 @@ public class FreelanceDashboardActivity extends AppCompatActivity {
 
                 ArrayList<workyLinkJob> linkJobs =
                         app.getLinkedJobsByTypeFreelancer(user.get(workySessionMgt.KEY_USERNAME));
-                ArrayList<String> stringOutput = new ArrayList<>();
-                for (int i = 0; i < linkJobs.size(); i++) {
-                    stringOutput.add("Your Job: " + linkJobs.get(i).getJob().getJobtitle() + "\n"
-                            + "Client Applied: " + linkJobs.get(i).getClient().getUsername() + "\n"
-                            + "Email: " + linkJobs.get(i).getClient().getEmail() + "\n"
-                            + "Contact: " + linkJobs.get(i).getClient().getMobile());
-                }
                 mAdapter.clear();
-                mAdapter.addAll(stringOutput);
+                mAdapter.addAll(linkJobs);
                 mAdapter.notifyDataSetChanged();
             }
         }
+
         handler.post(new updateAdapter(handler, mAdapter));
     }
 }

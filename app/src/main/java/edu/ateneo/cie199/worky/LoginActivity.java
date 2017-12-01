@@ -22,20 +22,16 @@ public class LoginActivity extends AppCompatActivity {
         /* APPLICATION OBJECT */
         final workyApplication app = (workyApplication) getApplication();
 
-
         /* INITIALIZE APPLICATION DATABASE */
         app.initializeUsers();
 
-
         /* LOGIN SESSION MANAGEMENT INITIALIZATION */
         session = new workySessionMgt(getApplicationContext());
-
 
         /* DECLARATION OF USER FIELD CONTENTS */
         final EditText edtUsername = (EditText) findViewById(R.id.edt_username);
         final EditText edtPassword = (EditText) findViewById(R.id.edt_password);
         final Spinner spnUsertype = (Spinner) findViewById(R.id.spn_usertype);
-
 
         /* REDIRECTION TO SIGN IN DASHBOARDS */
         ImageView btnSignin = (ImageView) findViewById(R.id.btn_signin);
@@ -93,7 +89,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
         /* REDIRECTION TO SIGN UP PAGES */
         ImageView btnSignup = (ImageView) findViewById(R.id.btn_signup);
         btnSignup.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +98,6 @@ public class LoginActivity extends AppCompatActivity {
                 String username = edtUsername.getText().toString();
                 String password = edtPassword.getText().toString();
                 int usertype = spnUsertype.getSelectedItemPosition();
-
 
                 /* CHECK IF FIELDS ARE BLANK */
                 if (areFieldsBlank(username, password)) {
@@ -128,6 +122,7 @@ public class LoginActivity extends AppCompatActivity {
                             return;
                         }
                     }
+
                     /* REDIRECT TO CLIENT SIGNUP ACTIVITY */
                     else if (usertype == 1) {
                         if (!app.isClientUsernameTaken(username)) {
@@ -150,6 +145,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    /* CHECKS IF ANY FIELDS ARE LEFT BLANK */
     protected boolean areFieldsBlank(String username, String password) {
         if (username.isEmpty() || password.isEmpty()) {
             Toast.makeText(LoginActivity.this,

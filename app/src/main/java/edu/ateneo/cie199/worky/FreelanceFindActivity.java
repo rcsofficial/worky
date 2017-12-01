@@ -34,6 +34,7 @@ public class FreelanceFindActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_freelance_find);
 
+        /* APPLICATION OBJECT */
         final workyApplication app = (workyApplication) getApplication();
         jobBuffer = app.getAllJobs("Client");
 
@@ -45,6 +46,7 @@ public class FreelanceFindActivity extends AppCompatActivity {
         lblFind.setTypeface(font);
         lblResult.setTypeface(font);
 
+        /* AUTOCOMPLETE ADAPTER */
         autoCompleteAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item);
         final AutoCompleteTextView autoCompleteSearch = (AutoCompleteTextView) findViewById(R.id.edt_f_search);
         autoCompleteSearch.setThreshold(0);
@@ -74,6 +76,7 @@ public class FreelanceFindActivity extends AppCompatActivity {
                 }
         );
 
+        /* SPINNER FOR SEARCH FILTERS */
         Spinner spnSearchFilter = (Spinner) findViewById(R.id.spn_f_searchfilters);
         spnSearchFilter.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
@@ -97,7 +100,6 @@ public class FreelanceFindActivity extends AppCompatActivity {
                     }
                 }
         );
-
 
         ImageView btnSearch = (ImageView) findViewById(R.id.btn_f_search);
         btnSearch.setOnClickListener(new View.OnClickListener() {
@@ -180,12 +182,17 @@ public class FreelanceFindActivity extends AppCompatActivity {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
 
-                                    Intent launchClientViewAsFreelancerActivity = new Intent(FreelanceFindActivity.this,
+                                    Intent launchClientViewAsFreelancerActivity =
+                                            new Intent(FreelanceFindActivity.this,
                                             ClientViewAsFreelancerActivity.class);
-                                    launchClientViewAsFreelancerActivity.putExtra("ORIGIN", "FIND");
-                                    launchClientViewAsFreelancerActivity.putExtra("C_ACCOUNTTYPE", outputArray.get((int) id).getUsertype());
-                                    launchClientViewAsFreelancerActivity.putExtra("C_USERNAME", outputArray.get((int) id).getUsername());
-                                    launchClientViewAsFreelancerActivity.putExtra("C_TITLE", outputArray.get((int) id).getJobtitle());
+                                    launchClientViewAsFreelancerActivity.putExtra
+                                            ("ORIGIN", "FIND");
+                                    launchClientViewAsFreelancerActivity.putExtra
+                                            ("C_ACCOUNTTYPE", outputArray.get((int) id).getUsertype());
+                                    launchClientViewAsFreelancerActivity.putExtra
+                                            ("C_USERNAME", outputArray.get((int) id).getUsername());
+                                    launchClientViewAsFreelancerActivity.putExtra
+                                            ("C_TITLE", outputArray.get((int) id).getJobtitle());
                                     startActivity(launchClientViewAsFreelancerActivity);
                                     return;
                                 }
@@ -196,15 +203,18 @@ public class FreelanceFindActivity extends AppCompatActivity {
         });
     }
 
+    /* UPDATE SEARCH STRING FOR AUTOCOMPLETE */
     private void updateSearchString() {
         searchString.clear();
 
         for (int i = 0; i < jobBuffer.size(); i++) {
             if (jobBuffer.get(i).getJobfield().equals(searchCategory)) {
-                if (searchFilter.equals("Title") && !stringInSearchString(jobBuffer.get(i).getJobtitle())) {
+                if (searchFilter.equals("Title") &&
+                        !stringInSearchString(jobBuffer.get(i).getJobtitle())) {
                     searchString.add(jobBuffer.get(i).getJobtitle());
                 }
-                else if (searchFilter.equals("Location") && !stringInSearchString(jobBuffer.get(i).getLocation()))
+                else if (searchFilter.equals("Location") &&
+                        !stringInSearchString(jobBuffer.get(i).getLocation()))
                     searchString.add(jobBuffer.get(i).getLocation());
             }
         }
@@ -214,6 +224,7 @@ public class FreelanceFindActivity extends AppCompatActivity {
         autoCompleteAdapter.notifyDataSetChanged();
     }
 
+    /* CHECKS IF STRING IS AVAILABLE FOR AUTOCOMPLETE */
     private Boolean stringInSearchString(String bufferString) {
         for (int i = 0; i < searchString.size(); i++) {
             if (searchString.get(i).equals(bufferString))

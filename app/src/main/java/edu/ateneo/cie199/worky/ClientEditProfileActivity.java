@@ -53,7 +53,7 @@ public class ClientEditProfileActivity extends AppCompatActivity {
         String initialField = clientAcct.getField();
 
 
-        /* DATA FIELDS */
+        /* DECLARE DATA FIELDS */
         final EditText edtCpassword = (EditText) findViewById(R.id.edt_c_e_password);
         final EditText edtCfirstname = (EditText) findViewById(R.id.edt_c_e_firstname);
         final EditText edtCmidname = (EditText) findViewById(R.id.edt_c_e_midname);
@@ -67,6 +67,7 @@ public class ClientEditProfileActivity extends AppCompatActivity {
         final Spinner spnCfield = (Spinner) findViewById(R.id.spn_c_e_field);
         final EditText edtCspecialization = (EditText) findViewById(R.id.edt_c_e_specialization);
         final EditText edtClocation = (EditText) findViewById(R.id.edt_c_e_location);
+        ImageView imvProfPic = (ImageView) findViewById(R.id.imv_c_e_icon);
 
             /* CONVERT GENDER AND FIELD TO INT */
             int initialGenderPos = 0;
@@ -85,6 +86,7 @@ public class ClientEditProfileActivity extends AppCompatActivity {
                     initialFieldPos = i;
             }
 
+        /* SET DATA FIELDS*/
         edtCpassword.setText(clientAcct.getPassword());
         edtCfirstname.setText(clientAcct.getFirstname());
         edtCmidname.setText(clientAcct.getMiddlename());
@@ -99,13 +101,17 @@ public class ClientEditProfileActivity extends AppCompatActivity {
         edtCspecialization.setText(clientAcct.getSpecialization());
         edtClocation.setText(clientAcct.getLocation());
 
-        /* Set Client Avatar */
-        final int icons[] = {R.drawable.profpic1, R.drawable.profpic2, R.drawable.profpic3, R.drawable.profpic4};
-        ImageView imvProfPic = (ImageView) findViewById(R.id.imv_c_e_icon);
+        final int icons[] = {
+                R.drawable.profpic1,
+                R.drawable.profpic2,
+                R.drawable.profpic3,
+                R.drawable.profpic4
+        };
+
         imvProfPic.setImageResource(icons[clientAcct.getIconCode()]);
 
-        final ImageView imvIcon = (ImageView) findViewById(R.id.imv_c_e_icon);
         /* ICON ONPRESS LISTENER */
+        final ImageView imvIcon = (ImageView) findViewById(R.id.imv_c_e_icon);
         imvIcon.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -120,7 +126,7 @@ public class ClientEditProfileActivity extends AppCompatActivity {
                 }
         );
 
-
+        /* REDIRECT BACK TO LOGIN AFTER SUBMIT */
         ImageView btnFinish = (ImageView) findViewById(R.id.btn_c_e_editprofile);
         btnFinish.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,6 +187,7 @@ public class ClientEditProfileActivity extends AppCompatActivity {
         });
     }
 
+    /* CHECKS IF ANY INT FIELDS ARE BLANK */
     protected boolean areIntFieldsBlank(EditText age, EditText mobilenum) {
         if (age.getText().toString().isEmpty() || mobilenum.getText().toString().isEmpty()) {
             Toast.makeText(ClientEditProfileActivity.this,
@@ -192,6 +199,7 @@ public class ClientEditProfileActivity extends AppCompatActivity {
             return false;
     }
 
+    /* CHECKS IF ANY STRING FIELDS ARE BLANK */
     protected boolean areStrFieldsBlank(String password, String firstname,
                                         String midname, String lastname, String email,
                                         String profile, String company, String specialization,

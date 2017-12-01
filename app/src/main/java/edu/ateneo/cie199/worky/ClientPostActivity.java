@@ -125,6 +125,7 @@ public class ClientPostActivity extends AppCompatActivity {
         });
     }
 
+    /* GENERATES RANDOM TIPS */
     public String randomTipsGen() {
         /* ARRAY LIST OF RANDOM TIPS */
         ArrayList<String> randomTips = new ArrayList<>();

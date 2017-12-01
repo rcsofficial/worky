@@ -76,7 +76,6 @@ public class FreelanceEditPostFieldsActivity extends AppCompatActivity {
         edtJobloc.setText(initialData.getLocation());
         edtJobdesc.setText(initialData.getDescription());
 
-
         ImageView btnEditJob = (ImageView) findViewById(R.id.btn_f_e_editjob);
         btnEditJob.setOnClickListener(new View.OnClickListener() {
             @Override

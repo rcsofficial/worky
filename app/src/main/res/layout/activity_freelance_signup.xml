@@ -43,6 +43,25 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/lbl_f_icon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textAlignment="center"
+                android:text="Tap to Change Avatar"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/imv_f_icon"
+                android:layout_width="match_parent"
+                android:layout_height="123dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/profpic1" />
+
+            <TextView
                 android:id="@+id/lbl_f_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -59,22 +78,6 @@
                 android:paddingTop="10dp"
                 android:text="Insert Username"
                 android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/lbl_f_icon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:text="Tap to Change Avatar"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/imv_f_icon"
-                android:layout_width="135dp"
-                android:layout_height="123dp"
-                android:paddingTop="10dp"
-                android:src="@drawable/profpic1" />
 
             <TextView
                 android:id="@+id/lbl_f_firstname"

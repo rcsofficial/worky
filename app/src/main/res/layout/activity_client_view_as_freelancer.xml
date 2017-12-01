@@ -16,12 +16,12 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/imv_c_v_profpic"
+        android:id="@+id/imv_c_v_jobicon"
         android:layout_width="122dp"
         android:layout_height="107dp"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
-        app:srcCompat="@drawable/clientprofile" />
+        app:srcCompat="@drawable/job1" />
 
     <TextView
         android:id="@+id/txv_c_v_title"
@@ -314,8 +314,8 @@
         android:layout_height="40dp"
         app:srcCompat="@drawable/interestedbtn"
         android:layout_marginTop="3dp"
-        android:layout_below="@+id/imv_c_v_profpic"
-        android:layout_alignEnd="@+id/imv_c_v_profpic"
-        android:layout_alignStart="@+id/imv_c_v_profpic" />
+        android:layout_below="@+id/imv_c_v_jobicon"
+        android:layout_alignEnd="@+id/imv_c_v_jobicon"
+        android:layout_alignStart="@+id/imv_c_v_jobicon" />
 
 </RelativeLayout>

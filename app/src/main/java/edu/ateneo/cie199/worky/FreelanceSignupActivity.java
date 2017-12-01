@@ -74,7 +74,6 @@ public class FreelanceSignupActivity extends AppCompatActivity {
                 /* APPLICATION OBJECT */
                 final workyApplication app = (workyApplication) getApplication();
 
-
                 /* GET EDIT TEXT AND SPIN FIELDS CONTENT */
                 EditText edtFfirstname = (EditText) findViewById(R.id.edt_f_firstname);
                 EditText edtFmidname = (EditText) findViewById(R.id.edt_f_midname);
@@ -89,14 +88,12 @@ public class FreelanceSignupActivity extends AppCompatActivity {
                 EditText edtFcourse = (EditText) findViewById(R.id.edt_f_course);
                 EditText edtFlocation = (EditText) findViewById(R.id.edt_f_location);
 
-
                 /* LOOKUP SPINNER TRANSLATION TABLE */
                 String[] LOOKUP_GENDER = { "Male", "Female", "Lesbian", "Gay", "Bisexual",
                         "Transsexual", "Queer", "Intersex", "Asexual"};
                 String[] LOOKUP_FIELD = { "Agriculture", "Arts", "Clerical", "Education",
                         "Engineering", "Finance", "Health", "Hospitality",
                         "IT", "Legal", "Manufacturing", "Transport", "Others"};
-
                 
                 /* CHECK IF INT FIELDS BLANK TO PREVENT PARSE ERROR */
                 if (areIntFieldsBlank(edtFage, edtFmobilenum))
@@ -138,6 +135,7 @@ public class FreelanceSignupActivity extends AppCompatActivity {
         });
     }
 
+    /* CHECKS IF ANY INT FIELDS ARE LEFT BLANK */
     protected boolean areIntFieldsBlank(EditText age, EditText mobilenum) {
         if (age.getText().toString().isEmpty() || mobilenum.getText().toString().isEmpty()) {
             Toast.makeText(FreelanceSignupActivity.this,
@@ -148,7 +146,8 @@ public class FreelanceSignupActivity extends AppCompatActivity {
         else
             return false;
     }
-    
+
+    /* CHECKS IF ANY STRING FIELDS ARE LEFT BLANK */
     protected boolean areStrFieldsBlank(String firstname, String midname, String lastname,
                                         String email, String profile, String educ,
                                         String expertise, String location) {

@@ -45,6 +45,7 @@ public class ClientFindActivity extends AppCompatActivity {
         lblFind.setTypeface(font);
         lblResult.setTypeface(font);
 
+        /* AUTO COMPLETE ADAPTER */
         autoCompleteAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item);
         final AutoCompleteTextView autoCompleteSearch = (AutoCompleteTextView) findViewById(R.id.edt_c_search);
         autoCompleteSearch.setThreshold(0);
@@ -74,6 +75,7 @@ public class ClientFindActivity extends AppCompatActivity {
                 }
         );
 
+        /* SEARCH FILTER SPINNER */
         Spinner spnSearchFilter = (Spinner) findViewById(R.id.spn_c_searchfilters);
         spnSearchFilter.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
@@ -97,8 +99,6 @@ public class ClientFindActivity extends AppCompatActivity {
                     }
                 }
         );
-
-
 
         ImageView btnSearch = (ImageView) findViewById(R.id.btn_c_search);
         btnSearch.setOnClickListener(new View.OnClickListener() {
@@ -196,6 +196,7 @@ public class ClientFindActivity extends AppCompatActivity {
         });
     }
 
+    /* UPDATES THE SEARCH STRING FOR AUTOCOMPLETE */
     private void updateSearchString() {
         searchString.clear();
 
@@ -214,6 +215,7 @@ public class ClientFindActivity extends AppCompatActivity {
         autoCompleteAdapter.notifyDataSetChanged();
     }
 
+    /* CHECKS IF STRING IS AVAILABLE FOR AUTOCOMPLETE */
     private Boolean stringInSearchString(String bufferString) {
         for (int i = 0; i < searchString.size(); i++) {
             if (searchString.get(i).equals(bufferString))

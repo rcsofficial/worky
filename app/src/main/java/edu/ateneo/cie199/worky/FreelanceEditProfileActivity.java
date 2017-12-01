@@ -65,6 +65,7 @@ public class FreelanceEditProfileActivity extends AppCompatActivity {
         final Spinner spnFexpertise = (Spinner) findViewById(R.id.spn_f_e_expertise);
         final EditText edtFcourse = (EditText) findViewById(R.id.edt_f_e_course);
         final EditText edtFlocation = (EditText) findViewById(R.id.edt_f_e_location);
+        ImageView imvProfPic = (ImageView) findViewById(R.id.imv_f_e_icon);
         
         /* CONVERT GENDER AND FIELD TO INT */
         int initialGenderPos = 0;
@@ -97,13 +98,17 @@ public class FreelanceEditProfileActivity extends AppCompatActivity {
         edtFcourse.setText(freelancerAcct.getCourse());
         edtFlocation.setText(freelancerAcct.getLocation());
 
-        /* Set Freelancer Avatar */
-        final int icons[] = {R.drawable.profpic1, R.drawable.profpic2, R.drawable.profpic3, R.drawable.profpic4};
-        ImageView imvProfPic = (ImageView) findViewById(R.id.imv_f_e_icon);
+        final int icons[] = {
+                R.drawable.profpic1,
+                R.drawable.profpic2,
+                R.drawable.profpic3,
+                R.drawable.profpic4
+        };
+
         imvProfPic.setImageResource(icons[freelancerAcct.getIconCode()]);
 
-        final ImageView imvIcon = (ImageView) findViewById(R.id.imv_f_e_icon);
         /* ICON ONPRESS LISTENER */
+        final ImageView imvIcon = (ImageView) findViewById(R.id.imv_f_e_icon);
         imvIcon.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -181,6 +186,7 @@ public class FreelanceEditProfileActivity extends AppCompatActivity {
         });
     }
 
+    /* CHECKS IF ANY INT FIELDS ARE LEFT BLANK */
     protected boolean areIntFieldsBlank(EditText age, EditText mobilenum) {
         if (age.getText().toString().isEmpty() || mobilenum.getText().toString().isEmpty()) {
             Toast.makeText(FreelanceEditProfileActivity.this,
@@ -192,6 +198,7 @@ public class FreelanceEditProfileActivity extends AppCompatActivity {
             return false;
     }
 
+    /* CHECKS IF ANY STRING FIELDS ARE LEFT BLANK */
     protected boolean areStrFieldsBlank(String password, String firstname,
                                         String midname, String lastname, String email,
                                         String profile, String educ, String expertise,

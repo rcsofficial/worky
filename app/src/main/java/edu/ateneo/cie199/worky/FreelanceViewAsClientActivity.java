@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.HashMap;
 
@@ -35,13 +36,14 @@ public class FreelanceViewAsClientActivity extends AppCompatActivity {
         /* LOGIN SESSION MANAGEMENT */
         session = new workySessionMgt(getApplicationContext());
         final HashMap<String, String> user = session.getUserDetails();
-        String cUsername;
+        String fUsername;
 
         final Intent recvdIntent = getIntent();
 
         /* GET INFO AND SET TEXT VIEWS ACCORDINGLY */
         TextView txvUserName = (TextView) findViewById(R.id.txv_f_v_username);
         TextView txvFullName = (TextView) findViewById(R.id.txv_f_v_fullname);
+        TextView txvEducation = (TextView) findViewById(R.id.txv_f_v_education);
         TextView txvExpertise = (TextView) findViewById(R.id.txv_f_v_expertise);
         TextView txvCourse = (TextView) findViewById(R.id.txv_f_v_course);
         TextView txvProfile = (TextView) findViewById(R.id.txv_f_v_profile);
@@ -50,16 +52,16 @@ public class FreelanceViewAsClientActivity extends AppCompatActivity {
         TextView txvLocation = (TextView) findViewById(R.id.txv_f_v_location);
         TextView txvMobile = (TextView) findViewById(R.id.txv_f_v_mobile);
         TextView txvEmail = (TextView) findViewById(R.id.txv_f_v_email);
-        ImageView imvProfPic = (ImageView) findViewById(R.id.imv_f_v_profpic);
+        ImageView imvJobIcon = (ImageView) findViewById(R.id.imv_f_v_jobicon);
 
         if (recvdIntent.getStringExtra("ORIGIN").equals("DASHBOARD")){
-            cUsername = user.get(workySessionMgt.KEY_USERNAME);
+            fUsername = user.get(workySessionMgt.KEY_USERNAME);
         }
         else {
             String accountType = recvdIntent.getStringExtra("F_ACCOUNTTYPE");
-            cUsername = recvdIntent.getStringExtra("F_USERNAME");
+            fUsername = recvdIntent.getStringExtra("F_USERNAME");
             String title = recvdIntent.getStringExtra("F_TITLE");
-            final workyJobs job = app.getJobByTypeUsernameTitle(accountType, cUsername, title);
+            final workyJobs job = app.getJobByTypeUsernameTitle(accountType, fUsername, title);
 
             TextView txvTitle = (TextView) findViewById(R.id.txv_f_v_title);
             TextView txvField = (TextView) findViewById(R.id.txv_f_v_job_field);
@@ -74,6 +76,24 @@ public class FreelanceViewAsClientActivity extends AppCompatActivity {
             txvJobLocation.setText(job.getLocation());
             txvDescription.setText(job.getDescription());
 
+            int icons[] = {
+                    R.drawable.job1,
+                    R.drawable.job2,
+                    R.drawable.job3,
+                    R.drawable.job4,
+                    R.drawable.job5,
+                    R.drawable.job6,
+                    R.drawable.job7,
+                    R.drawable.job8,
+                    R.drawable.job9,
+                    R.drawable.job10,
+                    R.drawable.job11,
+                    R.drawable.job12,
+                    R.drawable.job13
+            };
+            imvJobIcon.setImageResource(icons[job.getJobicon()]);
+
+            /* ADDS JOB LINK WHEN INTERESTED, REDIRECT TO DASHBOARD */
             ImageView btnSubmit = (ImageView) findViewById(R.id.btn_f_v_submit);
             btnSubmit.setOnClickListener(
                     new View.OnClickListener() {
@@ -85,6 +105,11 @@ public class FreelanceViewAsClientActivity extends AppCompatActivity {
 
                             app.addLinkJob("Freelancer", user.get(workySessionMgt.KEY_USERNAME),
                                     recvdIntent.getStringExtra("F_USERNAME"), job);
+
+                            Toast.makeText(FreelanceViewAsClientActivity.this,
+                                    "The freelancer has been informed of your interest.",
+                                    Toast.LENGTH_SHORT).show();
+
                             startActivity(launchClientDashboardActivity);
                             finish();
                         }
@@ -92,32 +117,29 @@ public class FreelanceViewAsClientActivity extends AppCompatActivity {
             );
         }
 
-        txvUserName.setText(cUsername);
-        String fullname = app.getFreelancerAcctByUsername(cUsername).getFirstname() + " "
-                + app.getFreelancerAcctByUsername(cUsername).getMiddlename() + " "
-                + app.getFreelancerAcctByUsername(cUsername).getLastname();
+        /* SET ABOUT CLIENT DETAILS */
+        txvUserName.setText(fUsername);
+        String fullname = app.getFreelancerAcctByUsername(fUsername).getFirstname() + " "
+                + app.getFreelancerAcctByUsername(fUsername).getMiddlename() + " "
+                + app.getFreelancerAcctByUsername(fUsername).getLastname();
         txvFullName.setText(fullname);
+        txvEducation.setText(app.getFreelancerAcctByUsername(fUsername).getEducation());
         txvExpertise.setText
-                (app.getFreelancerAcctByUsername(cUsername).getExpertise());
+                (app.getFreelancerAcctByUsername(fUsername).getExpertise());
         txvCourse.setText
-                (app.getFreelancerAcctByUsername(cUsername).getCourse());
+                (app.getFreelancerAcctByUsername(fUsername).getCourse());
         txvProfile.setText
-                (app.getFreelancerAcctByUsername(cUsername).getProfile());
+                (app.getFreelancerAcctByUsername(fUsername).getProfile());
         txvAge.setText
-                (Long.toString(app.getFreelancerAcctByUsername(cUsername).getAge()));
+                (Long.toString(app.getFreelancerAcctByUsername(fUsername).getAge()));
         txvGender.setText
-                (app.getFreelancerAcctByUsername(cUsername).getGender());
+                (app.getFreelancerAcctByUsername(fUsername).getGender());
         txvLocation.setText
-                (app.getFreelancerAcctByUsername(cUsername).getLocation());
+                (app.getFreelancerAcctByUsername(fUsername).getLocation());
         txvMobile.setText
-                (Long.toString(app.getFreelancerAcctByUsername(cUsername).getMobile()));
+                (Long.toString(app.getFreelancerAcctByUsername(fUsername).getMobile()));
         txvEmail.setText
-                (app.getFreelancerAcctByUsername(cUsername).getEmail());
-
-        /* Set Client Avatar */
-        int icons[] = {R.drawable.profpic1, R.drawable.profpic2, R.drawable.profpic3, R.drawable.profpic4};
-        imvProfPic.setImageResource(icons[app.getFreelancerAcctByUsername(cUsername).getIconCode()]);
-
+                (app.getFreelancerAcctByUsername(fUsername).getEmail());
     }
 
 }

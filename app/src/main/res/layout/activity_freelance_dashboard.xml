@@ -17,9 +17,10 @@
 
     <ImageView
         android:id="@+id/imv_f_profpic"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="110dp"
         android:layout_marginTop="10dp"
+        android:layout_gravity="center"
         app:srcCompat="@drawable/freelanceprofile" />
 
     <TextView

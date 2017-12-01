@@ -4,10 +4,11 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -16,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 /**
  * The activity class where a client can find jobs posted by freelancers.
@@ -24,11 +24,18 @@ import java.util.regex.Pattern;
 public class ClientFindActivity extends AppCompatActivity {
 
     private ArrayAdapter<workyJobs> mAdapter = null;
+    private ArrayAdapter<String> autoCompleteAdapter = null;
+    private ArrayList<String> searchString = new ArrayList<>();
+    private String searchCategory = "Agriculture";
+    private String searchFilter = "Title";
+    private ArrayList<workyJobs> jobBuffer = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_find);
+        final workyApplication app = (workyApplication) getApplication();
+        jobBuffer = app.getAllJobs("Freelancer");
 
         /* SET FONT OF HEADER */
         Typeface font = Typeface.createFromAsset(ClientFindActivity.this.getAssets(),
@@ -37,6 +44,61 @@ public class ClientFindActivity extends AppCompatActivity {
         TextView lblResult = (TextView) findViewById(R.id.lbl_c_searchresults);
         lblFind.setTypeface(font);
         lblResult.setTypeface(font);
+
+        autoCompleteAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item);
+        final AutoCompleteTextView autoCompleteSearch = (AutoCompleteTextView) findViewById(R.id.edt_c_search);
+        autoCompleteSearch.setThreshold(0);
+        autoCompleteSearch.setAdapter(autoCompleteAdapter);
+
+        /* INITIALIZE SEARCH STRING FOR AUTOCOMPLETE */
+        updateSearchString();
+
+        /* CHANGE AUTOCOMPLETE BASED ON THE CATEGORY SELECTED */
+        Spinner spnJobcategory = (Spinner) findViewById(R.id.spn_c_jobcategory);
+        spnJobcategory.setOnItemSelectedListener(
+                new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        String[] LOOKUP_JOBCATEGORY = { "Agriculture", "Arts", "Clerical", "Education",
+                                "Engineering", "Finance", "Health", "Hospitality",
+                                "IT", "Legal", "Manufacturing", "Transport", "Others"};
+                        searchCategory = LOOKUP_JOBCATEGORY[position];
+
+                        updateSearchString();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                }
+        );
+
+        Spinner spnSearchFilter = (Spinner) findViewById(R.id.spn_c_searchfilters);
+        spnSearchFilter.setOnItemSelectedListener(
+                new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if (position == 0) {
+                            searchFilter = "Title";
+                            updateSearchString();
+                        }
+                        else if (position == 3) {
+                            searchFilter = "Location";
+                            updateSearchString();
+                        }
+                        else
+                            searchString.clear();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                }
+        );
+
+
 
         ImageView btnSearch = (ImageView) findViewById(R.id.btn_c_search);
         btnSearch.setOnClickListener(new View.OnClickListener() {
@@ -133,4 +195,31 @@ public class ClientFindActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void updateSearchString() {
+        searchString.clear();
+
+        for (int i = 0; i < jobBuffer.size(); i++) {
+            if (jobBuffer.get(i).getJobfield().equals(searchCategory)) {
+                if (searchFilter.equals("Title") && !stringInSearchString(jobBuffer.get(i).getJobtitle())) {
+                    searchString.add(jobBuffer.get(i).getJobtitle());
+                }
+                else if (searchFilter.equals("Location") && !stringInSearchString(jobBuffer.get(i).getLocation()))
+                    searchString.add(jobBuffer.get(i).getLocation());
+            }
+        }
+
+        autoCompleteAdapter.clear();
+        autoCompleteAdapter.addAll(searchString);
+        autoCompleteAdapter.notifyDataSetChanged();
+    }
+
+    private Boolean stringInSearchString(String bufferString) {
+        for (int i = 0; i < searchString.size(); i++) {
+            if (searchString.get(i).equals(bufferString))
+                return true;
+        }
+        return false;
+    }
 }
+

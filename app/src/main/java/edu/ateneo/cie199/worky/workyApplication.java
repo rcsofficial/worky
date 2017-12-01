@@ -242,7 +242,7 @@ public class workyApplication extends Application{
         ArrayList<workyLinkJob> linkJobs = new ArrayList<>();
         for (int i = 0; i < mLinkJob.size(); i++) {
             if ( mLinkJob.get(i).getJobUsertype().equals("Client") &&
-                   mLinkJob.get(i).getClient().getUsername().equals(clientUsername) )
+                    mLinkJob.get(i).getClient().getUsername().equals(clientUsername) )
                 linkJobs.add(mLinkJob.get(i));
         }
         return linkJobs;
@@ -334,8 +334,8 @@ public class workyApplication extends Application{
     public int getJobIndexByTypeUsernameTitle(String type, String username, String title) {
         for (int i = 0; i < mJobs.size(); i++) {
             if ( mJobs.get(i).getUsertype().equals(type) &&
-                 mJobs.get(i).getUsername().equals(username) &&
-                 mJobs.get(i).getJobtitle().equals(title) )
+                    mJobs.get(i).getUsername().equals(username) &&
+                    mJobs.get(i).getJobtitle().equals(title) )
                 return i;
         }
         return -1;
@@ -405,7 +405,7 @@ public class workyApplication extends Application{
      * @param password the password of the freelancer
      * @return <code>true</code> when the freelancer is found; <code>false</code> otherwise
      */
-   public boolean isFreelancerExistent(String username, String password) {
+    public boolean isFreelancerExistent(String username, String password) {
         for (int i=0; i<mFreelancer.size(); i++) {
             if (mFreelancer.get(i).getUsername().equals(username) &&
                     mFreelancer.get(i).getPassword().equals(password))
@@ -527,6 +527,18 @@ public class workyApplication extends Application{
     }
 
 
+    public ArrayList<workyJobs> getAllJobs(String type) {
+        ArrayList<workyJobs> jobs = new ArrayList<>();
+
+        for (int i = 0; i < mJobs.size(); i++) {
+            if (mJobs.get(i).getUsertype().equals(type))
+                jobs.add(mJobs.get(i));
+        }
+
+        return jobs;
+    }
+
+
     /**
      * Gets jobs based from the username and the type of the user.
      *
@@ -590,7 +602,7 @@ public class workyApplication extends Application{
      * @param userType the type of the user
      * @return array of jobs
      */
-   public ArrayList<workyJobs> getJobsByMinSalary(float salary, String jobField, String userType) {
+    public ArrayList<workyJobs> getJobsByMinSalary(float salary, String jobField, String userType) {
         ArrayList<workyJobs> outputEntries = new ArrayList<>();
         for (int i = 0; i < getJobsByField(jobField).size(); i++) {
             if (getJobsByField(jobField).get(i).getSalary() >= salary &&
@@ -856,5 +868,4 @@ public class workyApplication extends Application{
                     }
                 });
     }
-
 }

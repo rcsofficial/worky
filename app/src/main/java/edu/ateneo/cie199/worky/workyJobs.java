@@ -14,7 +14,7 @@ public class workyJobs {
     private String mUsertype;
 
     /**
-     * Instantiates a new Worky jobs.
+     * Instantiates a new job.
      */
     public workyJobs() {}
 

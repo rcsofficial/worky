@@ -13,6 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -346,9 +347,13 @@ public class workyApplication extends Application{
      * Gets the index of the job based on the user, the username, and the job title in the
      * <code>mJobs</code> array.
      *
-     * @param type     the type of the user
-     * @param username the username of the user
-     * @param title    the title of the job
+     * @param type          the type of the user
+     * @param username      the username of the user
+     * @param field         the field of the job
+     * @param title         the title of the job
+     * @param salary        the requesting salary of the job owner
+     * @param location      the location of the job
+     * @param description   the description of the job
      * @return -1 when the job is not found; the index otherwise
      */
     public int getJobIndexByAllType(String type, String username, String field, String title, float salary,
@@ -551,6 +556,13 @@ public class workyApplication extends Application{
         return mJobs;
     }
 
+
+    /**
+     * Gets all jobs.
+     *
+     * @param type the type of the job owner
+     * @return all the jobs owned by a user type
+     */
     public ArrayList<workyJobs> getAllJobs(String type) {
         ArrayList<workyJobs> jobs = new ArrayList<>();
 

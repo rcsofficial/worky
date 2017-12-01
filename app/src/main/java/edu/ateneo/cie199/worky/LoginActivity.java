@@ -4,11 +4,12 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import java.io.IOException;
 
 public class LoginActivity extends AppCompatActivity {
     /* LOGIN SESSION MANAGEMENT */
@@ -47,6 +48,11 @@ public class LoginActivity extends AppCompatActivity {
                 /* CHECK IF FIELDS ARE BLANK */
                 if(areFieldsBlank(username, password)) {
                     return;
+                }
+                else if (!isInternetAvailable()) {
+                    Toast.makeText(LoginActivity.this,
+                            "ERROR: Please connect to the internet.",
+                            Toast.LENGTH_SHORT).show();
                 }
                 else {
                     /* REDIRECT TO FREELANCE DASHBOARD */
@@ -103,6 +109,11 @@ public class LoginActivity extends AppCompatActivity {
                 if (areFieldsBlank(username, password)) {
                     return;
                 }
+                else if (!isInternetAvailable()) {
+                    Toast.makeText(LoginActivity.this,
+                            "ERROR: Please connect to the internet.",
+                            Toast.LENGTH_SHORT).show();
+                }
                 else {
                     /* REDIRECT TO FREELANCE SIGNUP ACTIVITY */
                     if (usertype == 0) {
@@ -156,4 +167,15 @@ public class LoginActivity extends AppCompatActivity {
         else
             return false;
     }
+
+    /* CHECKS IF THERE IS AN INTERNET CONNECTION */
+    private Boolean isInternetAvailable() {
+        String command = "ping -c 1 google.com";
+        try {
+            return (Runtime.getRuntime().exec(command).waitFor() == 0);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }

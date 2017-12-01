@@ -126,14 +126,18 @@ public class workyApplication extends Application{
                                         break;
                                     case MODIFIED:
                                         workyJobs job = dc.getDocument().toObject(workyJobs.class);
-                                        int i = getJobIndexByTypeUsernameTitle(job.getUsertype(), job.getUsername(), job.getJobtitle());
+                                        int i = getJobIndexByAllType(job.getUsertype(), job.getUsername(),
+                                                job.getJobfield(), job.getJobtitle(), job.getSalary(), job.getLocation(),
+                                                job.getDescription() );
                                         mJobs.set(i, job);
                                         Log.d(TAG, "Modified job: " + dc.getDocument().getData());
                                         break;
                                     case REMOVED:
-                                        workyJobs jobA = dc.getDocument().toObject(workyJobs.class);
+                                        workyJobs jobs = dc.getDocument().toObject(workyJobs.class);
 
-                                        mJobs.remove(getJobIndexByTypeUsernameTitle(jobA.getUsertype(), jobA.getUsername(), jobA.getJobtitle()));
+                                        mJobs.remove(getJobIndexByAllType(jobs.getUsertype(), jobs.getUsername(),
+                                                jobs.getJobfield(), jobs.getJobtitle(), jobs.getSalary(), jobs.getLocation(),
+                                                jobs.getDescription() ));
 
                                         //mJobs.remove(dc.getDocument().toObject(workyJobs.class));
                                         Log.d(TAG, "Removed job: " + dc.getDocument().getData());
@@ -172,16 +176,26 @@ public class workyApplication extends Application{
                                             String usertype = dc.getDocument().get("usertype").toString();
                                             String client = dc.getDocument().get("client").toString();
                                             String freelancer = dc.getDocument().get("freelancer").toString();
-                                            String jobTitle = dc.getDocument().get("job").toString();
+                                            String jobTitle = dc.getDocument().get("job title").toString();
                                             String jobUsername;
                                             if (usertype.equals("Freelancer"))
                                                 jobUsername = freelancer;
                                             else
                                                 jobUsername = client;
+
+                                            String jobField = dc.getDocument().get("job field").toString();
+                                            Float jobSalary = Float.parseFloat(dc.getDocument().get("job salary").toString());
+                                            String jobLocation = dc.getDocument().get("job location").toString();
+                                            String jobDescription = dc.getDocument().get("job description").toString();
+
+                                            workyJobs job = new workyJobs(jobField, jobTitle, jobSalary, jobLocation,
+                                                    jobDescription, jobUsername, usertype);
+
                                             workyLinkJob linkJob = new workyLinkJob(usertype,
                                                     getClientAcctByUsername(client),
                                                     getFreelancerAcctByUsername(freelancer),
-                                                    getJobByTypeUsernameTitle(usertype, jobUsername, jobTitle));
+                                                    /*getJobByTypeUsernameTitle(usertype, jobUsername, jobTitle)*/
+                                                    job);
 
                                             mLinkJob.add(linkJob);
                                         } catch (NullPointerException err) {
@@ -195,7 +209,7 @@ public class workyApplication extends Application{
                                     case REMOVED:
                                         deleteLinkJob(dc.getDocument().get("client").toString(),
                                                 dc.getDocument().get("freelancer").toString(),
-                                                dc.getDocument().get("job").toString());
+                                                dc.getDocument().get("job title").toString());
                                         Log.d(TAG, "Removed Job Link: " + dc.getDocument().getData());
                                         break;
                                 }
@@ -225,7 +239,13 @@ public class workyApplication extends Application{
         docData.put("usertype", jobUserType);
         docData.put("client", clientUsername);
         docData.put("freelancer", freelancerUsername);
-        docData.put("job", job.getJobtitle());
+        docData.put("job title", job.getJobtitle());
+        docData.put("job field", job.getJobfield());
+        docData.put("job salary", job.getSalary());
+        docData.put("job location", job.getLocation());
+        docData.put("job description", job.getDescription());
+        docData.put("job icon", job.getJobicon());
+
         db.collection("joblink").document(clientUsername + freelancerUsername + job.getJobtitle())
                 .set(docData);
         return;
@@ -331,16 +351,20 @@ public class workyApplication extends Application{
      * @param title    the title of the job
      * @return -1 when the job is not found; the index otherwise
      */
-    public int getJobIndexByTypeUsernameTitle(String type, String username, String title) {
+    public int getJobIndexByAllType(String type, String username, String field, String title, float salary,
+                                    String location, String description) {
         for (int i = 0; i < mJobs.size(); i++) {
             if ( mJobs.get(i).getUsertype().equals(type) &&
                     mJobs.get(i).getUsername().equals(username) &&
-                    mJobs.get(i).getJobtitle().equals(title) )
+                    mJobs.get(i).getJobfield().equals(field) &&
+                    mJobs.get(i).getJobtitle().equals(title) &&
+                    mJobs.get(i).getSalary() == salary &&
+                    mJobs.get(i).getLocation().equals(location) &&
+                    mJobs.get(i).getDescription().equals(description)  )
                 return i;
         }
         return -1;
     }
-
 
     /**
      * Gets the index of the freelancer based on the username in the <code>mFreelancer</code>
@@ -392,7 +416,8 @@ public class workyApplication extends Application{
      */
     public void addJob(workyJobs job) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("job").document(job.getUsertype() + job.getUsername() + ": " + job.getJobtitle()).set(job);
+        db.collection("job").document(job.getUsertype() + job.getUsername() + ":" + job.getJobfield() + job.getJobtitle()
+                + job.getSalary() + job.getLocation() + job.getDescription()).set(job);
         return;
     }
 
@@ -526,7 +551,6 @@ public class workyApplication extends Application{
         return mJobs;
     }
 
-
     public ArrayList<workyJobs> getAllJobs(String type) {
         ArrayList<workyJobs> jobs = new ArrayList<>();
 
@@ -537,7 +561,6 @@ public class workyApplication extends Application{
 
         return jobs;
     }
-
 
     /**
      * Gets jobs based from the username and the type of the user.
@@ -585,7 +608,7 @@ public class workyApplication extends Application{
                                                String userType) {
         ArrayList<workyJobs> outputEntries = new ArrayList<>();
         for (int i = 0; i < getJobsByField(jobField).size(); i++) {
-            if (getJobsByField(jobField).get(i).getJobtitle().equals(jobTitle) &&
+            if (getJobsByField(jobField).get(i).getJobtitle().toLowerCase().contains(jobTitle.toLowerCase()) &&
                     getJobsByField(jobField).get(i).getUsertype().equals(userType))
                 outputEntries.add(getJobsByField(jobField).get(i));
         }
@@ -646,7 +669,7 @@ public class workyApplication extends Application{
                                                   String userType) {
         ArrayList<workyJobs> outputEntries = new ArrayList<>();
         for (int i = 0; i < getJobsByField(jobField).size(); i++) {
-            if (getJobsByField(jobField).get(i).getLocation().equals(location) &&
+            if (getJobsByField(jobField).get(i).getLocation().toLowerCase().contains(location.toLowerCase()) &&
                     getJobsByField(jobField).get(i).getUsertype().equals(userType))
                 outputEntries.add(getJobsByField(jobField).get(i));
         }
@@ -691,7 +714,9 @@ public class workyApplication extends Application{
         }
         */
 
-        db.collection("job").document(toDeleteFromMain.getUsertype()+ toDeleteFromMain.getUsername() + ": " + toDeleteFromMain.getJobtitle())
+        db.collection("job").document(toDeleteFromMain.getUsertype()+ toDeleteFromMain.getUsername() + ":" +
+                toDeleteFromMain.getJobfield() + toDeleteFromMain.getJobtitle() + toDeleteFromMain.getSalary() +
+                toDeleteFromMain.getLocation() + toDeleteFromMain.getDescription())
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -728,13 +753,20 @@ public class workyApplication extends Application{
                         String description, String username, String usertype) {
         workyJobs toEditFromMain = getJobsByUsername(username, usertype).get(index);
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("job").document(toEditFromMain.getUsertype() + toEditFromMain.getUsername() + ": " + toEditFromMain.getJobtitle())
-                .set(new workyJobs(jobField, jobTitle,
-                        salary, location, description, username, usertype))
+        final String docName = toEditFromMain.getUsertype()+ toEditFromMain.getUsername() + ":" +
+                toEditFromMain.getJobfield() + toEditFromMain.getJobtitle() + toEditFromMain.getSalary() +
+                toEditFromMain.getLocation() + toEditFromMain.getDescription();
+
+        deleteJob(username, usertype, index);
+        addJob(new workyJobs(jobField, jobTitle, salary, location, description, username, usertype));
+
+        /*
+        db.collection("job").document(docName)
+                .set(new workyJobs(jobField, jobTitle, salary, location, description, username, usertype))
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        Log.d("Haha", docName);
                         Log.d(TAG, "DocumentSnapshot successfully written!");
                     }
                 })
@@ -744,8 +776,9 @@ public class workyApplication extends Application{
                         Log.w(TAG, "Error writing document", e);
                     }
                 });
-
+        */
         return;
+
     }
 
 
@@ -868,4 +901,5 @@ public class workyApplication extends Application{
                     }
                 });
     }
+
 }

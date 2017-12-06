@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/lbl_location"
         android:layout_below="@+id/lbl_location"
-        android:text="Salary (PhP):"
+        android:text="Salary:"
         android:textStyle="bold" />
 
     <TextView

@@ -30,7 +30,7 @@
 
     <TextView
         android:id="@+id/lbl_match"
-        android:layout_width="65dp"
+        android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txv_jobtitlelink"
         android:layout_toEndOf="@+id/imv_avatar"
@@ -39,7 +39,7 @@
 
     <TextView
         android:id="@+id/lbl_email"
-        android:layout_width="65dp"
+        android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/lbl_match"
         android:layout_toEndOf="@+id/imv_avatar"
@@ -48,7 +48,7 @@
 
     <TextView
         android:id="@+id/lbl_mobilenum"
-        android:layout_width="65dp"
+        android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/lbl_email"
         android:layout_below="@+id/lbl_email"

@@ -4,9 +4,8 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -94,19 +93,44 @@ public class FreelanceSignupActivity extends AppCompatActivity {
                 String[] LOOKUP_FIELD = { "Agriculture", "Arts", "Clerical", "Education",
                         "Engineering", "Finance", "Health", "Hospitality",
                         "IT", "Legal", "Manufacturing", "Transport", "Others"};
-                
+
+                if (!isInternetAvailable()) {
+                    Log.d("HERE", "HERE???");
+                    Toast.makeText(FreelanceSignupActivity.this,
+                            "ERROR: Please connect to the internet.",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 /* CHECK IF INT FIELDS BLANK TO PREVENT PARSE ERROR */
-                if (areIntFieldsBlank(edtFage, edtFmobilenum))
+                else if (areIntFieldsBlank(edtFage, edtFmobilenum))
                     return;
                 else {
                     /* EXTRACT DATA FROM USER INPUT */
                     String fFirstname = edtFfirstname.getText().toString();
                     String fMidname = edtFmidname.getText().toString();
                     String fLastname = edtFlastname.getText().toString();
-                    int fAge = Integer.parseInt(edtFage.getText().toString());
+                    int fAge;
+                    try {
+                        fAge = Integer.parseInt(edtFage.getText().toString());
+                    } catch (Exception e) {
+                        Log.e("ERROR", e.getMessage());
+                        Toast.makeText(FreelanceSignupActivity.this,
+                                "ERROR: Invalid age.",
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     String fGender = LOOKUP_GENDER[spnFgender.getSelectedItemPosition()];
                     String fEmail = edtFemail.getText().toString();
-                    Long fMobilenum = Long.parseLong(edtFmobilenum.getText().toString());
+                    long fMobilenum;
+                    try {
+                        fMobilenum = Long.parseLong(edtFmobilenum.getText().toString());
+                    } catch (Exception e) {
+                        Log.e("ERROR", e.getMessage());
+                        Toast.makeText(FreelanceSignupActivity.this,
+                                "ERROR: Invalid mobile number.",
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     String fProfile = edtFprofile.getText().toString();
                     String fEduc = edtFeduc.getText().toString();
                     String fExpertise = LOOKUP_FIELD[spnFexpertise.getSelectedItemPosition()];
@@ -161,5 +185,15 @@ public class FreelanceSignupActivity extends AppCompatActivity {
         }
         else
             return false;
+    }
+
+    /* CHECKS IF THERE IS AN INTERNET CONNECTION */
+    private Boolean isInternetAvailable() {
+        String command = "ping -c 1 google.com";
+        try {
+            return (Runtime.getRuntime().exec(command).waitFor() == 0);
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

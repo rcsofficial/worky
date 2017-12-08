@@ -5,12 +5,14 @@ import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,9 +64,29 @@ public class ClientDashboardActivity extends AppCompatActivity {
         final String cUsername = user.get(workySessionMgt.KEY_USERNAME);
 
         /* GET USER DATA BASED FROM USERNAME IN SESSION */
-        String firstname = app.getClientAcctByUsername(cUsername).getFirstname();
-        String company = app.getClientAcctByUsername(cUsername).getCompany();
-        String field = app.getClientAcctByUsername(cUsername).getField();
+
+        String firstname = "";
+        String company = "";
+        String field = "";
+        try {
+            firstname = app.getClientAcctByUsername(cUsername).getFirstname();
+            company = app.getClientAcctByUsername(cUsername).getCompany();
+            field = app.getClientAcctByUsername(cUsername).getField();
+        } catch (Exception e) {
+            Log.e("ERROR", e.getMessage());
+            Intent launchLoginActivity = new Intent(ClientDashboardActivity.this,
+                    LoginActivity.class);
+            Toast.makeText(ClientDashboardActivity.this,
+                    "ERROR: Please login again.",
+                    Toast.LENGTH_SHORT).show();
+            startActivity(launchLoginActivity);
+            finish();
+            return;
+        }
+
+        // String firstname = app.getClientAcctByUsername(cUsername).getFirstname();
+        // String company = app.getClientAcctByUsername(cUsername).getCompany();
+        // String field = app.getClientAcctByUsername(cUsername).getField();
 
         /* SET DASHBOARD DATA */
         TextView txvCfirstname = (TextView) findViewById(R.id.txv_c_firstname);

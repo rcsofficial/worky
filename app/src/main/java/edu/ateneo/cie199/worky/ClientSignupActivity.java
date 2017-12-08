@@ -101,18 +101,42 @@ public class ClientSignupActivity extends AppCompatActivity {
                         "IT", "Legal", "Manufacturing", "Transport", "Others"};
 
 
+                if (!isInternetAvailable()) {
+                    Toast.makeText(ClientSignupActivity.this,
+                            "ERROR: Please connect to the internet.",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 /* CHECK IF INT FIELDS BLANK TO PREVENT PARSE ERROR */
-                if (areIntFieldsBlank(edtCage, edtCmobilenum))
+                else if (areIntFieldsBlank(edtCage, edtCmobilenum))
                     return;
                 else {
                     /* EXTRACT DATA FROM USER INPUT */
                     String cFirstname = edtCfirstname.getText().toString();
                     String cMidname = edtCmidname.getText().toString();
                     String cLastname = edtClastname.getText().toString();
-                    int cAge = Integer.parseInt(edtCage.getText().toString());
+                    int cAge;
+                    try {
+                        cAge = Integer.parseInt(edtCage.getText().toString());
+                    } catch (Exception e) {
+                        Log.e("ERROR", e.getMessage());
+                        Toast.makeText(ClientSignupActivity.this,
+                                "ERROR: Invalid age.",
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     String cGender = LOOKUP_GENDER[spnCgender.getSelectedItemPosition()];
                     String cEmail = edtCemail.getText().toString();
-                    long cMobilenum = Long.parseLong(edtCmobilenum.getText().toString());
+                    long cMobilenum;
+                    try {
+                        cMobilenum = Long.parseLong(edtCmobilenum.getText().toString());
+                    } catch (Exception e) {
+                        Log.e("ERROR", e.getMessage());
+                        Toast.makeText(ClientSignupActivity.this,
+                                "ERROR: Invalid mobile number.",
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     String cProfile = edtCprofile.getText().toString();
                     String cCompany = edtCcompany.getText().toString();
                     String cField = LOOKUP_FIELD[spnCfield.getSelectedItemPosition()];
@@ -169,5 +193,15 @@ public class ClientSignupActivity extends AppCompatActivity {
         }
         else
             return false;
+    }
+
+    /* CHECKS IF THERE IS AN INTERNET CONNECTION */
+    private Boolean isInternetAvailable() {
+        String command = "ping -c 1 google.com";
+        try {
+            return (Runtime.getRuntime().exec(command).waitFor() == 0);
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

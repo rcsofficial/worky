@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -152,10 +153,28 @@ public class ClientEditProfileActivity extends AppCompatActivity {
                     String cFirstname = edtCfirstname.getText().toString();
                     String cMidname = edtCmidname.getText().toString();
                     String cLastname = edtClastname.getText().toString();
-                    int cAge = Integer.parseInt(edtCage.getText().toString());
+                    int cAge;
+                    try {
+                        cAge = Integer.parseInt(edtCage.getText().toString());
+                    } catch (Exception e) {
+                        Log.e("ERROR", e.getMessage());
+                        Toast.makeText(ClientEditProfileActivity.this,
+                                "ERROR: Invalid age.",
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     String cGender = LOOKUP_GENDER[spnCgender.getSelectedItemPosition()];
                     String cEmail = edtCemail.getText().toString();
-                    long cMobilenum = Long.parseLong(edtCmobilenum.getText().toString());
+                    long cMobilenum;
+                    try {
+                        cMobilenum = Long.parseLong(edtCmobilenum.getText().toString());
+                    } catch (Exception e) {
+                        Log.e("ERROR", e.getMessage());
+                        Toast.makeText(ClientEditProfileActivity.this,
+                                "ERROR: Invalid mobile number.",
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     String cProfile = edtCprofile.getText().toString();
                     String cCompany = edtCcompany.getText().toString();
                     String cField = LOOKUP_FIELD[spnCfield.getSelectedItemPosition()];

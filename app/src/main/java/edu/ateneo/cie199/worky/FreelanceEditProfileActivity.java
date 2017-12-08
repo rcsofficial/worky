@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -148,10 +149,28 @@ public class FreelanceEditProfileActivity extends AppCompatActivity {
                     String fFirstname = edtFfirstname.getText().toString();
                     String fMidname = edtFmidname.getText().toString();
                     String fLastname = edtFlastname.getText().toString();
-                    int fAge = Integer.parseInt(edtFage.getText().toString());
+                    int fAge;
+                    try {
+                        fAge = Integer.parseInt(edtFage.getText().toString());
+                    } catch (Exception e) {
+                        Log.e("ERROR", e.getMessage());
+                        Toast.makeText(FreelanceEditProfileActivity.this,
+                                "ERROR: Invalid age.",
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     String fGender = LOOKUP_GENDER[spnFgender.getSelectedItemPosition()];
                     String fEmail = edtFemail.getText().toString();
-                    long fMobilenum = Long.parseLong(edtFmobilenum.getText().toString());
+                    long fMobilenum;
+                    try {
+                        fMobilenum = Long.parseLong(edtFmobilenum.getText().toString());
+                    } catch (Exception e) {
+                        Log.e("ERROR", e.getMessage());
+                        Toast.makeText(FreelanceEditProfileActivity.this,
+                                "ERROR: Invalid mobile number.",
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     String fProfile = edtFprofile.getText().toString();
                     String fEduc = edtFeduc.getText().toString();
                     String fExpertise = LOOKUP_FIELD[spnFexpertise.getSelectedItemPosition()];

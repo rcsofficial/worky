@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,10 +67,25 @@ public class FreelanceDashboardActivity extends AppCompatActivity {
 
 
         /* GET USER DATA BASED FROM USERNAME IN SESSION */
-        String firstname = app.getFreelancerAcctByUsername(fUsername).getFirstname();
-        String education = app.getFreelancerAcctByUsername(fUsername).getEducation();
-        String expertise = app.getFreelancerAcctByUsername(fUsername).getExpertise();
 
+        String firstname = "";
+        String education = "";
+        String expertise = "";
+        try {
+            firstname = app.getFreelancerAcctByUsername(fUsername).getFirstname();
+            education = app.getFreelancerAcctByUsername(fUsername).getEducation();
+            expertise = app.getFreelancerAcctByUsername(fUsername).getExpertise();
+        } catch (Exception e) {
+            Log.e("ERROR", e.getMessage());
+            Intent launchLoginActivity = new Intent(FreelanceDashboardActivity.this,
+                    LoginActivity.class);
+            Toast.makeText(FreelanceDashboardActivity.this,
+                    "ERROR: Please login again.",
+                    Toast.LENGTH_SHORT).show();
+            startActivity(launchLoginActivity);
+            finish();
+            return;
+        }
 
         /* SET DASHBOARD DATA AND AVATAR*/
         TextView txvFfirstname = (TextView) findViewById(R.id.txv_f_firstname);

@@ -63,8 +63,13 @@ public class workyApplication extends Application{
                                         break;
                                     case MODIFIED:
                                         workyFreelancer freelancer = dc.getDocument().toObject(workyFreelancer.class);
-                                        int i = getFreelancerIndexByUsername(freelancer.getUsername());
-                                        mFreelancer.set(i, freelancer);
+                                        int freelancerIndex = getFreelancerIndexByUsername(freelancer.getUsername());
+                                        mFreelancer.set(freelancerIndex, freelancer);
+                                        for (int i = 0; i < mLinkJob.size(); i++) {
+                                            if (mLinkJob.get(i).getFreelancer().getUsername().equals(freelancer.getUsername())) {
+                                                mLinkJob.get(i).setFreelancer(freelancer);
+                                            }
+                                        }
                                         Log.d(TAG, "Modified freelancer: " + dc.getDocument().getData());
                                         break;
                                     case REMOVED:
@@ -95,8 +100,13 @@ public class workyApplication extends Application{
                                         break;
                                     case MODIFIED:
                                         workyClient client = dc.getDocument().toObject(workyClient.class);
-                                        int i = getClientIndexByUsername(client.getUsername());
-                                        mClient.set(i, client);
+                                        int clientIndex = getClientIndexByUsername(client.getUsername());
+                                        mClient.set(clientIndex, client);
+                                        for (int i = 0; i < mLinkJob.size(); i++) {
+                                            if (mLinkJob.get(i).getClient().getUsername().equals(client.getUsername())) {
+                                                mLinkJob.get(i).setClient(client);
+                                            }
+                                        }
                                         Log.d(TAG, "Modified client: " + dc.getDocument().getData());
                                         break;
                                     case REMOVED:

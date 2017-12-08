@@ -113,6 +113,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this,
                             "ERROR: Please connect to the internet.",
                             Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 else {
                     /* REDIRECT TO FREELANCE SIGNUP ACTIVITY */
